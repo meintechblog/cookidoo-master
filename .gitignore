@@ -1,0 +1,19 @@
+# Browser profile (contains session cookies — never commit!)
+profile/
+*/profile/
+.cookidoo-profile/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Playwright screenshots / debug
+screenshots/
+debug-*.png
+*.tmp.html
+
+# macOS
+.DS_Store

@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://cookidoo.de/recipes/recipe/de-DE/r408579",
+    "name": "Schweizer Bauernbrot",
+    "yield": "16 Scheiben",
+    "prepTime": "PT35M",
+    "totalTime": "PT7H",
+    "ingredient_count": 9,
+    "section_count": 4,
+    "sections": [
+      "Quellstück",
+      "Hauptteig",
+      "Quellstück",
+      "Hauptteig"
+    ],
+    "step_count": 5,
+    "nobr_commands": [
+      "30 Sek.//Stufe 4",
+      "Teig /2 Min.",
+      "30 Sek.//Stufe 4",
+      "Teig /2 Min."
+    ],
+    "nobr_count": 4
+  },
+  {
+    "url": "https://cookidoo.de/recipes/recipe/de-DE/r754629",
+    "name": "Schneller Apfel-Kastenkuchen",
+    "yield": "12 Scheiben",
+    "prepTime": "PT10M",
+    "totalTime": "PT1H30M",
+    "ingredient_count": 10,
+    "section_count": 0,
+    "sections": [],
+    "step_count": 5,
+    "nobr_commands": [
+      "3 Sek./Stufe 4",
+      "1 Min./Stufe 4",
+      "20 Sek./Stufe 3",
+      "3 Sek./Stufe 4",
+      "1 Min./Stufe 4",
+      "20 Sek./Stufe 3"
+    ],
+    "nobr_count": 6
+  },
+  {
+    "url": "https://cookidoo.de/recipes/recipe/de-DE/r64219",
+    "name": "Smoothie",
+    "yield": "4 Gläser",
+    "prepTime": "PT5M",
+    "totalTime": "PT5M",
+    "ingredient_count": 3,
+    "section_count": 0,
+    "sections": [],
+    "step_count": 1,
+    "nobr_commands": [
+      "5 Sek./Stufe 5",
+      "Pürieren /1 Min.",
+      "5 Sek./Stufe 5",
+      "Pürieren /1 Min.",
+      "auf 500 g",
+      "auf 150 g.",
+      "z. B.",
+      "350 g",
+      "auf 300 g."
+    ],
+    "nobr_count": 9
+  },
+  {
+    "url": "https://cookidoo.de/recipes/recipe/de-DE/r51923",
+    "name": "Kürbiscremesuppe",
+    "yield": "6 Portionen",
+    "prepTime": "PT15M",
+    "totalTime": "PT30M",
+    "ingredient_count": 14,
+    "section_count": 0,
+    "sections": [],
+    "step_count": 5,
+    "nobr_commands": [
+      "3 Sek./Stufe 5",
+      "3 Min./120°C/Stufe 2",
+      "5 Sek./Stufe 5",
+      "15 Min./100°C/Stufe 1",
+      "3 Sek./Stufe 5",
+      "3 Min./120°C/Stufe 2",
+      "5 Sek./Stufe 5",
+      "15 Min./100°C/Stufe 1"
+    ],
+    "nobr_count": 8
+  },
+  {
+    "url": "https://cookidoo.de/recipes/recipe/de-DE/r729835",
+    "name": "Bowl mit schwarzem Reis, Hühnerfleisch und Pilzen",
+    "yield": "4 Portionen",
+    "prepTime": "PT15M",
+    "totalTime": "PT40M",
+    "ingredient_count": 14,
+    "section_count": 0,
+    "sections": [],
+    "step_count": 5,
+    "nobr_commands": [
+      "15 Sek./Stufe 5",
+      "25 Min./100°C/Stufe 3.5",
+      "10 Min./Varoma/Stufe 2",
+      "15 Sek./Stufe 5",
+      "25 Min./100°C/Stufe 3.5",
+      "10 Min./Varoma/Stufe 2"
+    ],
+    "nobr_count": 6
+  }
+]
