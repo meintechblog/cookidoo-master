@@ -144,9 +144,18 @@ Slug aus Recipe-Name ableiten (kebab-case, UTF-8-safe — sed über Umlaute zers
    - `cd $SKILL_REPO && python3 automation/01_create_recipe.py`
    - Recipe-ID wird ins STATE_FILE geschrieben
 
-**2. Hero-Bild kopieren (wenn User-Foto vorhanden):**
+**2. Hero-Bild kopieren + verifizieren + hochladen (wenn User-Foto vorhanden):**
    - `mkdir -p recipes/<slug>/`
    - `cp <user-photo-path> recipes/<slug>/hero.jpg`
+   - **WICHTIG — Image-Match-Verify VOR dem Upload** (verhindert dass das falsche Foto auf einem fremden Rezept landet):
+     ```bash
+     $SKILL_DIR/scripts/verify-image-match.py \
+       --user-image recipes/<slug>/hero.jpg \
+       --hf-url "<original-hellofresh-url>"
+     ```
+     - Exit 0 (≥50% composite score): auto-approve, fortfahren
+     - Exit 2 (25-49%): UNCERTAIN — du musst BEIDE Bilder via Read-Tool anschauen und visuell vergleichen (Komposition, Hauptzutaten, Farbprofil). Bei Match: weitermachen. Bei Mismatch: User fragen, ob er das richtige Foto hat.
+     - Exit 1 (<25%): MISMATCH likely — STOPP, User fragen ob er das richtige Foto rausgesucht hat. Bei manchen stark-stylisierten User-Fotos (z.B. dunkler Hintergrund vs HF-Weißkulisse) kann der Score niedriger sein als der Dish wirklich passt — also auch hier visuell verifizieren bevor du abbrichst.
    - `python3 automation/02_upload_image.py recipes/<slug>/hero.jpg`
 
 **3. Tipps schreiben + 03_add_tips.py editieren + ausführen:**

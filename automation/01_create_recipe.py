@@ -31,48 +31,37 @@ import pathlib
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-RECIPE_NAME = "Nasi Goreng mit veganen Filetstücken (HelloFresh)"
+RECIPE_NAME = "Ingwer-Süßkartoffel-Eintopf mit Tofu (HelloFresh)"
 
 INGREDIENTS = [
-    "300 g Basmatireis",
-    "2 Karotten",
-    "4 Schalotten",
-    "2 rote Spitzpaprikas",
-    "2 rote Chilischoten, frisch",
+    "2 Süßkartoffeln",
+    "360 g Tofu Natur",
+    "4 Knoblauchzehen",
     "2 Limetten, gewachst",
-    "4 g Gewürzmischung „Hello Curry\"",
-    "320 g Planted vegane Filetstücke Hähnchen-Art, Kräuter-Zitrone",
-    "140 g Tomatenmark",
-    "36 g Ketjap Manis",
-    "50 g Sojasoße",
-    "40 g Erdnüsse, geröstet und gesalzen",
-    "1200 g Wasser",
-    "100 g Öl",
-    "20 g Mehl",
-    "2 TL Salz",
+    "44 g Knoblauch-Ingwer-Zitronengras-Paste",
+    "360 g Kokosmilch",
+    "780 g stückige Tomaten",
+    "200 g Baby-Grünkohl",
+    "4 g milder Chili-Mix",
+    "20 g Sojasoße, salzreduziert",
+    "20 g Öl",
+    "1 TL Salz",
     "1-2 Prisen Pfeffer",
+    "1 Prise Zucker",
 ]
 
-# 6 native-style steps (within native range 4-7 for 17-ingredient recipes).
-# 6 statt 5 weil die Pfannen-Phase Öl 2x braucht — Per-Step-Uniqueness sauber via Split.
-# Cooking commands embedded as plain text in the format the AI annotator recognizes:
-#   "18 Min./Varoma/Stufe 1"  or  "10 Sek./Stufe 6"
-# Script 05_annotate_chips.py converts them to interactive chips.
-#
-# Per-step uniqueness + cross-step adjacent endings validated.
+# 5 native-style steps for 14 ingredients (within native range 4-7, median 5).
 STEPS = [
-    # 1 — Vorbereitung (alles schneiden)
-    "Limetten in 8 Spalten schneiden. Schalotten halbieren und in feine Streifen schneiden. Karotten schälen, längs vierteln und fein würfeln. Spitzpaprikas halbieren, entkernen und in feine Streifen schneiden. Chilischoten (Achtung: scharf!) halbieren, nach Belieben entkernen und fein hacken.",
-    # 2 — Reis dampfgaren (Thermomix)
-    "Gareinsatz einhängen, Basmatireis einwiegen und kurz abspülen. 4 g „Hello Curry\"-Gewürzmischung darüberstreuen und vermengen. Gareinsatz einsetzen. 900 g Wasser, 1 TL Salz und 5 g Öl in den Mixtopf geben und 18 Min./Varoma/Stufe 1 dampfgaren. Gareinsatz mithilfe des Spatels herausnehmen und abgedeckt 5 Min. ruhen lassen.",
-    # 3 — Würzpaste pürieren (Thermomix)
-    "Mixtopf leeren. Die Hälfte der Schalottenstreifen, 140 g Tomatenmark, Chilischoten, Saft von 4 Limettenspalten, 60 g Öl, 1 TL Salz und 1 Prise Pfeffer in den Mixtopf geben und 10 Sek./Stufe 6 zu einer stückigen Masse pürieren. In eine Schüssel umfüllen.",
-    # 4 — Filetstücke braten (Pfanne)
-    "In einer großen Pfanne 20 g Öl erhitzen. Vegane Filetstücke mit 20 g Mehl bestäuben, in die Pfanne geben und 5-6 Min. rundherum goldbraun braten. Herausnehmen und beiseitestellen.",
-    # 5 — Gemüse + Sauce (Pfanne)
-    "Erneut 20 g Öl in der Pfanne erhitzen. Würzpaste aus Schritt 3 dazugeben und 1 Min. anbraten. Restliche Schalottenstreifen, Karotten und Paprika dazugeben und 4-5 Min. mitbraten. Filetstücke, 36 g Ketjap Manis und 50 g Sojasoße dazugeben und 1 Min. mitbraten. Mit 300 g Wasser ablöschen und 3-4 Min. köcheln lassen, bis die Soße eindickt. Mit Pfeffer abschmecken.",
-    # 6 — Anrichten
-    "Reis mit einer Gabel auflockern und auf 4 tiefe Teller verteilen. Nasi-Pfanne daneben anrichten, mit 40 g Erdnüssen toppen und mit den restlichen Limettenspalten servieren.",
+    # 1 — Vorbereitung (Süßkartoffel in Varoma, Knoblauch + Limetten prep)
+    "Süßkartoffeln in 1 cm Würfel schneiden und in den Varoma-Behälter geben. Knoblauch fein hacken. Limetten heiß waschen, Schale fein abreiben und in 8 Spalten schneiden.",
+    # 2 — Tofu braten (Pfanne, parallel zu Step 3-4 möglich)
+    "Tofu in 2 cm Würfel schneiden, in einer großen Pfanne mit 20 g Öl 8-10 Min. goldbraun anbraten. In den letzten 2 Min. 4 g milder Chili-Mix dazugeben, dann beiseitestellen.",
+    # 3 — Soße im Mixtopf + Süßkartoffel im Varoma (Thermomix)
+    "44 g Knoblauch-Ingwer-Zitronengras-Paste, Knoblauch, 360 g Kokosmilch, 780 g stückige Tomaten, 1 TL Salz und 1 Prise Pfeffer in den Mixtopf geben. Varoma mit Süßkartoffeln aufsetzen und 20 Min./Varoma/Stufe 1 garen.",
+    # 4 — Grünkohl + abschmecken (Thermomix Linkslauf)
+    "Varoma absetzen. Baby-Grünkohl in den Mixtopf geben und 2 Min./100 °C/Linkslauf/Stufe 1 köcheln lassen. Mit 20 g Sojasoße, Saft von 4 Limettenspalten und 1 Prise Zucker abschmecken.",
+    # 5 — Anrichten
+    "Eintopf auf 4 tiefe Teller verteilen, Süßkartoffeln und Tofu darauf anrichten, mit Limettenschale garnieren und mit den restlichen Spalten servieren.",
 ]
 # === END EDIT ===
 

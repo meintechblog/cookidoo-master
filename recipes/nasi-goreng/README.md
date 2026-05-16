@@ -8,7 +8,7 @@ dazu gelber Reis, Erdnüsse & Limette · vegan · 4 Portionen
 
 | | |
 |---|---|
-| **Quelle** | HelloFresh Wochenbox |
+| **Quelle** | HelloFresh Wochenbox, Karte #64 |
 | **Portionen** | 4 |
 | **Arbeitszeit** | ca. 30 Min. |
 | **Gesamtzeit** | ca. 40 Min. |

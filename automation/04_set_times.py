@@ -9,8 +9,8 @@ import pathlib, sys
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-PREP_MIN = 30     # Arbeitszeit in minutes (Nasi Goreng, 4P)
-TOTAL_MIN = 40    # Gesamtzeit in minutes (Nasi Goreng, 4P)
+PREP_MIN = 15     # Arbeitszeit in minutes (Süßkartoffel-Eintopf, 4P)
+TOTAL_MIN = 35    # Gesamtzeit in minutes (Süßkartoffel-Eintopf, 4P)
 # === END EDIT ===
 
 USER_DATA = str(pathlib.Path.home() / "cookidoo-automation/profile")

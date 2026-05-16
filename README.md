@@ -25,12 +25,15 @@ Komplettes Reverse-Engineering — DOM, Custom-Elements, Bundle-Strings, Save-Qu
 
 ## Status
 
-✅ **Voll funktional + zwei Rezepte öffentlich auf Cookidoo:**
+✅ **Voll funktional + fünf Rezepte öffentlich auf Cookidoo:**
 
-| Rezept | Steps · Zutaten · Chips | Live auf Cookidoo | HelloFresh-Original |
-|---|---|---|---|
-| [Sweet-Chili-Bowl mit glasierter Aubergine](recipes/sweet-chili-bowl/) | 5 · 17 · 2 (`Varoma` + `Linkslauf`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRNNR72NTN1C0PTD67PA8W7D) | [Original](https://www.hellofresh.de/recipes/sweet-chili-bowl-mit-glasierter-aubergine-thermomix-695b7cae2a2e2effad1837dd) |
-| [Nasi Goreng mit veganen Filetstücken](recipes/nasi-goreng/) | 6 · 17 · 2 (`Varoma` + `Pürieren`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ1JCX58H8QGDSBB47XVP5B) | [Original](https://www.hellofresh.de/recipes/nasi-goreng-mit-veganen-filetstucken-64e461d2e1f123211ed56789) |
+| Karte | Rezept | Steps · Zutaten · Chips | Live auf Cookidoo | HelloFresh-Original |
+|---|---|---|---|---|
+| #18 | [Umami-Pilz-Stir-Fry mit Rosenkohl](recipes/umami-pilz-stir-fry-mit-rosenkohl/) | 5 · 19 · 2 (`Varoma` + `Verquirlen`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ3TEB572NJEE7GB4FDRFG5) | [Original](https://www.hellofresh.de/recipes/umami-pilz-stir-fry-mit-rosenkohl-6904cb849140c7b54fef9a2e) |
+| #25 | [Frische Sauerteig-Pinsa mit Aubergine](recipes/frische-sauerteig-pinsa-mit-aubergine/) | 5 · 16 · 1 (`Pürieren`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ44JTZ8ETRE7N6PBB4Q0Q8) | [Original](https://www.hellofresh.de/recipes/frische-sauerteig-pinsa-mit-aubergine-6978d31f6aaab04ab65108b0) |
+| #33 | [Sweet-Chili-Bowl mit glasierter Aubergine](recipes/sweet-chili-bowl/) | 5 · 17 · 2 (`Varoma` + `Linkslauf`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRNNR72NTN1C0PTD67PA8W7D) | [Original](https://www.hellofresh.de/recipes/sweet-chili-bowl-mit-glasierter-aubergine-thermomix-695b7cae2a2e2effad1837dd) |
+| #64 | [Nasi Goreng mit veganen Filetstücken](recipes/nasi-goreng/) | 6 · 17 · 2 (`Varoma` + `Pürieren`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ1JCX58H8QGDSBB47XVP5B) | [Original](https://www.hellofresh.de/recipes/nasi-goreng-mit-veganen-filetstucken-64e461d2e1f123211ed56789) |
+| #66 | [Ingwer-Süßkartoffel-Eintopf mit Tofu](recipes/ingwer-suesskartoffel-eintopf-mit-tofu/) | 5 · 14 · 2 (`Varoma` + `Linkslauf`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ4A91QAT7SEKVZ5WK31JGW) | [Original](https://www.hellofresh.de/recipes/ingwer-susskartoffel-eintopf-mit-tofu-68fa30ecff3933d87e3fe9d9) |
 
 ### Beweis: native-quality Chips im Rezept
 
@@ -40,7 +43,7 @@ Komplettes Reverse-Engineering — DOM, Custom-Elements, Bundle-Strings, Save-Qu
 
 ![Step 3 Nasi Goreng mit Stufe-6-Chip](docs/assets/nasi-zoom-step3-stufe6.png)
 
-> _`18 Min./Varoma/Stufe 1`, `6 Min./100 °C/Linkslauf/Stufe 1` und `10 Sek./Stufe 6` sind keine Plain-Text-Strings — der Thermomix erkennt sie als ausführbare Koch-Befehle und führt sie beim Antippen direkt aus._
+> _`18 Min./Varoma/Stufe 1`, `6 Min./100 °C/Linkslauf/Stufe 1`, `10 Sek./Stufe 6`, `20 Min./Varoma/Stufe 1`, `30 Sek./Stufe 3` — alle keine Plain-Text-Strings, sondern interaktive Chips. Der Thermomix erkennt sie als ausführbare Koch-Befehle und führt sie beim Antippen direkt aus._
 
 ## Quick Start
 
