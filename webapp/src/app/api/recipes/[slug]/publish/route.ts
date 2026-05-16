@@ -31,15 +31,28 @@ function extractStepLines(md: string): string[] {
   const m = md.match(/##\s+Zubereitung[^\n]*\n([\s\S]*?)(?=\n##\s+|$(?![\s\S]))/);
   if (!m) return [];
   const body = m[1];
+  // Handles BOTH styles seen in our recipes:
+  //  - one-step-per-line (SCB, Nasi) — no blank line between steps
+  //  - blank-line-separated paragraphs (Hackbraten) — newlines between steps
+  // A new step starts on any line beginning with `\d+. `; continuation
+  // lines accumulate until the next step. Blockquotes are skipped.
   const steps: string[] = [];
-  // Strip the leading curation-warning blockquote if present.
-  for (const block of body.split(/\n\n+/)) {
-    const trimmed = block.trim();
-    if (trimmed.startsWith(">")) continue;
-    const sm = trimmed.match(/^(\d+)\.\s+([\s\S]+)$/);
-    if (sm) steps.push(sm[2].trim());
+  let current: string[] = [];
+  for (const rawLine of body.split("\n")) {
+    if (rawLine.trim().startsWith(">")) {
+      if (current.length) { steps.push(current.join(" ").trim()); current = []; }
+      continue;
+    }
+    const sm = rawLine.match(/^(\d+)\.\s+(.*)$/);
+    if (sm) {
+      if (current.length) steps.push(current.join(" ").trim());
+      current = [sm[2]];
+    } else if (current.length && rawLine.trim()) {
+      current.push(rawLine.trim());
+    }
   }
-  return steps;
+  if (current.length) steps.push(current.join(" ").trim());
+  return steps.map(s => s.replace(/\*\*/g, ""));
 }
 
 function buildTipsBlock(tipsMd: string, warumMd: string, hfUrl: string | null): string {

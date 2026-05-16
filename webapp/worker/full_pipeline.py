@@ -126,6 +126,67 @@ def create_recipe(page, name, ingredients, steps):
     return recipe_id
 
 
+# ─── 99 — replace steps on an existing recipe ────────────────────────
+def replace_steps(page, recipe_id, steps):
+    """Delete every existing step on a recipe and insert a fresh list.
+    Used when the user wants to update the wording of a live recipe
+    without re-creating it (preserves recipe_id + public URL + image).
+    Logic ported from automation/99_replace_steps_helper.py.
+    """
+    log(f"99_replace_steps on {recipe_id}: {len(steps)} new steps")
+    page.goto(f"https://cookidoo.de/created-recipes/de-DE/{recipe_id}/edit/ingredients-and-preparation-steps?active=steps",
+              wait_until="domcontentloaded", timeout=60000)
+    dismiss_cookies(page); page.wait_for_timeout(2500)
+
+    # Delete every existing step via the per-row dropdown menu.
+    deleted = 0
+    while True:
+        menu_btns = page.locator("cr-manage-steps button.cr-manage-list__menu-button")
+        target = None
+        for i in range(menu_btns.count()):
+            try:
+                if menu_btns.nth(i).is_visible():
+                    target = menu_btns.nth(i); break
+            except Exception: pass
+        if not target: break
+        target.click(); page.wait_for_timeout(350)
+        if not click_first_visible(page, "button:has-text('Rezeptschritt löschen')"):
+            break
+        page.wait_for_timeout(500)
+        deleted += 1
+        if deleted > 50: break  # sanity cap
+
+    log(f"  deleted {deleted} existing steps")
+    page.wait_for_timeout(800)
+
+    # Open the empty-state to start adding fresh steps.
+    for sel in ["#add-steps", "button:has-text('Ersten Rezeptschritt hinzufügen')"]:
+        if click_first_visible(page, sel): break
+    page.wait_for_timeout(500)
+
+    for i, step in enumerate(steps):
+        page.wait_for_selector("cr-manage-steps cr-text-field[contenteditable='true']", timeout=10000)
+        fields = page.locator("cr-manage-steps cr-text-field[contenteditable='true']")
+        target = None
+        for j in range(fields.count() - 1, -1, -1):
+            try:
+                if fields.nth(j).is_visible(): target = fields.nth(j); break
+            except Exception: pass
+        if not target: continue
+        target.click(); page.wait_for_timeout(150)
+        page.keyboard.type(step, delay=1); page.wait_for_timeout(120)
+        page.keyboard.press("Enter"); page.wait_for_timeout(250)
+
+    page.wait_for_timeout(800)
+    for a in page.locator("a:has-text('Bestätigen')").all():
+        try:
+            if a.is_visible(): a.click(); break
+        except Exception: pass
+    page.wait_for_load_state("networkidle", timeout=20000)
+    page.wait_for_timeout(2000)
+    return deleted
+
+
 # ─── 03 — tips ───────────────────────────────────────────────────────
 def add_tips(page, recipe_id, tips_text):
     log(f"03_tips on {recipe_id}")
@@ -370,10 +431,27 @@ def main():
 
         try:
             recipe_id = spec.get("recipe_id")  # update existing
+            mode = spec.get("mode", "auto")     # auto | replace_steps_only
             if not recipe_id:
                 recipe_id = create_recipe(page, spec["recipe_name"], spec["ingredients"], spec["steps"])
                 actions.append("created")
             result["recipe_id"] = recipe_id
+
+            if mode == "replace_steps_only":
+                # Surgical update of an existing live recipe: drop all
+                # steps, insert fresh wording, re-annotate chips. Skip
+                # everything else so tips/times/image/publish-state
+                # stay exactly as they were.
+                deleted = replace_steps(page, recipe_id, spec["steps"])
+                actions.append(f"replaced({deleted}→{len(spec['steps'])})")
+                try:
+                    n_chips = annotate_chips(page, recipe_id, spec["ingredients"], spec["steps"])
+                    actions.append(f"annotated({n_chips}chips)")
+                except Exception as e:
+                    log(f"annotate failed (non-fatal): {e}")
+                result["actions"] = actions
+                print(json.dumps(result))
+                return
 
             if spec.get("tips_text"):
                 add_tips(page, recipe_id, spec["tips_text"]); actions.append("tipped")

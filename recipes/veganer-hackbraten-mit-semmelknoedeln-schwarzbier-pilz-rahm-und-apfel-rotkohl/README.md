@@ -15,9 +15,9 @@ Wirtshaus-Klassiker im Thermomix · vegan · 4 Portionen · ca. 720 kcal/Portion
 | **Schwierigkeit** | mittel |
 | **Diät** | vegan |
 | **Hauptprodukt** | Planeo Bio Veganer Festtags-Hackbraten (500 g, am Stück) — https://planeofood.de/products/planeo-bio-veganer-festtags-hackbraten |
-| **Cookidoo-Rezept (privat, eingeloggt)** | _(wird beim Push gesetzt)_ |
-| **Cookidoo-Rezept (öffentlich)** | _(wird beim Public-Publish gesetzt)_ |
-| **Foto** | AI-Vorab-Bild (gleicher Studio-Stil wie unsere anderen Rezepte) — wird beim ersten Kochen durch eigenes Foto ersetzt, dann Public-Publish auf Cookidoo |
+| **Cookidoo-Rezept (privat, eingeloggt)** | https://cookidoo.de/created-recipes/de-DE/01KRRA70F256JS1FJH8SHY4G6D |
+| **Cookidoo-Rezept (öffentlich)** | https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRRA70F256JS1FJH8SHY4G6D |
+| **Foto** | AI-Vorab-Bild (eigene Generierung, Copyright Jörg Hofmann) — wird beim ersten Kochen durch eigenes Plattenfoto ersetzt |
 
 ## Zutaten (4P)
 
