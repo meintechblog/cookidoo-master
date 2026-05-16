@@ -63,6 +63,7 @@ install -m 0644 "$REPO_DIR/webapp/deploy/thermomix-webapp.service" /etc/systemd/
 install -m 0644 "$REPO_DIR/webapp/deploy/thermomix-worker.service" /etc/systemd/system/thermomix-worker.service
 install -m 0644 "$REPO_DIR/webapp/deploy/thermomix-autoupdate.service" /etc/systemd/system/thermomix-autoupdate.service
 install -m 0644 "$REPO_DIR/webapp/deploy/thermomix-autoupdate.timer" /etc/systemd/system/thermomix-autoupdate.timer
+install -m 0644 "$REPO_DIR/webapp/deploy/thermomix-chat.service" /etc/systemd/system/thermomix-chat.service
 systemctl daemon-reload
 
 # 6. nginx reverse-proxy on port 80
@@ -78,6 +79,15 @@ systemctl enable --now thermomix-worker.service
 systemctl enable --now thermomix-autoupdate.timer
 systemctl restart thermomix-webapp.service
 systemctl restart thermomix-worker.service
+
+# Chat service is optional — only starts if /usr/local/bin/ttyd + /usr/bin/claude both present
+if [ -x /usr/local/bin/ttyd ] && [ -x /usr/bin/claude ]; then
+  systemctl enable --now thermomix-chat.service
+  systemctl restart thermomix-chat.service
+  echo "==> chat service enabled (/chat in webapp)"
+else
+  echo "==> chat service skipped (install ttyd + claude first)"
+fi
 
 # 8. Health check
 sleep 3

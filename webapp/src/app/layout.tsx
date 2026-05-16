@@ -22,6 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="flex items-center gap-6 text-sm font-medium text-charcoal-700">
               <a href="/" className="hover:text-hero-700 transition">Rezepte</a>
               <a href="/pinned" className="hover:text-hero-700 transition">Queue</a>
+              <a href="/chat" className="hover:text-hero-700 transition flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-hero-500 animate-pulse" /> Chat
+              </a>
               <a href="/settings" className="hover:text-hero-700 transition">Einstellungen</a>
               <a href="https://github.com/meintechblog/cookidoo-master" target="_blank" rel="noopener" className="px-3 py-1.5 rounded-md border border-charcoal-200 hover:border-hero-500 hover:text-hero-700 transition">GitHub ↗</a>
             </nav>
