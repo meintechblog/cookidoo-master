@@ -1,5 +1,12 @@
 # thermomix-master webapp
 
+> 🟢 **Live**: http://192.168.3.223/ (LXC 141 auf proxi)
+> · `/chat` für embedded Claude Code
+> · `/pinned` für die URL-Queue
+> · `/r/<slug>/edit` für Markdown + Hero-Upload
+
+
+
 HelloFresh-styled Browser für unsere Cookidoo-Rezepte, läuft als LXC auf Proxmox unter Port 80.
 
 ## Architektur
