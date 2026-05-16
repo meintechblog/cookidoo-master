@@ -50,11 +50,21 @@ if [ ! -d "$REPO_DIR/.venv" ]; then
 fi
 
 # 4. Node deps + build
+# Rebuild whenever the on-disk build is older than the most recent source change,
+# even if git rev-parse claims "already up-to-date" (operator may have pre-pulled).
 cd "$REPO_DIR/webapp"
-if [ "${SKIP_BUILD:-0}" = "0" ] || [ ! -d "$REPO_DIR/webapp/.next" ]; then
+NEEDS_BUILD=0
+if [ "${SKIP_BUILD:-0}" = "0" ]; then NEEDS_BUILD=1; fi
+if [ ! -d "$REPO_DIR/webapp/.next" ]; then NEEDS_BUILD=1; fi
+if [ -d "$REPO_DIR/webapp/.next" ] && [ -n "$(find "$REPO_DIR/webapp/src" "$REPO_DIR/webapp/package.json" -newer "$REPO_DIR/webapp/.next" 2>/dev/null | head -1)" ]; then
+  echo "==> source newer than .next/, will rebuild"
+  NEEDS_BUILD=1
+fi
+if [ "$NEEDS_BUILD" = "1" ]; then
   echo "==> npm install"
   npm install --no-audit --no-fund --silent
   echo "==> npm build"
+  rm -rf .next
   npm run build
 fi
 
