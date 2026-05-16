@@ -58,7 +58,33 @@ python3 automation/00_setup_profile.py
 # Login persistiert in ~/cookidoo-automation/profile/ — danach nie wieder nötig.
 ```
 
-Pro neuem Rezept:
+### Option A — als Claude-Code-Skill (empfohlen)
+
+Wenn du [Claude Code](https://claude.com/claude-code) nutzt: der Skill `thermomix-master` macht den kompletten Workflow zero-friction.
+
+```bash
+# Einmaliger Symlink:
+ln -s "$(pwd)/skill/thermomix-master" ~/.claude/skills/thermomix-master
+```
+
+Pro neuem Rezept einfach in Claude Code aufrufen:
+
+```
+/thermomix-master https://www.hellofresh.de/recipes/<name>-<id>
+```
+
+Der Skill:
+1. Scrapet die HelloFresh-Karte (Zutaten + Steps + Foto-URL + Nährwerte)
+2. Skaliert auf 4 Portionen
+3. Adaptiert auf native Thermomix-Style (5-6 Steps für 14-17 Zutaten, native Verben, spezifische Mengen, interaktive Koch-Befehl-Chips)
+4. Auditiert per-step uniqueness + cross-step endings + chip-syntax
+5. Holt von dir das eigene Foto + Bestätigung
+6. Pipeline ausführen (01→06), Recipe live auf Cookidoo PUBLIC
+7. README + Screenshots schreiben, commit + push
+
+Auch mit `--text "<plain-recipe>"` oder `--image <path/to/photo.jpg>` als Input — siehe `skill/thermomix-master/SKILL.md`.
+
+### Option B — manuell, Pipeline-Scripts direkt
 
 ```bash
 # 1. Quellmaterial bereitlegen (eigenes Foto + slug-Verzeichnis)
@@ -88,6 +114,7 @@ cookidoo-master/
 ├── PLAYBOOK.md           ← Schritt-für-Schritt pro neuem Rezept + die 9 Qualitätsregeln
 ├── LEARNINGS.md          ← Reverse-Engineering: APIs, DOM, Custom-Elements, Edge-Cases
 ├── automation/           ← 7 Pipeline-Scripts (00_setup_profile → 06_publish) + 1 Helper (99_replace_steps_helper)
+├── skill/                ← Claude-Code-Skill `thermomix-master` (Symlink-bar nach ~/.claude/skills/)
 ├── research/             ← Deep-Research aus 12 nativen Vorwerk-Rezepten (Step-Median, Verben)
 ├── recipes/              ← Pro Rezept: Quellfoto, Markdown, Cookidoo-Link, Tipps-Narrativ
 │   └── sweet-chili-bowl/ ← Das canonical example
