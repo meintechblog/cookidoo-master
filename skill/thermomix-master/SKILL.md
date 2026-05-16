@@ -59,7 +59,7 @@ Wenn unklar → AskUserQuestion mit den 3 Input-Typen.
 ```bash
 $SKILL_DIR/scripts/extract-hellofresh.py "$URL" > /tmp/thermomix-raw.json
 ```
-Liefert `name`, `ingredients_2p`, `instructions_2p`, `image_url`, `totalTime_iso`, `nutrition_2p`.
+Liefert `name`, `servings`, `ingredients`, `instructions`, `image_url`, `totalTime_iso`, `nutrition`. Die Felder sind in der HelloFresh-Original-Portionsgröße (`servings`-Wert, meist 2P) — Phase 2 skaliert auf die Ziel-Portionen.
 
 **plain-text:**
 User pastet das Rezept. Parse heuristisch (Zutaten in Bullet-Liste, Steps als nummerierte Liste oder Absätze).
@@ -69,7 +69,7 @@ User pastet das Rezept. Parse heuristisch (Zutaten in Bullet-Liste, Steps als nu
 
 ## Phase 2 — Auf 4 Portionen skalieren (default)
 
-HelloFresh-Karten sind meist 2P-Basis. Multiplier-Brackets `[1,5 EL | 2 EL]` zeigen 3P/4P-Varianten. Für 4P: alle 2P-Werte × 2 (oder die rechte Bracket-Variante nutzen wenn vorhanden).
+Compute `multiplier = 4 / servings` (HelloFresh-Karten sind meist `servings: 2` → multiplier = 2). Multiplier-Brackets `[1,5 EL | 2 EL]` in den `instructions` zeigen 3P/4P-Varianten — bei 4P kann man die letzte Bracket-Variante direkt nutzen, sonst alle 2P-Mengen × multiplier rechnen.
 
 Wenn der User eine andere Portionsgröße will: AskUserQuestion.
 
@@ -133,8 +133,8 @@ User kann:
 
 ## Phase 6 — Pipeline durchlaufen
 
-Slug aus Recipe-Name ableiten (kebab-case, Sonderzeichen weg):
-`SLUG=$(echo "$NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//;s/-$//')`
+Slug aus Recipe-Name ableiten (kebab-case, UTF-8-safe — sed über Umlaute zerstört die Bytes!):
+`SLUG=$($SKILL_DIR/scripts/_slugify.py "$NAME")`
 
 **1. `01_create_recipe.py` editieren + ausführen:**
    - Edit `$SKILL_REPO/automation/01_create_recipe.py`:
@@ -185,8 +185,9 @@ Slug aus Recipe-Name ableiten (kebab-case, Sonderzeichen weg):
 
 **7. Publish (wenn User-Foto eigenes):**
    ```bash
-   cd $SKILL_REPO && echo "yes" | python3 automation/06_publish.py
+   cd $SKILL_REPO && python3 automation/06_publish.py --yes
    ```
+   Das `--yes`-Flag ist die explizite "ich bestätige Image-Ownership"-Variante (statt `echo yes` zu pipen — so wird ein zukünftiger zweiter Confirmation-Prompt nicht versehentlich auto-bestätigt).
 
 ## Phase 7 — Dokumentieren
 

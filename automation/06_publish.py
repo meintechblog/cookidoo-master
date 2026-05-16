@@ -18,9 +18,13 @@ def main():
         sys.exit("Run 01_create_recipe.py first")
     recipe_id = STATE_FILE.read_text().strip()
 
-    confirm = input(f"Publishing {recipe_id} to PUBLIC. Do you OWN the hero image? [yes/no] ").strip().lower()
-    if confirm != "yes":
-        sys.exit("Aborted. Re-upload your own image first (02_upload_image.py), then retry.")
+    # Non-interactive bypass for the thermomix-master skill (only flag we accept).
+    if "--yes" in sys.argv:
+        print(f"Publishing {recipe_id} to PUBLIC (--yes: image ownership confirmed by caller).")
+    else:
+        confirm = input(f"Publishing {recipe_id} to PUBLIC. Do you OWN the hero image? [yes/no] ").strip().lower()
+        if confirm != "yes":
+            sys.exit("Aborted. Re-upload your own image first (02_upload_image.py), then retry.")
 
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(

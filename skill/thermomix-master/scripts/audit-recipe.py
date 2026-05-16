@@ -6,109 +6,171 @@ Reads a JSON file:
     "steps": ["Limetten in 8 Spalten...", ...] }
 
 Checks:
-  1. Per-step ingredient uniqueness (every ingredient max 1x per step)
-  2. Cross-step adjacent endings (no two consecutive steps end identically)
-  3. Compound-name conflicts (Sriracha-Mayo + Sriracha-Sauce in same step)
-  4. Chip-syntax sanity (cooking commands match `<N> <Min.|Sek.>/.../<Stufe ...>`)
-  5. Step-count vs ingredient-count vs native-median table
+  1. Per-step ingredient uniqueness (every ingredient max 1x per step) —
+     plural/synonym pairs normalized via INGREDIENT_NORMALIZATION so
+     `Bohnen` + `Buschbohnen` correctly trip as the same chip.
+  2. Cross-step adjacent endings (normalized + lowercased before comparing —
+     `beiseitestellen.` and `beiseite stellen.` count as the same ending).
+  3. Compound-name conflicts (substring matches that risk double-annotation).
+  4. Chip-syntax sanity (cooking commands match `<N> <Min.|Sek.>/.../<Stufe ...>`).
+  5. Step-count vs ingredient-count vs native-median table.
 
 Usage: ./audit-recipe.py recipe.json
-Prints findings, exits 0 if clean / 1 if any blocker.
+Prints findings, exits 0 if clean / 1 if any BLOCKer.
 """
 import sys, re, json, pathlib
 from collections import Counter
 
-# Ingredient keywords that the AI annotator matches by substring. Add as needed.
-INGREDIENT_KEYWORDS = [
-    "Wasser", "Salz", "Pfeffer", "Zucker", "Öl", "Sesamöl", "Mehl",
-    "Reis", "Basmatireis", "Aubergine", "Auberginen", "Buschbohnen", "Bohnen",
-    "Limette", "Limetten", "Limettenspalten", "Limettenviertel",
-    "Chili", "Chilischote", "Chilischoten",
-    "Gurke", "Gurken", "Frühlingszwiebel", "Frühlingszwiebeln",
-    "Karotte", "Karotten", "Schalotte", "Schalotten", "Spitzpaprika", "Spitzpaprikas",
+# Keywords the AI annotator matches by substring → canonical form. Multiple
+# spellings (plural, compound) collapse to one canonical so the uniqueness
+# check counts them as the same ingredient.
+INGREDIENT_NORMALIZATION = {
+    # plurals
+    "Auberginen": "Aubergine", "Karotten": "Karotte", "Schalotten": "Schalotte",
+    "Gurken": "Gurke", "Limetten": "Limette", "Frühlingszwiebeln": "Frühlingszwiebel",
+    "Chilischoten": "Chilischote", "Chili": "Chilischote",
+    "Spitzpaprikas": "Spitzpaprika", "Erdnüssen": "Erdnüsse",
+    # synonym-pairs that the AI treats as the same chip
+    "Buschbohnen": "Bohnen", "Bohne": "Bohnen",
+    "Basmatireis": "Reis",
+    "Limettenspalten": "Limette", "Limettenviertel": "Limette",
+    "Filetstücke": "Filetstück", "Filetstücken": "Filetstück",
+    # subtle variants
+    "Soße": "Sauce", "Soßen": "Sauce",
+    "Hello Curry": "Hello Curry",  # identity (just to register the canonical name)
+}
+
+# Canonical forms we actually look for. Anything not in this list is ignored
+# (avoids false positives like every preposition).
+CANONICAL_INGREDIENTS = {
+    "Wasser", "Salz", "Pfeffer", "Zucker", "Öl", "Sesamöl", "Mehl", "Reis",
+    "Aubergine", "Bohnen", "Karotte", "Schalotte", "Spitzpaprika",
+    "Gurke", "Frühlingszwiebel", "Chilischote",
+    "Limette", "Erdnüsse",
     "Mayonnaise", "Sriracha", "Sweet-Chili", "Teriyaki", "Teriyakisoße",
-    "Tomatenmark", "Ketjap", "Sojasoße", "Erdnüsse", "Erdnüssen",
-    "Filetstück", "Filetstücke", "Tofu", "Edamame",
-    "Hello Curry", "Curry",
-]
+    "Tomatenmark", "Ketjap", "Sojasoße", "Hello Curry", "Curry",
+    "Filetstück", "Tofu", "Edamame",
+}
 
 ADJACENT_END_PATTERNS = [
-    "abschmecken.", "verrühren.", "vermengen.", "marinieren.",
-    "köcheln lassen.", "ziehen lassen.", "ruhen lassen.",
-    "beiseitestellen.", "beiseite stellen.", "servieren.",
+    "abschmecken", "verrühren", "vermengen", "marinieren",
+    "köcheln lassen", "ziehen lassen", "ruhen lassen",
+    "beiseitestellen", "beiseite stellen", "servieren",
 ]
 
-# Native step-median table: ingredient_count → (median, range)
+# Native step-median table: (max_ingredients, median, (lo, hi))
 NATIVE_STEP_TABLE = [
-    (12, 4, (3, 5)),   # 8-12 ingredients → 4 steps median
-    (17, 5, (4, 7)),   # 13-17 ingredients → 5 steps median
-    (25, 6, (5, 8)),   # 18-25 ingredients → 6 steps median
+    (12, 4, (3, 5)),
+    (17, 5, (4, 7)),
+    (25, 6, (5, 8)),
 ]
+
+
+def normalize_ending(s: str) -> str:
+    """Strip trailing period, collapse ALL whitespace, lowercase.
+
+    Collapsing all whitespace makes 'beiseitestellen' == 'beiseite stellen'
+    after normalization — both become 'beiseitestellen' for comparison.
+    """
+    s = s.rstrip().rstrip(".").lower()
+    s = re.sub(r"\s+", "", s)
+    return s
+
+
+def detect_ingredients_in_step(step: str) -> Counter:
+    """Count canonical ingredient mentions in a step.
+
+    Algorithm:
+      1. Build search-term list = CANONICAL ∪ NORMALIZATION_KEYS
+      2. Sort DESC by length so longer terms match first (Buschbohnen > Bohnen,
+         Chilischoten > Chilischote > Chili)
+      3. For each term, find non-overlapping matches in regions not yet consumed
+         by an earlier (longer) match. Map matched text to canonical form.
+
+    This handles:
+    - Plural variants: `Chilischoten` matched once (longest), not twice
+      (once as 'Chilischoten' once as 'Chilischote\\w*')
+    - Synonym pairs: `Buschbohnen ... Bohnen` both count as canonical 'Bohnen'
+    """
+    counts = Counter()
+    all_terms = set(CANONICAL_INGREDIENTS) | set(INGREDIENT_NORMALIZATION.keys())
+    # Longest first so overlapping shorter terms don't double-count
+    sorted_terms = sorted(all_terms, key=len, reverse=True)
+    consumed = [False] * len(step)
+    for term in sorted_terms:
+        pattern = rf"\b{re.escape(term)}\w*\b"
+        for m in re.finditer(pattern, step):
+            if any(consumed[m.start():m.end()]):
+                continue
+            canonical = INGREDIENT_NORMALIZATION.get(term, term)
+            counts[canonical] += 1
+            for i in range(m.start(), m.end()):
+                consumed[i] = True
+    return counts
 
 
 def check_per_step_uniqueness(steps):
     findings = []
     for i, step in enumerate(steps, 1):
-        counts = Counter()
-        for kw in INGREDIENT_KEYWORDS:
-            # word boundary search, case-sensitive (German has different inflections)
-            n = len(re.findall(rf"\b{re.escape(kw)}\w*\b", step))
-            if n > 1:
-                counts[kw] = n
-        if counts:
-            for kw, n in counts.items():
-                findings.append(("WARN", f"Step {i}: '{kw}' mentioned {n}x — will produce duplicate chips"))
+        counts = detect_ingredients_in_step(step)
+        dupes = {kw: n for kw, n in counts.items() if n > 1}
+        for kw, n in dupes.items():
+            findings.append(("WARN", f"Step {i}: '{kw}' mentioned {n}x (across variants) — will produce duplicate chips"))
     return findings
 
 
 def check_adjacent_endings(steps):
     findings = []
     for i in range(1, len(steps)):
+        prev_end = normalize_ending(steps[i-1])
+        curr_end = normalize_ending(steps[i])
+        # Check if both end with the same known phrase
         for pat in ADJACENT_END_PATTERNS:
-            if steps[i-1].rstrip().endswith(pat) and steps[i].rstrip().endswith(pat):
+            if prev_end.endswith(pat) and curr_end.endswith(pat):
                 findings.append(("BLOCK", f"Steps {i} and {i+1} both end with '...{pat}' — reads like copy-paste, merge or rephrase"))
+                break
+        else:
+            # Also catch when the literal last word matches (catches variants not in the pattern list)
+            prev_last = prev_end.split()[-1] if prev_end.split() else ""
+            curr_last = curr_end.split()[-1] if curr_end.split() else ""
+            if prev_last and prev_last == curr_last and len(prev_last) > 5:
+                findings.append(("WARN", f"Steps {i} and {i+1} both end with word '{prev_last}' — consider varying the last verb"))
     return findings
 
 
 def check_compound_conflicts(steps, ingredients):
     """If a step mentions e.g. 'Sriracha-Mayo' while 'Sriracha-Sauce' is an ingredient,
-    the AI will annotate both → two chips for 'Sriracha'."""
+    the AI will annotate both → two chips for 'Sriracha'.
+    """
     findings = []
     ing_keywords = set()
     for ing in ingredients:
-        # Pull substantive words (Sriracha-Sauce → Sriracha, Sauce)
-        for w in re.findall(r"[A-ZÄÖÜ][a-zäöüß-]+", ing):
+        for w in re.findall(r"[A-ZÄÖÜ][a-zäöüß]+(?:-[A-ZÄÖÜa-zäöüß]+)*", ing):
+            # rstrip dashes just in case
+            w = w.rstrip("-")
             if len(w) > 4 and w not in {"Stück", "Prise", "Teelöffel", "Esslöffel"}:
                 ing_keywords.add(w)
     for i, step in enumerate(steps, 1):
         hits = Counter()
         for kw in ing_keywords:
-            n = len(re.findall(rf"\b{kw}", step))
+            # Use word boundary so trailing dashes don't matter
+            n = len(re.findall(rf"\b{re.escape(kw)}\b", step))
             if n > 1:
                 hits[kw] = n
         for kw, n in hits.items():
-            findings.append(("WARN", f"Step {i}: substring '{kw}' appears {n}x — check if compound names like '{kw}-X' cause double-annotation"))
+            findings.append(("WARN", f"Step {i}: token '{kw}' appears {n}x — check if compound names cause double-annotation"))
     return findings
-
-
-CHIP_PATTERN = re.compile(
-    r"\b\d+(?:[-–]\d+)?\s+(?:Sek|Min)\."           # 10 Sek. / 18 Min. / 5-6 Min.
-    r"(?:/(?:Stufe\s+[\d,.]+|soft|Teig|Varoma|\d+\s*°?\s*C))*"  # optional /Stufe / /100°C / /Varoma
-    r"/(?:Stufe\s+[\d,.]+|soft|Teig|Linkslauf|Stufe\s+[\d,.]+)"  # mandatory final Stufe or modifier
-)
 
 
 def check_chip_syntax(steps):
     findings = []
     chips_found = 0
     for i, step in enumerate(steps, 1):
-        # Loose pattern: anything like "N Min./..." or "N Sek./..."
-        candidates = re.findall(r"\b\d+(?:[-–]\d+)?\s+(?:Sek|Min)\.\/[^.,;]{3,60}", step)
+        candidates = re.findall(r"\b\d+(?:[-–]\d+)?\s+(?:Sek|Min)\.\/[^.,;]{3,80}", step)
         for c in candidates:
             chips_found += 1
-            # Tighter validation
-            if not re.search(r"/Stufe\s+", c) and "/Varoma" not in c:
-                findings.append(("WARN", f"Step {i}: '{c}' may not annotate as TTS chip (needs /Stufe N or /Varoma)"))
+            if not re.search(r"/Stufe\s+", c) and "/Varoma" not in c and "/Teig" not in c:
+                findings.append(("WARN", f"Step {i}: '{c.strip()}' may not annotate as TTS chip (needs /Stufe N or /Varoma)"))
     if chips_found == 0:
         findings.append(("WARN", "No cooking-command chip patterns detected — this recipe will have no interactive Thermomix chips"))
     return findings, chips_found
@@ -131,7 +193,13 @@ def check_step_count(steps, ingredients):
 def main():
     if len(sys.argv) != 2:
         print("usage: audit-recipe.py recipe.json", file=sys.stderr); sys.exit(64)
-    data = json.loads(pathlib.Path(sys.argv[1]).read_text())
+    try:
+        data = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"error: cannot read recipe JSON: {e}", file=sys.stderr); sys.exit(64)
+    if "ingredients" not in data or "steps" not in data:
+        print("error: input JSON must have 'ingredients' and 'steps' keys", file=sys.stderr); sys.exit(64)
+
     ingredients = data["ingredients"]
     steps = data["steps"]
 
@@ -150,8 +218,7 @@ def main():
     warns = [f for sev, f in all_findings if sev == "WARN"]
     oks = [f for sev, f in all_findings if sev == "OK"]
 
-    if oks:
-        for f in oks: print(f"  ✓ {f}")
+    for f in oks: print(f"  ✓ {f}")
     if warns:
         print()
         for f in warns: print(f"  ⚠ {f}")
