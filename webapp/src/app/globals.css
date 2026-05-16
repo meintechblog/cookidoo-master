@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800;900&display=swap");
+
+:root {
+  --color-bg: #fefdf9;
+  --color-fg: #1a1f24;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* HelloFresh-style scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: theme("colors.cream.100"); }
+::-webkit-scrollbar-thumb { background: theme("colors.charcoal.300"); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: theme("colors.charcoal.500"); }
+
+/* Recipe content prose tweaks */
+.prose-recipe h2 { font-family: theme("fontFamily.display"); }
+.prose-recipe ol { counter-reset: step; }
+.prose-recipe ol > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+.prose-recipe ol > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  background: theme("colors.hero.600");
+  color: white;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+.prose-recipe strong { color: theme("colors.hero.700"); font-weight: 600; }
+.prose-recipe code {
+  background: theme("colors.hero.50");
+  color: theme("colors.hero.800");
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.35rem;
+  font-size: 0.9em;
+  font-weight: 600;
+  border: 1px solid theme("colors.hero.200");
+}
+
+/* Pinned-URL form */
+.pin-form input {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 0.6rem;
+  border: 2px solid theme("colors.charcoal.200");
+  background: white;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.pin-form input:focus {
+  outline: none;
+  border-color: theme("colors.hero.500");
+  box-shadow: 0 0 0 4px theme("colors.hero.100");
+}
+
+/* Card hover */
+.recipe-card { transition: transform 0.2s, box-shadow 0.2s; }
+.recipe-card:hover { transform: translateY(-2px); box-shadow: theme("boxShadow.cardHover"); }

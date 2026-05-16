@@ -1,0 +1,8 @@
+[Unit]
+Description=thermomix-master auto-update from GitHub
+
+[Service]
+Type=oneshot
+ExecStart=/opt/cookidoo-master/webapp/deploy/install.sh
+StandardOutput=journal
+StandardError=journal
