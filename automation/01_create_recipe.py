@@ -31,45 +31,48 @@ import pathlib
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-RECIPE_NAME = "Sweet-Chili-Bowl mit glasierter Aubergine (HelloFresh #33)"
+RECIPE_NAME = "Nasi Goreng mit veganen Filetstücken (HelloFresh)"
 
 INGREDIENTS = [
     "300 g Basmatireis",
-    "2 Auberginen",
-    "200 g Buschbohnen",
-    "2 Gurken",
-    "2 Frühlingszwiebeln",
-    "1 rote Chilischote, frisch",
-    "100 g Teriyakisoße",
-    "20 ml Sesamöl",
-    "16 ml Sriracha-Sauce",
-    "100 g Sweet-Chili-Soße",
-    "1 Limette, gewachst",
-    "50 g vegane Mayonnaise",
+    "2 Karotten",
+    "4 Schalotten",
+    "2 rote Spitzpaprikas",
+    "2 rote Chilischoten, frisch",
+    "2 Limetten, gewachst",
+    "4 g Gewürzmischung „Hello Curry\"",
+    "320 g Planted vegane Filetstücke Hähnchen-Art, Kräuter-Zitrone",
+    "140 g Tomatenmark",
+    "36 g Ketjap Manis",
+    "50 g Sojasoße",
+    "40 g Erdnüsse, geröstet und gesalzen",
     "1200 g Wasser",
+    "100 g Öl",
+    "20 g Mehl",
     "2 TL Salz",
-    "25 g Öl",
     "1-2 Prisen Pfeffer",
-    "1 Prise Zucker",
 ]
 
-# 5 native-style steps (median for 14-17-ingredient native recipes).
+# 6 native-style steps (within native range 4-7 for 17-ingredient recipes).
+# 6 statt 5 weil die Pfannen-Phase Öl 2x braucht — Per-Step-Uniqueness sauber via Split.
 # Cooking commands embedded as plain text in the format the AI annotator recognizes:
-#   "18 Min./Varoma/Stufe 1"  or  "6 Min./100 °C/Linkslauf/Stufe 1"
+#   "18 Min./Varoma/Stufe 1"  or  "10 Sek./Stufe 6"
 # Script 05_annotate_chips.py converts them to interactive chips.
 #
-# Per-step uniqueness + cross-step adjacent endings already validated.
+# Per-step uniqueness + cross-step adjacent endings validated.
 STEPS = [
-    # 1 — Vorbereitung (Limette, Aubergine, Buschbohnen, Ofen)
-    "Limette in 6 Spalten schneiden. Aubergine längs vierteln und in ca. 2 cm Stücke schneiden, in einer großen Schüssel mit der Hälfte der Teriyakisoße, Saft von 2 Limettenspalten, 1 TL Salz und 2 EL Öl marinieren und auf einem mit Backpapier belegten Backblech verteilen. Enden der Buschbohnen entfernen und dritteln, in den Varoma-Behälter geben und verschließen. Backofen auf 220 °C Ober-/Unterhitze (200 °C Umluft) vorheizen.",
-    # 2 — Reis dampfgaren + Aubergine backen
-    "Gareinsatz einhängen, Basmatireis einwiegen und kurz abspülen. Gareinsatz einsetzen. 1200 g Wasser, 1,5 TL Salz und 5 g Öl in den Mixtopf geben, Varoma aufsetzen und 18 Min./Varoma/Stufe 1 dampfgaren. Aubergine in den vorgeheizten Ofen geben und 15–20 Min. backen, bis sie innen weich und außen schön gebräunt ist.",
-    # 3 — Toppings + Gurkensalat (parallel zum Dampfgaren)
-    "In der Zwischenzeit Chili (Achtung: scharf!) und Frühlingszwiebeln in feine Ringe schneiden. In einer kleinen Schüssel 50 g vegane Mayonnaise, 16 g Sriracha-Sauce und Saft von 2 Limettenspalten verrühren. In einer zweiten Schüssel 100 g Sweet-Chili-Soße mit dem Saft von 4 weiteren Spalten vermengen. Gurke in dünne Scheiben (2 mm) hobeln und in der Marinade-Schüssel aus Schritt 1 mit 2 EL aus der zweiten Schüssel, Saft von 2 Limettenspalten und 1 Prise Zucker marinieren. Beide Soßen und Gurkensalat mit Salz und Pfeffer abschmecken.",
-    # 4 — Bohnen vollenden + Reis fertig
-    "Varoma absetzen. Gareinsatz mithilfe des Spatels herausnehmen und abgedeckt 6 Min. ruhen lassen. Mixtopf leeren. 20 g Öl, Buschbohnen aus dem Varoma und je 1 Prise Salz und Pfeffer in den Mixtopf geben und 6 Min./100 °C/Linkslauf/Stufe 1 dünsten. Reis mit einer Gabel auflockern und 20 ml Sesamöl unterheben.",
-    # 5 — Anrichten
-    "Reis und Buschbohnen auf 4 Bowls verteilen. Aubergine nach der Garzeit mit der restlichen Teriyakisoße vermengen und obenauf geben. Gurkensalat daneben anrichten, mit Frühlingszwiebelringen, Chili (Achtung: scharf!) und den Dips garnieren und servieren.",
+    # 1 — Vorbereitung (alles schneiden)
+    "Limetten in 8 Spalten schneiden. Schalotten halbieren und in feine Streifen schneiden. Karotten schälen, längs vierteln und fein würfeln. Spitzpaprikas halbieren, entkernen und in feine Streifen schneiden. Chilischoten (Achtung: scharf!) halbieren, nach Belieben entkernen und fein hacken.",
+    # 2 — Reis dampfgaren (Thermomix)
+    "Gareinsatz einhängen, Basmatireis einwiegen und kurz abspülen. 4 g „Hello Curry\"-Gewürzmischung darüberstreuen und vermengen. Gareinsatz einsetzen. 900 g Wasser, 1 TL Salz und 5 g Öl in den Mixtopf geben und 18 Min./Varoma/Stufe 1 dampfgaren. Gareinsatz mithilfe des Spatels herausnehmen und abgedeckt 5 Min. ruhen lassen.",
+    # 3 — Würzpaste pürieren (Thermomix)
+    "Mixtopf leeren. Die Hälfte der Schalottenstreifen, 140 g Tomatenmark, Chilischoten, Saft von 4 Limettenspalten, 60 g Öl, 1 TL Salz und 1 Prise Pfeffer in den Mixtopf geben und 10 Sek./Stufe 6 zu einer stückigen Masse pürieren. In eine Schüssel umfüllen.",
+    # 4 — Filetstücke braten (Pfanne)
+    "In einer großen Pfanne 20 g Öl erhitzen. Vegane Filetstücke mit 20 g Mehl bestäuben, in die Pfanne geben und 5-6 Min. rundherum goldbraun braten. Herausnehmen und beiseitestellen.",
+    # 5 — Gemüse + Sauce (Pfanne)
+    "Erneut 20 g Öl in der Pfanne erhitzen. Würzpaste aus Schritt 3 dazugeben und 1 Min. anbraten. Restliche Schalottenstreifen, Karotten und Paprika dazugeben und 4-5 Min. mitbraten. Filetstücke, 36 g Ketjap Manis und 50 g Sojasoße dazugeben und 1 Min. mitbraten. Mit 300 g Wasser ablöschen und 3-4 Min. köcheln lassen, bis die Soße eindickt. Mit Pfeffer abschmecken.",
+    # 6 — Anrichten
+    "Reis mit einer Gabel auflockern und auf 4 tiefe Teller verteilen. Nasi-Pfanne daneben anrichten, mit 40 g Erdnüssen toppen und mit den restlichen Limettenspalten servieren.",
 ]
 # === END EDIT ===
 
@@ -97,10 +100,13 @@ def main():
         page.goto("https://cookidoo.de/created-recipes/de-DE", wait_until="domcontentloaded", timeout=60000)
         try: page.locator("#onetrust-accept-btn-handler").first.click(timeout=2000)
         except Exception: pass
-        page.wait_for_timeout(2000)
+        page.wait_for_timeout(2500)
 
-        # Open create-modal
-        page.locator("button:has-text('Rezept erstellen')").first.click()
+        # New UI (post-2026): "Rezept erstellen" sits in a dropdown behind the
+        # green floating "+" button bottom-right. Open it first.
+        page.locator("cr-floating-button#floating-button").click()
+        page.wait_for_timeout(800)
+        page.locator("button#create-button").click()
         page.wait_for_timeout(1200)
 
         # Fill recipe name and confirm via the modal's "Erstellen" button (exact match)

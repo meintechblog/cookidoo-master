@@ -25,19 +25,22 @@ Komplettes Reverse-Engineering — DOM, Custom-Elements, Bundle-Strings, Save-Qu
 
 ## Status
 
-✅ **Voll funktional + erstes Rezept öffentlich auf Cookidoo:**
+✅ **Voll funktional + zwei Rezepte öffentlich auf Cookidoo:**
 
-- Rezept: [Sweet-Chili-Bowl mit glasierter Aubergine](recipes/sweet-chili-bowl/) — **5 native Steps**, **17 strukturierte Zutaten**, **2 interaktive Koch-Befehl-Chips**, alle Zutaten-Mentions als Chips verlinkt, Tipps + Quellen-Narrativ
-- **Live auf Cookidoo (öffentlich, ohne Login einsehbar):** https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRNNR72NTN1C0PTD67PA8W7D
-- **Original HelloFresh-Karte:** https://www.hellofresh.de/recipes/sweet-chili-bowl-mit-glasierter-aubergine-thermomix-695b7cae2a2e2effad1837dd
+| Rezept | Steps · Zutaten · Chips | Live auf Cookidoo | HelloFresh-Original |
+|---|---|---|---|
+| [Sweet-Chili-Bowl mit glasierter Aubergine](recipes/sweet-chili-bowl/) | 5 · 17 · 2 (`Varoma` + `Linkslauf`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRNNR72NTN1C0PTD67PA8W7D) | [Original](https://www.hellofresh.de/recipes/sweet-chili-bowl-mit-glasierter-aubergine-thermomix-695b7cae2a2e2effad1837dd) |
+| [Nasi Goreng mit veganen Filetstücken](recipes/nasi-goreng/) | 6 · 17 · 2 (`Varoma` + `Pürieren`) | [öffentlich](https://cookidoo.de/created-recipes/public/recipes/de-DE/01KRQ1JCX58H8QGDSBB47XVP5B) | [Original](https://www.hellofresh.de/recipes/nasi-goreng-mit-veganen-filetstucken-64e461d2e1f123211ed56789) |
 
 ### Beweis: native-quality Chips im Rezept
 
-![Step 2 mit Varoma-Chip](docs/assets/zoom-step2-varoma-chip.png)
+![Step 2 Sweet-Chili-Bowl mit Varoma-Chip](docs/assets/zoom-step2-varoma-chip.png)
 
-![Step 4 mit Linkslauf-Chip](docs/assets/zoom-step4-linkslauf-chip.png)
+![Step 4 Sweet-Chili-Bowl mit Linkslauf-Chip](docs/assets/zoom-step4-linkslauf-chip.png)
 
-> _`18 Min./Varoma/Stufe 1` und `6 Min./100 °C/Linkslauf/Stufe 1` sind keine Plain-Text-Strings — der Thermomix erkennt sie als ausführbare Koch-Befehle und führt sie beim Antippen direkt aus._
+![Step 3 Nasi Goreng mit Stufe-6-Chip](docs/assets/nasi-zoom-step3-stufe6.png)
+
+> _`18 Min./Varoma/Stufe 1`, `6 Min./100 °C/Linkslauf/Stufe 1` und `10 Sek./Stufe 6` sind keine Plain-Text-Strings — der Thermomix erkennt sie als ausführbare Koch-Befehle und führt sie beim Antippen direkt aus._
 
 ## Quick Start
 

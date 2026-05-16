@@ -232,6 +232,16 @@ Was gut funktioniert:
 
 **Per-field Save**: NACHDEM man die Tipps geändert hat, erscheint ein **`<button>Bestätigen</button>`** direkt am Textarea. Den klicken **bevor** man den globalen `<a>Bestätigen</a>` oben klickt — sonst geht der Tipps-Inhalt verloren.
 
+## UI-Drift — Stand 2026-05-16
+
+Cookidoo updatet die Frontend-UI regelmäßig. Bisher gesehene Drifts:
+
+| Datum | Was | Workaround |
+|---|---|---|
+| 2026-05-16 | „Rezept erstellen" ist jetzt im Floating-Action-Button (FAB) bottom-right (`cr-floating-button#floating-button`), nicht mehr als Top-Level-Button | Erst `cr-floating-button#floating-button` clicken → dann `button#create-button`. Der FAB hat auch einen `button#import-button` (neuer Import-Workflow, noch nicht reverse-engineered) |
+
+Bei Pipeline-Brüchen lohnt sich immer: `page.evaluate(...)` mit einem Filter auf sichtbare Buttons/Anchors um den neuen Trigger zu finden. Beispiel in `/tmp/cookidoo/inspect_create_button.py` (CI-style DOM-Audit).
+
 ## Was NICHT geht (Hard Limits)
 
 - **Direkt-Injection von `<nobr>`-Tags** in user-content wird serverseitig gestrippt. Nur Vorwerk-published Recipes dürfen `<nobr>` als persistenten Format-Tag. User-created Recipes nutzen `<cr-tts>` etc. (die im View dann als `<nobr class="recipe-content__accent">` gerendert werden).
