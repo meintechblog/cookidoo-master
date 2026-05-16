@@ -7,6 +7,7 @@ After publishing, the recipe is reachable at:
    https://cookidoo.de/created-recipes/public/recipes/de-DE/{recipeId}
 """
 import pathlib, sys
+import os
 from playwright.sync_api import sync_playwright
 
 USER_DATA = str(pathlib.Path.home() / "cookidoo-automation/profile")
@@ -28,7 +29,7 @@ def main():
 
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(
-            USER_DATA, headless=False,
+            USER_DATA, headless=os.environ.get('THERMOMIX_HEADLESS', '0') == '1',
             viewport={"width": 1500, "height": 950}, locale="de-DE",
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()

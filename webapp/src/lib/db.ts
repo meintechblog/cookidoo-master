@@ -46,7 +46,7 @@ function migrate(d: Database.Database) {
 export type PinnedUrl = {
   id: number;
   url: string;
-  status: "queued" | "processing" | "done" | "error" | "skipped";
+  status: "queued" | "processing" | "ready_for_review" | "publishing" | "done" | "error" | "skipped";
   slug: string | null;
   error: string | null;
   pinned_at: number;

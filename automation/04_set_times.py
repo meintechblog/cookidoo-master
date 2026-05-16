@@ -6,6 +6,7 @@ The modal has 3 tabs: Zubereitungszeit / Gesamtzeit / Portionsgröße.
 Edit PREP_MIN / TOTAL_MIN below, then run.
 """
 import pathlib, sys
+import os
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
@@ -52,7 +53,7 @@ def main():
 
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(
-            USER_DATA, headless=False,
+            USER_DATA, headless=os.environ.get('THERMOMIX_HEADLESS', '0') == '1',
             viewport={"width": 1500, "height": 950}, locale="de-DE",
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()

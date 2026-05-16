@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { readRecipe } from "@/lib/recipes";
 import { EditForm } from "@/components/EditForm";
 import { HeroUploader } from "@/components/HeroUploader";
+import { PublishPanel } from "@/components/PublishPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,13 @@ export default async function EditPage({ params }: { params: Promise<{ slug: str
       </div>
 
       <HeroUploader slug={recipe.slug} hasOwnHero={recipe.hasOwnHero} hfUrl={recipe.hfUrl} />
+
+      <PublishPanel
+        slug={recipe.slug}
+        hasOwnHero={recipe.hasOwnHero}
+        cookidooRecipeId={recipe.cookidooRecipeId}
+        cookidooPublicUrl={recipe.cookidooPublicUrl}
+      />
 
       <div className="bg-white rounded-2xl p-6 shadow-card">
         <h3 className="font-display text-xl font-bold text-charcoal-900 mb-4">Markdown</h3>

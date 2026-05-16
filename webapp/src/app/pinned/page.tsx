@@ -4,8 +4,10 @@ export const dynamic = "force-dynamic";
 
 const statusLabel: Record<string, { label: string; color: string }> = {
   queued: { label: "Wartet", color: "bg-charcoal-100 text-charcoal-700" },
-  processing: { label: "Wird verarbeitet", color: "bg-cream-300 text-charcoal-800" },
-  done: { label: "Fertig", color: "bg-hero-100 text-hero-800" },
+  processing: { label: "Wird extrahiert", color: "bg-cream-300 text-charcoal-800" },
+  ready_for_review: { label: "Skeleton — bitte kuratieren", color: "bg-amber-100 text-amber-800" },
+  publishing: { label: "Wird publiziert", color: "bg-cream-300 text-charcoal-800" },
+  done: { label: "Live", color: "bg-hero-100 text-hero-800" },
   error: { label: "Fehler", color: "bg-red-100 text-red-800" },
   skipped: { label: "Übersprungen", color: "bg-charcoal-100 text-charcoal-600" },
 };
@@ -45,7 +47,14 @@ export default function PinnedPage() {
                       <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold ${s.color}`}>{s.label}</span>
                     </td>
                     <td className="px-5 py-3 text-sm text-charcoal-600">
-                      {p.slug ? <a href={`/r/${p.slug}`} className="hover:text-hero-700">{p.slug}</a> : "—"}
+                      {p.slug ? (
+                        <>
+                          <a href={`/r/${p.slug}`} className="hover:text-hero-700">{p.slug}</a>
+                          {p.status === "ready_for_review" && (
+                            <a href={`/r/${p.slug}/edit`} className="ml-2 text-xs text-hero-700 hover:underline">[bearbeiten →]</a>
+                          )}
+                        </>
+                      ) : "—"}
                     </td>
                     <td className="px-5 py-3 text-sm text-charcoal-500">
                       {new Date(p.pinned_at * 1000).toLocaleString("de-DE")}

@@ -17,7 +17,7 @@ export function HeroUploader({ slug, hasOwnHero, hfUrl }: { slug: string; hasOwn
       const r = await fetch(`/api/recipes/${slug}/hero/upload`, { method: "POST", body: fd });
       const data = await r.json();
       if (r.ok) {
-        setMsg(`✓ Lokales Hero ersetzt (${Math.round(file.size / 1024)} KB). Push zu Cookidoo erfolgt via Skill/Chat.`);
+        setMsg(`✓ Lokales Hero ersetzt (${Math.round(file.size / 1024)} KB). Push zu Cookidoo unten via "Erstellen + Public-Publish".`);
         setPreviewBust(Date.now());
         setFile(null);
       } else {
@@ -87,7 +87,7 @@ export function HeroUploader({ slug, hasOwnHero, hfUrl }: { slug: string; hasOwn
         )}
         {msg && <div className="mt-3 text-sm text-charcoal-700">{msg}</div>}
         <p className="mt-3 text-xs text-charcoal-500">
-          ⚠ Das Foto wird nur LOKAL in der Webapp ersetzt. Für das Cookidoo-Public-Sharing musst du es per <code className="bg-cream-100 px-1.5 py-0.5 rounded">02_upload_image.py</code> (oder über den /thermomix-master Skill) auch zu Cookidoo pushen — wird automatisiert sobald die Pipeline-Integration läuft.
+          Das Foto wird sofort lokal gespeichert. Push zu Cookidoo läuft unten über den <strong>„Erstellen + Public-Publish"</strong>-Button (Pipeline lädt das Hero hoch, setzt Tipps + Zeiten und schaltet das Rezept öffentlich).
         </p>
       </div>
     </div>

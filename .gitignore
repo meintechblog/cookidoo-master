@@ -17,3 +17,23 @@ debug-*.png
 
 # macOS
 .DS_Store
+
+# Webapp runtime state (SQLite DB + WAL, pinned-URL queue)
+.state/
+**/.state/
+
+# Webapp build/deploy artifacts
+webapp/node_modules/
+webapp/.next/
+webapp/out/
+webapp/dist/
+
+# Per-recipe extracted JSON + HF reference image — derived, can be regenerated
+recipes/*/.extracted.json
+
+# Local-only credentials never to be pushed
+**/.credentials.json
+**/credentials.json
+*.env
+.env.local
+.env.production
