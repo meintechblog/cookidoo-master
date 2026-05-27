@@ -1,0 +1,77 @@
+#!/usr/bin/env python3
+"""cookidoo-chat — mini-CLI for the running session to reply into the chat-bridge.
+
+Usage:
+  cookidoo-chat reply "<text>"
+  echo "<text>" | cookidoo-chat reply --stdin
+  cookidoo-chat ping            # health check
+"""
+from __future__ import annotations
+
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+
+BASE = os.environ.get("COOKIDOO_CHAT_BASE", "http://192.168.3.223").rstrip("/")
+TOKEN = os.environ.get("CHAT_BRIDGE_TOKEN", "")
+
+
+def _post(path: str, body: dict) -> tuple[int, dict]:
+    data = json.dumps(body).encode()
+    headers = {"Content-Type": "application/json", "User-Agent": "cookidoo-chat-cli/1"}
+    if TOKEN:
+        headers["Authorization"] = f"Bearer {TOKEN}"
+    req = urllib.request.Request(f"{BASE}{path}", data=data, method="POST", headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            txt = resp.read().decode("utf-8", "replace")
+            return resp.status, json.loads(txt) if txt else {}
+    except urllib.error.HTTPError as e:
+        return e.code, {"error": e.reason}
+    except urllib.error.URLError as e:
+        return 0, {"error": str(e.reason)}
+
+
+def cmd_reply(args: list[str]) -> int:
+    if "--stdin" in args:
+        body = sys.stdin.read()
+    else:
+        body = " ".join(args).strip()
+    if not body:
+        sys.stderr.write("Usage: cookidoo-chat reply \"<text>\"\n")
+        return 2
+    status, data = _post("/api/chat/reply", {"body": body})
+    if status == 200 and data.get("ok"):
+        print(f"reply delivered (id={data.get('message',{}).get('id')})")
+        return 0
+    sys.stderr.write(f"reply failed: status={status} body={data}\n")
+    return 1
+
+
+def cmd_ping(_args: list[str]) -> int:
+    import urllib.request
+    try:
+        with urllib.request.urlopen(f"{BASE}/api/chat/inbox", timeout=5) as r:
+            print(f"ok status={r.status}")
+            return 0
+    except Exception as e:
+        sys.stderr.write(f"ping failed: {e}\n")
+        return 1
+
+
+def main() -> int:
+    if len(sys.argv) < 2:
+        sys.stderr.write(__doc__ or "")
+        return 2
+    cmd = sys.argv[1]
+    args = sys.argv[2:]
+    if cmd == "reply":   return cmd_reply(args)
+    if cmd == "ping":    return cmd_ping(args)
+    sys.stderr.write(f"unknown cmd: {cmd}\n{__doc__}")
+    return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+"""Chat-Bridge: poll Webapp `/api/chat/inbox`, push to claude-peers broker.
+
+Inspired by ~/codex/tvheadend-master/scripts/ticket_worker/peer_bridge.py.
+Way simpler: no SSE listener, no reply CLI here (browser writes via
+/api/chat/reply directly from the session via `cookidoo-chat reply`).
+
+Env:
+  COOKIDOO_CHAT_BASE   — webapp base URL. Default: http://192.168.3.223
+  CHAT_BRIDGE_TOKEN    — bearer for /api/chat/inbox if webapp requires auth.
+  COOKIDOO_REPO_PATH   — peer's repo path. Default: /Users/hulki/codex/cookidoo-master
+  COOKIDOO_PEERS_BROKER — Default: http://127.0.0.1:7899
+  COOKIDOO_CHAT_POLL_S — Default: 2
+  COOKIDOO_PEER_POLL_S — Default: 5
+"""
+from __future__ import annotations
+
+import json
+import os
+import signal
+import sys
+import threading
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+BASE = os.environ.get("COOKIDOO_CHAT_BASE", "http://192.168.3.223").rstrip("/")
+TOKEN = os.environ.get("CHAT_BRIDGE_TOKEN", "")
+REPO_PATH = os.environ.get("COOKIDOO_REPO_PATH", "/Users/hulki/codex/cookidoo-master")
+BROKER = os.environ.get("COOKIDOO_PEERS_BROKER", "http://127.0.0.1:7899").rstrip("/")
+CHAT_POLL_S = float(os.environ.get("COOKIDOO_CHAT_POLL_S", "2"))
+PEER_POLL_S = float(os.environ.get("COOKIDOO_PEER_POLL_S", "5"))
+QUEUE_DIR = Path(os.environ.get(
+    "COOKIDOO_CHAT_QUEUE_DIR",
+    str(Path.home() / ".cookidoo-pending-chat"),
+))
+LOG_PATH = Path(os.environ.get(
+    "COOKIDOO_CHAT_LOG",
+    str(Path(REPO_PATH) / "scripts/chat_bridge/chat-bridge.log"),
+))
+
+_stop = threading.Event()
+
+
+def log(msg: str) -> None:
+    line = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {msg}\n"
+    try:
+        LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with LOG_PATH.open("a", encoding="utf-8") as f:
+            f.write(line)
+    except Exception:
+        pass
+    sys.stderr.write(line)
+    sys.stderr.flush()
+
+
+# ── Webapp API ──────────────────────────────────────────────────────────────
+
+
+def _webapp(method: str, path: str, body=None, timeout: float = 15.0) -> dict:
+    url = f"{BASE}{path}"
+    data = json.dumps(body).encode() if body is not None else None
+    headers = {"User-Agent": "cookidoo-chat-bridge/1"}
+    if data is not None:
+        headers["Content-Type"] = "application/json"
+    if TOKEN:
+        headers["Authorization"] = f"Bearer {TOKEN}"
+    req = urllib.request.Request(url, data=data, method=method, headers=headers)
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            txt = resp.read().decode("utf-8", "replace")
+            return {"status": resp.status, "body": json.loads(txt) if txt else {}}
+    except urllib.error.HTTPError as e:
+        try: txt = e.read().decode("utf-8", "replace")
+        except Exception: txt = ""
+        return {"status": e.code, "body": {}, "error": e.reason, "raw": txt}
+    except urllib.error.URLError as e:
+        return {"status": 0, "body": {}, "error": str(e.reason)}
+
+
+def fetch_pending() -> list[dict]:
+    r = _webapp("GET", "/api/chat/inbox")
+    if r["status"] != 200:
+        return []
+    return list(r["body"].get("messages") or [])
+
+
+def ack_delivered(ids: list[int]) -> None:
+    if not ids:
+        return
+    _webapp("POST", "/api/chat/inbox", body={"ids": ids})
+
+
+# ── claude-peers broker ─────────────────────────────────────────────────────
+
+
+def _broker(path: str, body) -> dict:
+    url = f"{BROKER}{path}"
+    data = json.dumps(body).encode()
+    req = urllib.request.Request(url, data=data, method="POST",
+                                 headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            txt = resp.read().decode("utf-8", "replace")
+            return {"status": resp.status, "body": json.loads(txt) if txt else {}}
+    except Exception as e:
+        return {"status": 0, "error": str(e)}
+
+
+def find_cookidoo_peer() -> str | None:
+    r = _broker("/list-peers", {"scope": "machine", "from_id": "chat-bridge"})
+    if r["status"] != 200:
+        return None
+    for p in (r.get("body") or []):
+        if str(p.get("cwd", "")).rstrip("/") == REPO_PATH.rstrip("/"):
+            return p["id"]
+    return None
+
+
+def push_to_peer(peer_id: str, text: str) -> bool:
+    r = _broker("/send-message", {"from_id": "chat-bridge", "to_id": peer_id, "text": text})
+    return r["status"] == 200
+
+
+# ── Queue (fallback when peer offline) ──────────────────────────────────────
+
+
+def queue_push(msg: dict) -> None:
+    QUEUE_DIR.mkdir(parents=True, exist_ok=True)
+    fp = QUEUE_DIR / f"{int(time.time() * 1000)}-{msg['id']}.json"
+    fp.write_text(json.dumps(msg, ensure_ascii=False), encoding="utf-8")
+
+
+def queue_drain(peer_id: str) -> list[int]:
+    if not QUEUE_DIR.exists():
+        return []
+    drained: list[int] = []
+    for fp in sorted(QUEUE_DIR.glob("*.json")):
+        try:
+            msg = json.loads(fp.read_text(encoding="utf-8"))
+        except Exception:
+            fp.unlink(missing_ok=True)
+            continue
+        if push_to_peer(peer_id, render_for_peer(msg)):
+            drained.append(int(msg["id"]))
+            fp.unlink(missing_ok=True)
+        else:
+            break  # broker glitch — try later
+    return drained
+
+
+# ── Render ──────────────────────────────────────────────────────────────────
+
+
+def render_for_peer(msg: dict) -> str:
+    return (
+        f"💬 [chat from=webapp ts={msg.get('created_at')} id={msg.get('id')}]\n"
+        f"{msg.get('body','')}\n\n"
+        f"# To reply, run from this repo:\n"
+        f"#   ./scripts/chat_bridge/cookidoo-chat reply \"your answer\"\n"
+        f"# It posts to {BASE}/api/chat/reply which the browser sees via SSE."
+    )
+
+
+# ── Main loop ───────────────────────────────────────────────────────────────
+
+
+def main() -> int:
+    log(f"chat-bridge starting · base={BASE} · repo={REPO_PATH} · broker={BROKER}")
+
+    def _shutdown(*_):
+        log("shutdown requested")
+        _stop.set()
+    signal.signal(signal.SIGINT, _shutdown)
+    signal.signal(signal.SIGTERM, _shutdown)
+
+    last_peer_check = 0.0
+    cached_peer: str | None = None
+
+    while not _stop.is_set():
+        now = time.time()
+        if now - last_peer_check >= PEER_POLL_S:
+            new_peer = find_cookidoo_peer()
+            if new_peer != cached_peer:
+                log(f"peer change: {cached_peer} → {new_peer}")
+                cached_peer = new_peer
+                if cached_peer:
+                    drained = queue_drain(cached_peer)
+                    if drained:
+                        log(f"drained {len(drained)} queued msgs to peer")
+                        ack_delivered(drained)
+            last_peer_check = now
+
+        msgs = fetch_pending()
+        if msgs:
+            log(f"got {len(msgs)} pending user message(s)")
+            if cached_peer:
+                acked: list[int] = []
+                for m in msgs:
+                    if push_to_peer(cached_peer, render_for_peer(m)):
+                        acked.append(m["id"])
+                    else:
+                        queue_push(m)
+                        log(f"peer push failed for id={m['id']} → queued")
+                if acked:
+                    ack_delivered(acked)
+                    log(f"delivered + acked {len(acked)} msg(s)")
+            else:
+                # Peer offline — queue ALL and ack so we don't refetch endlessly
+                for m in msgs:
+                    queue_push(m)
+                ack_delivered([m["id"] for m in msgs])
+                log(f"peer offline — queued {len(msgs)} msg(s)")
+
+        _stop.wait(CHAT_POLL_S)
+
+    log("chat-bridge exited")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

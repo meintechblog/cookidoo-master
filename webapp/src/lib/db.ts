@@ -40,7 +40,48 @@ function migrate(d: Database.Database) {
       value TEXT NOT NULL,
       updated_at INTEGER NOT NULL DEFAULT (strftime('%s','now'))
     );
+    CREATE TABLE IF NOT EXISTS chat_messages (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      role TEXT NOT NULL,        -- 'user' | 'assistant'
+      body TEXT NOT NULL,
+      delivered_to_peer INTEGER NOT NULL DEFAULT 0,   -- 1 = Mac-Daemon hat's abgeholt
+      created_at INTEGER NOT NULL DEFAULT (strftime('%s','now'))
+    );
+    CREATE INDEX IF NOT EXISTS idx_chat_undelivered
+      ON chat_messages(delivered_to_peer, id)
+      WHERE role='user' AND delivered_to_peer=0;
   `);
+}
+
+export type ChatMessage = {
+  id: number;
+  role: "user" | "assistant";
+  body: string;
+  delivered_to_peer: 0 | 1;
+  created_at: number;
+};
+
+export function chatInsert(role: "user" | "assistant", body: string): ChatMessage {
+  const info = db().prepare("INSERT INTO chat_messages (role, body) VALUES (?, ?)").run(role, body);
+  return db().prepare("SELECT * FROM chat_messages WHERE id = ?").get(info.lastInsertRowid) as ChatMessage;
+}
+
+export function chatList(sinceId: number = 0, limit: number = 200): ChatMessage[] {
+  return db().prepare(
+    "SELECT * FROM chat_messages WHERE id > ? ORDER BY id ASC LIMIT ?",
+  ).all(sinceId, limit) as ChatMessage[];
+}
+
+export function chatUndeliveredUserMessages(): ChatMessage[] {
+  return db().prepare(
+    "SELECT * FROM chat_messages WHERE role='user' AND delivered_to_peer=0 ORDER BY id ASC",
+  ).all() as ChatMessage[];
+}
+
+export function chatMarkDelivered(ids: number[]): void {
+  if (!ids.length) return;
+  const placeholders = ids.map(() => "?").join(",");
+  db().prepare(`UPDATE chat_messages SET delivered_to_peer=1 WHERE id IN (${placeholders})`).run(...ids);
 }
 
 export type PinnedUrl = {

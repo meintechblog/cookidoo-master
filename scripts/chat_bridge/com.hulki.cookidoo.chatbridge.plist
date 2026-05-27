@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.hulki.cookidoo.chatbridge</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/env</string>
+    <string>python3</string>
+    <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat_bridge.py</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>COOKIDOO_CHAT_BASE</key>
+    <string>http://192.168.3.223</string>
+    <key>COOKIDOO_REPO_PATH</key>
+    <string>/Users/hulki/codex/cookidoo-master</string>
+    <key>COOKIDOO_PEERS_BROKER</key>
+    <string>http://127.0.0.1:7899</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat-bridge.stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat-bridge.stderr.log</string>
+
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>
