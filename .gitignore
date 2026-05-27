@@ -36,6 +36,11 @@ recipes/*/.extracted.json
 # urheberrechtlich geschützt sein (HF-Originale) und Files sind groß.
 .received/
 
+# Chat-bridge runtime logs (launchd writes here continuously)
+scripts/chat_bridge/chat-bridge.log
+scripts/chat_bridge/chat-bridge.stdout.log
+scripts/chat_bridge/chat-bridge.stderr.log
+
 # Local-only credentials never to be pushed
 **/.credentials.json
 **/credentials.json
