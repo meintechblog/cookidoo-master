@@ -32,37 +32,41 @@ import os
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-RECIPE_NAME = "Ingwer-Süßkartoffel-Eintopf mit Tofu (HelloFresh)"
+RECIPE_NAME = "Räuchertofu Gyros-Art mit Kartoffelsalat und Zaziki (HelloFresh)"
 
 INGREDIENTS = [
-    "2 Süßkartoffeln",
-    "360 g Tofu Natur",
-    "4 Knoblauchzehen",
-    "2 Limetten, gewachst",
-    "44 g Knoblauch-Ingwer-Zitronengras-Paste",
-    "360 g Kokosmilch",
-    "780 g stückige Tomaten",
-    "200 g Baby-Grünkohl",
-    "4 g milder Chili-Mix",
-    "20 g Sojasoße, salzreduziert",
-    "20 g Öl",
-    "1 TL Salz",
+    "350 g geräucherter Tofu",
+    "1200 g Kartoffeln, Drillinge",
+    "2 Gurken",
+    "2 rote Zwiebeln",
+    "10 g Dill, frisch",
+    "10 g Petersilie, frisch",
+    "2 Zitronen",
+    "140 g Kalamata-Oliven, ohne Stein",
+    "100 g veganes cremiges Sojaprodukt",
+    "50 g vegane Mayonnaise",
+    "20 g mittelscharfer Senf",
+    "50 g Sojasoße",
+    "12 g Gewürzmischung „Hello Souflaki\"",
+    "40 g Öl",
+    "40 g Olivenöl",
+    "2 TL Zucker",
+    "3 TL Salz",
     "1-2 Prisen Pfeffer",
-    "1 Prise Zucker",
 ]
 
-# 5 native-style steps for 14 ingredients (within native range 4-7, median 5).
+# 5 native-style steps for 18 ingredients (within native range 5-8, median 6).
 STEPS = [
-    # 1 — Vorbereitung (Süßkartoffel in Varoma, Knoblauch + Limetten prep)
-    "Süßkartoffeln in 1 cm Würfel schneiden und in den Varoma-Behälter geben. Knoblauch fein hacken. Limetten heiß waschen, Schale fein abreiben und in 8 Spalten schneiden.",
-    # 2 — Tofu braten (Pfanne, parallel zu Step 3-4 möglich)
-    "Tofu in 2 cm Würfel schneiden, in einer großen Pfanne mit 20 g Öl 8-10 Min. goldbraun anbraten. In den letzten 2 Min. 4 g milder Chili-Mix dazugeben, dann beiseitestellen.",
-    # 3 — Soße im Mixtopf + Süßkartoffel im Varoma (Thermomix)
-    "44 g Knoblauch-Ingwer-Zitronengras-Paste, Knoblauch, 360 g Kokosmilch, 780 g stückige Tomaten, 1 TL Salz und 1 Prise Pfeffer in den Mixtopf geben. Varoma mit Süßkartoffeln aufsetzen und 20 Min./Varoma/Stufe 1 garen.",
-    # 4 — Grünkohl + abschmecken (Thermomix Linkslauf)
-    "Varoma absetzen. Baby-Grünkohl in den Mixtopf geben und 2 Min./100 °C/Linkslauf/Stufe 1 köcheln lassen. Mit 20 g Sojasoße, Saft von 4 Limettenspalten und 1 Prise Zucker abschmecken.",
+    # 1 — Ofen + Drillinge (parallel start)
+    "Backofen auf 220 °C Ober-/Unterhitze (200 °C Umluft) vorheizen. 1200 g Kartoffeln waschen, halbieren oder vierteln und auf einem mit Backpapier belegten Backblech verteilen. Mit 20 g Öl, einem Drittel der 12 g Gewürzmischung „Hello Souflaki\", 1 TL Salz und 1 Prise Pfeffer vermengen und im Ofen 25-30 Min. goldbraun backen.",
+    # 2 — Gurke + Zitrone vorbereiten + Zaziki im Mixtopf (TTS-Chip 1: 30 Sek./Stufe 3)
+    "In der Zwischenzeit 2 Gurken längs halbieren und mit einem Löffel entkernen. Die eine Hälfte grob raspeln, in einem Sieb leicht ausdrücken und beiseite stellen. Die andere Hälfte in grobe Würfel schneiden. 2 Zitronen heiß abwaschen, 2 TL Schale abreiben und vierteln. Die geraspelte Hälfte mit 50 g vegane Mayonnaise, 100 g veganes cremiges Sojaprodukt, Saft von 2 Spalten und 1 TL Salz in den Mixtopf einwiegen und 30 Sek./Stufe 3 zu einem Zaziki vermengen. Mit 1 Prise Pfeffer abschmecken, in eine Schüssel umfüllen, Mixtopf spülen.",
+    # 3 — Kräuter + Oliven hacken + Dressing (TTS-Chip 2+3: 3 Sek./Stufe 7, 2 Sek./Stufe 5)
+    "10 g Dill und 10 g Petersilie in den Mixtopf einwiegen und 3 Sek./Stufe 7 hacken. 140 g Kalamata-Oliven dazugeben und 2 Sek./Stufe 5 grob hacken, in eine große Schüssel umfüllen. 2 rote Zwiebeln halbieren und in feine Streifen schneiden. Zur Kräuter-Oliven-Mischung 40 g Olivenöl, 20 g mittelscharfen Senf, den abgeriebenen Schalen, Saft von 2 Spalten, 1 TL Salz, 1 Prise Pfeffer und 1 TL Zucker geben und zu einem Dressing verrühren. Ein Viertel der Zwiebelstreifen und die Gurkenwürfel unterheben und marinieren lassen.",
+    # 4 — Tofu in Pfanne anbraten + ablöschen
+    "350 g geräucherten Tofu in feine Scheiben hobeln — es ist kein Problem, wenn er etwas auseinanderfällt. In einer großen Pfanne 20 g Öl erhitzen und restliche Zwiebelstreifen mit den Scheiben darin 4-5 Min. goldbraun anbraten. Restliche „Hello Souflaki\"-Gewürzmischung dazugeben und 1 weitere Min. anbraten. Mit 50 g Sojasoße und 1 TL Zucker ablöschen, 30 Sek. einköcheln lassen und mit 1 Prise Pfeffer abschmecken.",
     # 5 — Anrichten
-    "Eintopf auf 4 tiefe Teller verteilen, Süßkartoffeln und Tofu darauf anrichten, mit Limettenschale garnieren und mit den restlichen Spalten servieren.",
+    "Die gebackenen Drillinge zum Dressing geben und vorsichtig unterheben, mit 1 Prise Salz und 1 Prise Pfeffer abschmecken. Den Kartoffelsalat und den Räuchertofu nebeneinander auf 4 Tellern anrichten. Zaziki über den veganen Gyros geben und servieren.",
 ]
 # === END EDIT ===
 
