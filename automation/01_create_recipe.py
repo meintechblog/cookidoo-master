@@ -32,41 +32,38 @@ import os
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-RECIPE_NAME = "Räuchertofu Gyros-Art mit Kartoffelsalat und Zaziki (HelloFresh)"
+RECIPE_NAME = "Vegane Filetstücke in thailändischer Orangensoße (HelloFresh)"
 
 INGREDIENTS = [
-    "350 g geräucherter Tofu",
-    "1200 g Kartoffeln, Drillinge",
-    "2 Gurken",
-    "2 rote Zwiebeln",
-    "10 g Dill, frisch",
-    "10 g Petersilie, frisch",
-    "2 Zitronen",
-    "140 g Kalamata-Oliven, ohne Stein",
-    "100 g veganes cremiges Sojaprodukt",
-    "50 g vegane Mayonnaise",
-    "20 g mittelscharfer Senf",
-    "50 g Sojasoße",
-    "12 g Gewürzmischung „Hello Souflaki\"",
-    "40 g Öl",
-    "40 g Olivenöl",
-    "2 TL Zucker",
-    "3 TL Salz",
+    "320 g vegane Filetstücke, Hähnchen-Art",
+    "2 Orangen",
+    "50 g Frühlingszwiebel",
+    "44 g Knoblauch-Ingwer-Zitronengras-Paste",
+    "50 g Sweet-Chili-Soße",
+    "36 g Hoisinsoße",
+    "40 g Cashewkerne, geröstet",
+    "20 g Sesamsamen",
+    "20 g Thai-Basilikum, frisch",
+    "600 g Stir-Fry Mix",
+    "300 g Jasminreis",
+    "700 g Wasser",
+    "30 g Öl",
+    "1 TL Salz",
     "1-2 Prisen Pfeffer",
 ]
 
-# 5 native-style steps for 18 ingredients (within native range 5-8, median 6).
+# 5 native-style steps for 15 ingredients (within native range 4-7, median 5).
 STEPS = [
-    # 1 — Ofen + Drillinge (parallel start)
-    "Backofen auf 220 °C Ober-/Unterhitze (200 °C Umluft) vorheizen. 1200 g Kartoffeln waschen, halbieren oder vierteln und auf einem mit Backpapier belegten Backblech verteilen. Mit 20 g Öl, einem Drittel der 12 g Gewürzmischung „Hello Souflaki\", 1 TL Salz und 1 Prise Pfeffer vermengen und im Ofen 25-30 Min. goldbraun backen.",
-    # 2 — Gurke + Zitrone vorbereiten + Zaziki im Mixtopf (TTS-Chip 1: 30 Sek./Stufe 3)
-    "In der Zwischenzeit 2 Gurken längs halbieren und mit einem Löffel entkernen. Die eine Hälfte grob raspeln, in einem Sieb leicht ausdrücken und beiseite stellen. Die andere Hälfte in grobe Würfel schneiden. 2 Zitronen heiß abwaschen, 2 TL Schale abreiben und vierteln. Die geraspelte Hälfte mit 50 g vegane Mayonnaise, 100 g veganes cremiges Sojaprodukt, Saft von 2 Spalten und 1 TL Salz in den Mixtopf einwiegen und 30 Sek./Stufe 3 zu einem Zaziki vermengen. Mit 1 Prise Pfeffer abschmecken, in eine Schüssel umfüllen, Mixtopf spülen.",
-    # 3 — Kräuter + Oliven hacken + Dressing (TTS-Chip 2+3: 3 Sek./Stufe 7, 2 Sek./Stufe 5)
-    "10 g Dill und 10 g Petersilie in den Mixtopf einwiegen und 3 Sek./Stufe 7 hacken. 140 g Kalamata-Oliven dazugeben und 2 Sek./Stufe 5 grob hacken, in eine große Schüssel umfüllen. 2 rote Zwiebeln halbieren und in feine Streifen schneiden. Zur Kräuter-Oliven-Mischung 40 g Olivenöl, 20 g mittelscharfen Senf, den abgeriebenen Schalen, Saft von 2 Spalten, 1 TL Salz, 1 Prise Pfeffer und 1 TL Zucker geben und zu einem Dressing verrühren. Ein Viertel der Zwiebelstreifen und die Gurkenwürfel unterheben und marinieren lassen.",
-    # 4 — Tofu in Pfanne anbraten + ablöschen
-    "350 g geräucherten Tofu in feine Scheiben hobeln — es ist kein Problem, wenn er etwas auseinanderfällt. In einer großen Pfanne 20 g Öl erhitzen und restliche Zwiebelstreifen mit den Scheiben darin 4-5 Min. goldbraun anbraten. Restliche „Hello Souflaki\"-Gewürzmischung dazugeben und 1 weitere Min. anbraten. Mit 50 g Sojasoße und 1 TL Zucker ablöschen, 30 Sek. einköcheln lassen und mit 1 Prise Pfeffer abschmecken.",
+    # 1 — Reis im Gareinsatz mit Paste-Topping (TTS-Chip 1: 18 Min./Varoma/Stufe 1)
+    "700 g Wasser und 1 TL Salz in den Mixtopf einwiegen. 300 g Jasminreis in den Gareinsatz geben, 44 g Knoblauch-Ingwer-Zitronengras-Paste darauf verteilen und einhängen. 18 Min./Varoma/Stufe 1 garen.",
+    # 2 — Vorbereitung Frühlingszwiebel + Thai-Basilikum (parallel zum Reis)
+    "In der Zwischenzeit 50 g Frühlingszwiebel waschen und weißen sowie grünen Teil getrennt in feine Ringe schneiden. 20 g Thai-Basilikum von den Stielen zupfen und in feine Streifen schneiden.",
+    # 3 — Orangen-Soße im Mixtopf (TTS-Chip 2: 5 Sek./Stufe 4)
+    "2 Orangen halbieren, Saft auspressen und mit 36 g Hoisinsoße und 50 g Sweet-Chili-Soße im Mixtopf 5 Sek./Stufe 4 vermengen. Mit 1 Prise Pfeffer abschmecken und in eine kleine Schüssel umfüllen.",
+    # 4 — Pfanne anbraten + ablöschen
+    "In einer großen Pfanne 30 g Öl erhitzen. Weißen Teil der Frühlingszwiebel, 600 g Stir-Fry Mix und 320 g vegane Filetstücke darin 4-6 Min. goldbraun anbraten. Die Orangen-Mischung dazugießen und 2 Min. glänzend einköcheln lassen.",
     # 5 — Anrichten
-    "Die gebackenen Drillinge zum Dressing geben und vorsichtig unterheben, mit 1 Prise Salz und 1 Prise Pfeffer abschmecken. Den Kartoffelsalat und den Räuchertofu nebeneinander auf 4 Tellern anrichten. Zaziki über den veganen Gyros geben und servieren.",
+    "Gareinsatz mithilfe des Spatels herausnehmen, Reis auflockern und auf 4 tiefe Teller verteilen. Stir-Fry-Mischung darauf anrichten und mit grünem Teil der Frühlingszwiebel, 40 g Cashewkerne, 20 g Sesamsamen und Thai-Basilikum bestreuen, sofort servieren.",
 ]
 # === END EDIT ===
 

@@ -10,8 +10,8 @@ import os
 from playwright.sync_api import sync_playwright
 
 # === EDIT THESE ===
-PREP_MIN = 30     # Arbeitszeit in minutes (Räuchertofu Gyros-Art, 4P — HelloFresh PT30M)
-TOTAL_MIN = 40    # Gesamtzeit in minutes (Räuchertofu Gyros-Art, 4P — 30 Min. Arbeit + ~10 Min. Ofen-Overlap)
+PREP_MIN = 15     # Arbeitszeit in minutes (Vegane Filetstücke thai Orangensoße, 4P — HelloFresh PT15M)
+TOTAL_MIN = 25    # Gesamtzeit in minutes (Vegane Filetstücke thai Orangensoße, 4P — 25 Min. inkl. Reis-Garen parallel)
 # === END EDIT ===
 
 USER_DATA = str(pathlib.Path.home() / "cookidoo-automation/profile")
