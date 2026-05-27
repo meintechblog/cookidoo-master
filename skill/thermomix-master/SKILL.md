@@ -13,23 +13,27 @@ allowed-tools:
 
 
 <objective>
-Take a recipe from any source (HelloFresh-Karte als URL, Plain-Text, Foto)
-and ship it as a publicly shared, native-quality Cookidoo „Eigenes Rezept"
-with interactive Thermomix cooking-command chips.
+Vollautopilot von Input (HF-URL ODER Handy-Foto einer Rezeptkarte) zu
+„Rezept live auf Cookidoo + sichtbar auf der Webapp + AI-Hero-Bild
+generiert + alles committed". Jörg schickt eine Zeile, der Skill macht
+den Rest — kein manuelles Foto-Schicken, kein Mid-Workflow-Approval.
 
-**Vorbedingungen:**
-- Toolkit-Repo unter `~/codex/cookidoo-master/` (oder anderswo — siehe SKILL_REPO env)
+**Input** (eines davon):
+- HelloFresh-URL → image_url aus JSON-LD wird automatisch zum Restyle benutzt
+- Pfad zu einem Handy-Foto der gedruckten HF-Karte (`--image`) → wird als Restyle-Source benutzt (Card-Mode-Prompt extrahiert das Gericht)
+- Plain-Text-Paste (`--text`) → ohne Bild, Rezept landet PRIVATE auf Cookidoo
+
+**Output** (automatisch, ohne weitere Eingaben):
+- Recipe live auf Cookidoo (PUBLIC wenn Hero da, sonst PRIVATE)
+- `recipes/<slug>/` im Repo mit hero.jpg + README + 3 Screenshots
+- HF-Original + AI-Restyle-PNG + JPEG-Q92 in `.received/hf<NR>/` (gitignored)
+- Commit + Push + LXC-Autoupdate getriggert → Webapp `http://192.168.3.223/r/<slug>` live
+
+**Vorbedingungen** (Setup-Sache, einmal pro Maschine):
+- Toolkit-Repo unter `~/codex/cookidoo-master/` (oder via SKILL_REPO env)
 - `~/cookidoo-automation/profile/` mit eingeloggter Cookidoo-Session
-- Hero-Bild (drei Optionen — siehe Phase 2.5):
-  - eigenes Foto vom fertigen Gericht (BEST, sofort PUBLIC-bereit)
-  - HF-Hauptbild + ChatGPT.app eingeloggt + `cliclick` installiert (AI-Restyle via Few-Shot, auch PUBLIC-bereit als „eigene AI-Generierung")
-  - kein Bild → Rezept bleibt PRIVATE
-
-**Ergebnis:**
-- Recipe live auf Cookidoo (privat + öffentlich teilbar)
-- `recipes/<slug>/` im Repo mit hero.jpg + README + Live-Screenshots
-- Repo-README Status-Tabelle ergänzt
-- Commit + Push gemacht
+- ChatGPT.app eingeloggt + Bedienungshilfen-Permission + `cliclick` (`brew install cliclick`) — nötig für den AI-Restyle in Pfad B
+- SSH-Zugang zu `root@192.168.3.223` für LXC-Autoupdate-Trigger (optional, sonst Fallback auf 10-Min-Timer)
 </objective>
 
 
@@ -60,15 +64,23 @@ Wenn unklar → AskUserQuestion mit den 3 Input-Typen.
 
 **hellofresh-url:**
 ```bash
-$SKILL_DIR/scripts/extract-hellofresh.py "$URL" > /tmp/thermomix-raw.json
+HF_URL="$1"
+$SKILL_DIR/scripts/extract-hellofresh.py "$HF_URL" > /tmp/thermomix-raw.json
+NAME=$(jq -r .name        /tmp/thermomix-raw.json)
+IMAGE_URL=$(jq -r .image_url /tmp/thermomix-raw.json)
+SERVINGS=$(jq -r .servings /tmp/thermomix-raw.json)
 ```
 Liefert `name`, `servings`, `ingredients`, `instructions`, `image_url`, `totalTime_iso`, `nutrition`. Die Felder sind in der HelloFresh-Original-Portionsgröße (`servings`-Wert, meist 2P) — Phase 2 skaliert auf die Ziel-Portionen.
 
-**plain-text:**
-User pastet das Rezept. Parse heuristisch (Zutaten in Bullet-Liste, Steps als nummerierte Liste oder Absätze).
+**Wichtig: `image_url` ist die direkte URL zum HF-Hauptbild** — alles was wir für den Restyle brauchen. Kein WA-Bridge nötig, kein Bild von Hand schicken. Der Skill zieht das Bild in Phase 2.5 automatisch via `curl -sL`.
 
-**image-path:**
-`Read` das Bild. Transkribiere Zutaten + Schritte aus der Bildansicht (du kannst Bilder lesen). Schreibe das Ergebnis nach `/tmp/thermomix-raw.json` im selben Format wie der HelloFresh-Extractor.
+**plain-text:**
+User pastet das Rezept. Parse heuristisch (Zutaten in Bullet-Liste, Steps als nummerierte Liste oder Absätze). `IMAGE_URL=""` und `IMAGE_PATH=""` setzen — fällt in Pfad C (keine Hero-Bild-Generierung, Rezept bleibt PRIVATE).
+
+**image-path** (Handy-Foto einer HF-Rezeptkarte):
+`Read` das Bild. Transkribiere Zutaten + Schritte aus der Bildansicht (du kannst Bilder lesen). Schreibe das Ergebnis nach `/tmp/thermomix-raw.json` im selben Format wie der HelloFresh-Extractor. Setze `IMAGE_PATH="$INPUT_IMAGE"` und `IMAGE_URL=""` — das Handy-Foto wird in Phase 6 Step 2 als Restyle-Source benutzt (das Gericht ist auf dem Karten-Foto sichtbar; ChatGPT extrahiert + restylet es).
+
+Wenn die Karte keine HF-Nummer auf der Vorderseite zeigt, nutze die Aufnahmezeit-Reihenfolge im Repo (`ls -t recipes/` als Heuristik für Karten-Position) oder lasse `HF_NR` leer.
 
 ## Phase 2 — Auf 4 Portionen skalieren (default)
 
@@ -78,40 +90,43 @@ Wenn der User eine andere Portionsgröße will: AskUserQuestion.
 
 ## Phase 2.5 — HF-Karten-Nr + Hero-Bild vorbereiten
 
-**Karten-Nr extrahieren** (für README + Webapp-Sort):
+**Karten-Nr extrahieren** (für README + Webapp-Sort) — direkt aus der `IMAGE_URL`, kein zusätzlicher HTTP-Hit:
 ```bash
-HF_TOKEN=$(curl -s "$HF_URL" | grep -oE 'HF_Y[0-9]+_R[0-9]+_W[0-9]+' | head -1)
+HF_TOKEN=$(echo "$IMAGE_URL" | grep -oE 'HF_Y[0-9]+_R[0-9]+_W[0-9]+' | head -1)
 HF_NR=$(echo "$HF_TOKEN" | grep -oE 'R[0-9]+' | head -1 | tr -d R)
-# z.B. HF_Y26_R25_W19 → HF_NR=25, HF_TOKEN="HF_Y26_R25_W19"
+# Beispiel: image_url enthält HF_Y26_R25_W19 → HF_NR=25, HF_TOKEN=HF_Y26_R25_W19
+# Wenn IMAGE_URL leer (plain-text) oder Pattern nicht matched: HF_NR leer lassen.
 ```
-
-Siehe `@$SKILL_DIR/references/hellofresh-card-numbers.md` für Details — wichtig: R-Codes wiederholen sich jährlich, daher Y+W als Disambiguator.
+Siehe `@$SKILL_DIR/references/hellofresh-card-numbers.md`.
 
 **Hero-Pfad wählen** (siehe `@$SKILL_DIR/references/hero-image-pipeline.md`):
 
-| Situation | Pfad | Wann startet die Bildgenerierung? |
+| Situation | Pfad | Was passiert in Phase 2.5 vs. Phase 6 Step 2 |
 |---|---|---|
-| Eigenes Foto vom Gericht da | A | jetzt sofort: kopieren + verify |
-| Nur HF-Hauptbild da | B | erst in Phase 6 Step 2 (im Hintergrund parallel zur Pipeline) |
-| Kein Bild | C | gar nicht — Rezept bleibt PRIVATE |
+| HF-URL (Phase 1 image_url da) | B | jetzt: curl image_url → `.received/hf$HF_NR/original.jpg`; in Phase 6: Background-Restyle |
+| Handy-Foto einer Karte (image-path) | B | jetzt: cp Karten-Foto → `.received/hf$HF_NR/original.jpg`; in Phase 6: Background-Restyle mit Card-Mode-Prompt |
+| Eigenes Plattenfoto vom Gericht (Sonderfall) | A | jetzt: copy + verify; Phase 6 Step 2 entfällt |
+| Kein Bild (plain-text ohne Foto) | C | gar nichts; Rezept bleibt PRIVATE, kein `06_publish.py --yes` |
 
-In allen Fällen JETZT machen:
 ```bash
-mkdir -p $SKILL_REPO/.received/hf$HF_NR
-# HF-Hauptbild aus Phase 1 (image_url) ziehen + speichern (auch für Pfad A als Source-Backup):
-curl -sL "$IMAGE_URL" -o $SKILL_REPO/.received/hf$HF_NR/original.jpg
+mkdir -p $SKILL_REPO/.received/hf${HF_NR:-unknown}
+if [[ -n "$IMAGE_URL" ]]; then
+  curl -sL "$IMAGE_URL" -o $SKILL_REPO/.received/hf$HF_NR/original.jpg
+elif [[ -n "$IMAGE_PATH" ]]; then
+  cp "$IMAGE_PATH" $SKILL_REPO/.received/hf$HF_NR/original.jpg
+fi
 ```
 
-Bei Pfad A *zusätzlich*:
+Bei Pfad A (User hat explizit ein Plattenfoto übergeben — separat von $IMAGE_PATH der Karte) *zusätzlich*:
 ```bash
 mkdir -p $SKILL_REPO/recipes/$SLUG
-cp <user-photo> $SKILL_REPO/recipes/$SLUG/hero.jpg
+cp <user-platefoto> $SKILL_REPO/recipes/$SLUG/hero.jpg
 $SKILL_DIR/scripts/verify-image-match.py \
   --user-image $SKILL_REPO/recipes/$SLUG/hero.jpg \
   --hf-url "$HF_URL"
 ```
 
-Bei Pfad B: nichts mehr in Phase 2.5 tun — der eigentliche AI-Restyle wird in Phase 6 Step 2 im Hintergrund gestartet, damit er parallel zu den Pipeline-Steps läuft.
+Bei Pfad B: nichts weiter in Phase 2.5 — AI-Restyle läuft in Phase 6 Step 2 im Hintergrund.
 
 ## Phase 3 — Auf native Thermomix-Style adaptieren
 
@@ -214,19 +229,24 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
    - Recipe-ID wird ins STATE_FILE geschrieben
    - **Wichtig:** dieser Step MUSS vor Step 2-5 fertig sein (Step 2 braucht den Slug für `.received/`-Pfad, Steps 3-5 brauchen die Recipe-ID aus STATE_FILE).
 
-**2. AI-Restyle im Hintergrund (NUR bei Pfad B — HF-Hauptbild restylen):**
+**2. AI-Restyle im Hintergrund (NUR bei Pfad B — HF-Hauptbild oder Karten-Foto restylen):**
    ```bash
+   # Bei Handy-Foto einer Karte: zusätzlich --card-mode
+   CARD_MODE_FLAG=""
+   [[ -n "$IMAGE_PATH" ]] && CARD_MODE_FLAG="--card-mode"
+
    $SKILL_DIR/scripts/chatgpt-restyle.sh \
      --target "$SKILL_REPO/.received/hf$HF_NR/original.jpg" \
      --slug "$SLUG" \
      --nr "$HF_NR" \
      --repo "$SKILL_REPO" \
-     --hf-url "$HF_URL" \
+     ${HF_URL:+--hf-url "$HF_URL"} \
+     $CARD_MODE_FLAG \
      --background
    ```
    Returnt sofort, schreibt PID nach `.received/hf$HF_NR/.pid`, Log nach `restyle.log`, sentinel `.done` wenn fertig.
 
-   Hinter den Kulissen läuft im BG: paste 3 style-references → paste target → send prompt → poll auf done (max 120s) → right-click image → copy → PNG extrahieren → JPEG q92 → verify-image-match → bei niedrigem Score 1× Retry mit verschärftem Prompt → hub-push (best-effort).
+   Hinter den Kulissen läuft im BG: paste 3 style-references → paste target → send prompt (Standard ODER Card-Mode-Prompt) → poll auf done (max 120s) → right-click image → copy → PNG extrahieren → JPEG q92 → verify-image-match → bei niedrigem Score 1× Retry mit verschärftem Prompt → hub-push (best-effort).
 
 **3. Tipps schreiben + 03_add_tips.py editieren + ausführen:** (parallel zu Step 2)
    - 5-8 rezept-spezifische Tipps generieren (kein Boilerplate!) basierend auf:
@@ -311,7 +331,7 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
 
 ```bash
 cd $SKILL_REPO && git add -A
-git commit -m "Add 3rd recipe: <name> (HelloFresh)
+git commit -m "Add <Nth> recipe: <name> (HelloFresh)
 
 [Strukturierter Body mit:
 - recipe-id + cookidoo-urls
@@ -321,6 +341,18 @@ git commit -m "Add 3rd recipe: <name> (HelloFresh)
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 git push
+```
+
+**LXC-Webapp sofort updaten** (statt auf den 10-Min-Autoupdate-Timer zu warten):
+```bash
+ssh -o ConnectTimeout=5 root@192.168.3.223 'systemctl start thermomix-autoupdate.service' || \
+  echo "LXC offline — fällt zurück auf den nächsten Timer-Tick"
+```
+Anschließend kurz pollen bis die neue Sort-Reihenfolge oder das neue Rezept sichtbar ist:
+```bash
+SLUG_HOST=192.168.3.223
+until curl -sf "http://$SLUG_HOST/r/$SLUG" -o /dev/null; do sleep 3; done
+echo "Webapp live mit Rezept $SLUG"
 ```
 
 </process>
@@ -344,10 +376,12 @@ Während des Laufs: kurze Status-Updates pro Phase. Am Ende:
 
 ```
 ✅ Rezept live: <name>
-🔗 Cookidoo (öffentlich): <url>
-📁 Repo: recipes/<slug>/
-📦 Originale: .received/hf<NR>/ (gitignored)
-📊 Stats: <n> Zutaten · <m> Steps · <k> TTS-Chips
-🚀 Commit: <hash>
+🔗 Cookidoo (öffentlich): https://cookidoo.de/created-recipes/public/recipes/de-DE/<recipe-id>
+🌐 Webapp:               http://192.168.3.223/r/<slug>
+📁 Repo:                 recipes/<slug>/
+📦 Originale:            .received/hf<NR>/ (gitignored)
+🖼  Hero-Bild:           Pfad-A (eigenes Foto) / Pfad-B (AI-Restyle, <retries> Versuche) / Pfad-C (kein Bild)
+📊 Stats:                <n> Zutaten · <m> Steps · <k> TTS-Chips
+🚀 Commit:               <hash>
 ```
 </output_format>
