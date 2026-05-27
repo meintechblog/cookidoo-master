@@ -31,6 +31,11 @@ webapp/dist/
 # Per-recipe extracted JSON + HF reference image — derived, can be regenerated
 recipes/*/.extracted.json
 
+# Eingehende Original-Bilder (HF-Hero per WA, AI-restyle full-PNG, Notizen).
+# Persistent für Re-Generation, aber nicht ins Repo — Source-Material kann
+# urheberrechtlich geschützt sein (HF-Originale) und Files sind groß.
+.received/
+
 # Local-only credentials never to be pushed
 **/.credentials.json
 **/credentials.json

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import { RECIPES_DIR } from "./repo-paths";
 
 export type Recipe = {
@@ -20,6 +21,7 @@ export type Recipe = {
   stepCount: number;
   hasOwnHero: boolean;
   rawMarkdown: string;
+  addedAt: string | null;
 };
 
 /**
@@ -77,7 +79,30 @@ export function readRecipe(slug: string): Recipe | null {
     stepCount,
     hasOwnHero,
     rawMarkdown: md,
+    addedAt: firstCommitISO(readme),
   };
+}
+
+/**
+ * Date the README was first committed to the repo = when we onboarded the
+ * recipe into our app. Falls back to file mtime when git is unavailable
+ * (e.g. tarball deploy without .git).
+ */
+function firstCommitISO(filePath: string): string | null {
+  try {
+    const out = execFileSync(
+      "git",
+      ["log", "--diff-filter=A", "--format=%aI", "--", filePath],
+      { cwd: RECIPES_DIR, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
+    );
+    const lines = out.trim().split("\n").filter(Boolean);
+    if (lines.length > 0) return lines[lines.length - 1];
+  } catch {}
+  try {
+    return fs.statSync(filePath).mtime.toISOString();
+  } catch {
+    return null;
+  }
 }
 
 function extractKennzahlen(md: string): Record<string, string | null> {
