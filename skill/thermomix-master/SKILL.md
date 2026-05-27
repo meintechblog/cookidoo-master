@@ -243,24 +243,28 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
    # Per Read des HF-Bildes erfassen vor dem Dispatch; explizit erhalten beim Retry.
    GARNISH="z.B. Zitronenkeile, Kräuter, Kürbiskerne"
 
-   CARD_MODE_FLAG=""
-   [[ -n "$IMAGE_PATH" ]] && CARD_MODE_FLAG="--card-mode"
+   SOURCE_MODE_FLAG=()
+   [[ -n "$IMAGE_PATH" ]] && SOURCE_MODE_FLAG=( --source-mode recipe-card )
 
-   $SKILL_DIR/scripts/chatgpt-restyle.sh \
+   # Ruft den reusable Skill `chatgpt-image-restyle` auf (~/.claude/skills/chatgpt-image-restyle).
+   # Der ist generisch — die cookidoo-spezifische Notify-Aktion geht per --notify-Hook.
+   ~/.claude/skills/chatgpt-image-restyle/scripts/restyle.sh \
      --target "$SKILL_REPO/.received/hf$HF_NR/original.jpg" \
-     --slug "$SLUG" \
-     --nr "$HF_NR" \
-     --repo "$SKILL_REPO" \
-     ${HF_URL:+--hf-url "$HF_URL"} \
+     --style-refs "$SKILL_REPO/style-references" \
+     --output "$SKILL_REPO/recipes/$SLUG/hero.jpg" \
+     --output-png "$SKILL_REPO/.received/hf$HF_NR/restyled-fullres.png" \
+     --log "$SKILL_REPO/.received/hf$HF_NR/restyle.log" \
+     ${HF_URL:+--verify-url "$HF_URL"} \
      ${DIET:+--diet "$DIET"} \
-     --main-ingredients "$MAIN" \
-     --garnish "$GARNISH" \
-     $CARD_MODE_FLAG \
+     --main-subjects "$MAIN" \
+     --preserve "$GARNISH" \
+     "${SOURCE_MODE_FLAG[@]}" \
+     --notify "curl -s --max-time 3 -X POST http://127.0.0.1:7899/send-message -H 'Content-Type: application/json' -d '{\"from_id\":\"chatgpt-restyle\",\"to_id\":\"'\$(curl -s -X POST http://127.0.0.1:7899/list-peers -H 'Content-Type: application/json' -d '{\"scope\":\"machine\",\"from_id\":\"cli\"}' | python3 -c \"import sys,json; print(next((p['id'] for p in json.load(sys.stdin) if str(p.get('cwd','')).endswith('/codex/agent-master')), ''))\")'\",\"text\":\"Restyle für HF #$HF_NR fertig — {output}\"}' || true" \
      --background
    ```
-   Returnt sofort, schreibt PID nach `.received/hf$HF_NR/.pid`, Log nach `restyle.log`, sentinel `.done` wenn fertig.
+   Returnt sofort, schreibt PID nach `<output>.pid`, Log nach `restyle.log`, sentinel `<output>.done` wenn fertig.
 
-   Hinter den Kulissen läuft im BG: paste 3 style-references → paste target → send prompt (mit Diet-Hint + Main-Ingredients + Garnish-Anker) → poll auf done (max 120s) → right-click image → copy → PNG extrahieren → JPEG q92 → verify-image-match → bei niedrigem Score 1× Retry mit verschärftem Prompt (gleiche Anker beibehalten!) → hub-push (best-effort).
+   Hinter den Kulissen (siehe `@~/.claude/skills/chatgpt-image-restyle/SKILL.md`): paste style-refs → paste target → compose prompt (default + diet + main-subjects + preserve) → poll done (max 120s) → right-click image → extract PNG → JPEG q92 → verify-image-match → bei niedrigem Score 1× Retry mit Anker-erhaltendem Prompt → notify-hook (hub-push).
 
    **Lessons aus früheren Runs** (siehe Memory `feedback_restyle_prompt_lessons.md`):
    - Bei „Stroganoff" / „Bolognese" / „Carbonara" / „Gulasch" und ähnlich klassisch-fleischigen Gerichtsnamen die `--diet vegan` Flag UND die echten Hauptzutaten in `--main-ingredients` setzen. Ohne diese Hinweise interpretiert image-1 das Gericht historisch und produziert Hähnchen/Hack/Speck.
@@ -298,15 +302,17 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
 
 **6. Wait-Point: Restyle muss fertig sein (nur Pfad B):**
    ```bash
+   SENTINEL="$SKILL_REPO/recipes/$SLUG/hero.jpg.done"
    # polling until done sentinel exists OR timeout 180s
    for i in $(seq 1 60); do
-     [[ -f "$SKILL_REPO/.received/hf$HF_NR/.done" ]] && break
+     [[ -f "$SENTINEL" ]] && break
      sleep 3
    done
-   [[ -f "$SKILL_REPO/.received/hf$HF_NR/.done" ]] || {
+   [[ -f "$SENTINEL" ]] || {
      echo "Restyle timed out — check $SKILL_REPO/.received/hf$HF_NR/restyle.log"
      exit 1
    }
+   rm -f "$SENTINEL"
    ```
 
 **7. Hero-Bild hochladen:**

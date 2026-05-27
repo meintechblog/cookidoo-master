@@ -19,7 +19,7 @@ $SKILL_DIR/scripts/verify-image-match.py \
 
 ## Pfad B — AI-Restyle (HF-Original vorhanden, eigenes Foto fehlt)
 
-Komplett gewrappt in `$SKILL_DIR/scripts/chatgpt-restyle.sh`. Skill ruft das Script auf, der Rest passiert automatisch:
+Seit 2026-05-27 wrappt der generische Skill `chatgpt-image-restyle` die UI-Steuerung. thermomix-master ruft den auf (statt eines eigenen Skripts):
 
 ```bash
 # 1. HF-Hauptbild von HelloFresh ziehen (URL aus Phase 1)
@@ -27,14 +27,20 @@ mkdir -p $SKILL_REPO/.received/hf$NR
 curl -sL "$IMAGE_URL" -o $SKILL_REPO/.received/hf$NR/original.jpg
 
 # 2. Restyle dispatchen (Background — kehrt sofort zurück)
-$SKILL_DIR/scripts/chatgpt-restyle.sh \
-  --target  $SKILL_REPO/.received/hf$NR/original.jpg \
-  --slug    "$SLUG" \
-  --nr      "$NR" \
-  --repo    "$SKILL_REPO" \
-  --hf-url  "$HF_URL" \
+~/.claude/skills/chatgpt-image-restyle/scripts/restyle.sh \
+  --target     $SKILL_REPO/.received/hf$NR/original.jpg \
+  --style-refs $SKILL_REPO/style-references \
+  --output     $SKILL_REPO/recipes/$SLUG/hero.jpg \
+  --output-png $SKILL_REPO/.received/hf$NR/restyled-fullres.png \
+  --log        $SKILL_REPO/.received/hf$NR/restyle.log \
+  --verify-url "$HF_URL" \
+  --diet       "$DIET" \
+  --main-subjects "$MAIN" \
+  --preserve   "$GARNISH" \
   --background
 ```
+
+Volle Doku des chatgpt-image-restyle Skills: `~/.claude/skills/chatgpt-image-restyle/SKILL.md`.
 
 Was das Script macht (Auto-Pipeline):
 

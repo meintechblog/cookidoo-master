@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# DEPRECATED seit 2026-05-27 — die generische Logik wurde nach
+# ~/.claude/skills/chatgpt-image-restyle/scripts/restyle.sh extrahiert.
+# Dieses Script bleibt aus historischen Gründen, neue Aufrufer sollten
+# direkt den User-Skill verwenden. Siehe ~/.claude/skills/chatgpt-image-restyle/SKILL.md.
+#
 # ChatGPT-Restyle Pipeline mit Polling, Background-Mode, Verify-Loop, Hub-Push.
 #
 # Usage:
