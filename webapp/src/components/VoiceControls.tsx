@@ -66,7 +66,7 @@ export function filterForTTS(raw: string): string {
 
 // ── STT / TTS HTTP calls ────────────────────────────────────────────────────
 
-async function postTranscribe(blob: Blob): Promise<string> {
+async function postTranscribe(blob: Blob, signal?: AbortSignal): Promise<string> {
   if (!SPEECH_URL) throw new Error("NEXT_PUBLIC_SPEECH_URL not set");
   const fd = new FormData();
   fd.append("audio", blob, "recording.webm");
@@ -74,6 +74,7 @@ async function postTranscribe(blob: Blob): Promise<string> {
   const res = await fetch(`${SPEECH_URL}/transcribe`, {
     method: "POST",
     body: fd,
+    signal,
   });
   if (!res.ok) throw new Error(`transcribe failed: ${res.status}`);
   const data = await res.json();
@@ -106,6 +107,7 @@ export function useVoice() {
   const chunksRef = useRef<Blob[]>([]);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const audioSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const sttAbortRef = useRef<AbortController | null>(null);
 
   // iOS Safari blocks audio.play() unless it's been "unlocked" inside a user-gesture.
   // Using the Web AudioContext API: once resume() runs inside a gesture, subsequent
@@ -176,14 +178,23 @@ export function useVoice() {
             return;
           }
           setTranscribing(true);
+          const ac = new AbortController();
+          sttAbortRef.current = ac;
           try {
             const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-            const text = await postTranscribe(blob);
+            const text = await postTranscribe(blob, ac.signal);
             resolve(text);
           } catch (e: unknown) {
-            setError(`STT-Fehler: ${(e as Error).message}`);
-            resolve(null);
+            const err = e as Error;
+            if (err.name === "AbortError") {
+              // user cancelled — silent
+              resolve(null);
+            } else {
+              setError(`STT-Fehler: ${err.message}`);
+              resolve(null);
+            }
           } finally {
+            sttAbortRef.current = null;
             setTranscribing(false);
           }
         },
@@ -201,6 +212,15 @@ export function useVoice() {
     chunksRef.current = [];
     setRecording(false);
   }, [recording]);
+
+  // Abort an in-flight STT request (the audio is recorded but not yet sent off / not yet returned).
+  const cancelTranscribing = useCallback(() => {
+    if (sttAbortRef.current) {
+      sttAbortRef.current.abort();
+      sttAbortRef.current = null;
+    }
+    setTranscribing(false);
+  }, []);
 
   const speakText = useCallback(async (rawText: string) => {
     if (!SPEECH_URL) return;
@@ -264,6 +284,7 @@ export function useVoice() {
     startRecording,
     stopRecording,
     cancelRecording,
+    cancelTranscribing,
     speakText,
     stopSpeaking,
     unlockAudio,
@@ -283,10 +304,14 @@ export function VoiceControls({ voice, onTranscript, show }: ControlsProps) {
   if (!voice.available || !show) return null;
 
   const handleMicClick = async () => {
-    voice.unlockAudio(); // prime iOS Safari for later TTS playback (no-op after first call)
+    voice.unlockAudio();
     if (voice.speaking) {
-      // While TTS is playing, the mic-button doubles as a stop-control.
       voice.stopSpeaking();
+      return;
+    }
+    if (voice.transcribing) {
+      // Abort the in-flight STT call — used when the user mis-spoke and wants to bail.
+      voice.cancelTranscribing();
       return;
     }
     if (voice.recording) {
@@ -302,9 +327,9 @@ export function VoiceControls({ voice, onTranscript, show }: ControlsProps) {
       <button
         type="button"
         onClick={handleMicClick}
-        disabled={voice.transcribing}
         aria-label={
           voice.recording ? "Aufnahme stoppen"
+          : voice.transcribing ? "Transkription abbrechen"
           : voice.speaking ? "Wiedergabe stoppen"
           : "Walkie-Aufnahme starten"
         }
@@ -313,29 +338,34 @@ export function VoiceControls({ voice, onTranscript, show }: ControlsProps) {
           (voice.recording
             ? "bg-red-500 hover:bg-red-600 animate-pulse ring-4 ring-red-200"
             : voice.transcribing
-            ? "bg-purple-400 cursor-wait"
+            ? "bg-purple-500 hover:bg-purple-600"
             : voice.speaking
             ? "bg-blue-500 hover:bg-blue-600 text-white"
             : "bg-purple-600 hover:bg-purple-700 text-white")
         }
         title={
           voice.recording ? "Reden, nochmal tippen → geht sofort raus"
-          : voice.transcribing ? "Wird transkribiert…"
+          : voice.transcribing ? "Tippen zum Abbrechen"
           : voice.speaking ? "Wiedergabe stoppen"
           : "Walkie: tippen, reden, nochmal tippen"
         }
       >
         {voice.transcribing ? (
-          <svg className="animate-spin text-white" width={26} height={26} viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
-            <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-          </svg>
+          // Spinner around a centered stop-square → tap to abort the in-flight STT
+          <span className="relative inline-flex items-center justify-center w-7 h-7">
+            <svg className="absolute inset-0 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
+              <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+            <svg className="relative" width={10} height={10} viewBox="0 0 10 10" fill="white">
+              <rect width="10" height="10" rx="1.5" />
+            </svg>
+          </span>
         ) : voice.recording ? (
           <svg width={18} height={18} viewBox="0 0 14 14" fill="white">
             <rect width="14" height="14" rx="2" />
           </svg>
         ) : voice.speaking ? (
-          // Stop icon — button doubles as TTS-stop while playback runs
           <svg width={18} height={18} viewBox="0 0 14 14" fill="white">
             <rect width="14" height="14" rx="2" />
           </svg>
