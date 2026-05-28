@@ -178,7 +178,7 @@ def _count_chips(step: str) -> int:
     return len(re.findall(r"\b\d+(?:[-–]\d+)?\s+(?:Sek|Min)\.\/", step))
 
 
-PARALLEL_MARKER_RE = re.compile(r"\b(Währenddessen|In der Zwischenzeit|In dieser Zeit)\b", re.I)
+PARALLEL_MARKER_RE = re.compile(r"\b(Währenddessen|In der Zwischenzeit|In dieser Zeit|In den letzten)\b", re.I)
 
 
 def check_step_structure(steps, ingredients):
@@ -228,7 +228,7 @@ def check_fused_operations(steps):
     """
     PREP_VERB = re.compile(r"\b(auspress\w+|hobel\w+|würfel\w+|raspel\w+|press\w+)\b\.?\s*$", re.I)
     NEW_PAN = re.compile(r"in einer? (?:großen )?Pfanne[^.]*\b(erhitz\w+|anbrat\w+|brat\w+)", re.I)
-    PARALLEL_MARKER = re.compile(r"^\s*(Währenddessen|In der Zwischenzeit)", re.I)
+    PARALLEL_MARKER = re.compile(r"^\s*(Währenddessen|In der Zwischenzeit|In dieser Zeit|In den letzten)", re.I)
     findings = []
     for i, step in enumerate(steps, 1):
         if PARALLEL_MARKER.search(step):

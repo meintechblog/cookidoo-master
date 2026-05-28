@@ -33,32 +33,36 @@ dazu Basmatireis, Koriander & Erdnüsse · vegan · 4 Portionen
 - 40 g Sesamöl
 - 8 g Maisstärke
 - 40 g Erdnüsse, geröstet und gesalzen
-- 10 g Koriander, frisch
+- 20 g Koriander, frisch
 - 30 g Balsamicoessig
 - 20 g Öl
 - 4 TL Zucker
-- 900 g Wasser
+- 700 g Wasser
 - 1 TL Salz
 - 1-2 Prisen Pfeffer
 
-## Zubereitung — 5 Schritte mit interaktiven Koch-Befehlen
+## Zubereitung — 12 Schritte mit interaktiven Koch-Befehlen
 
-1. Zwiebeln grob würfeln. Äußere Blätter der Rosenkohlröschen entfernen und Rosenkohl halbieren. Champignons vierteln. Knoblauch grob hacken. Koriander grob hacken. Erdnüsse grob hacken.
-2. Gareinsatz einhängen, **Basmatireis** einwiegen und kurz abspülen. Gareinsatz einsetzen. **600 g Wasser**, **1 TL Salz** und 5 g Öl in den Mixtopf geben und **`18 Min./Varoma/Stufe 1`** dampfgaren. Gareinsatz mithilfe des Spatels herausnehmen und abgedeckt 5 Min. ruhen lassen.
-3. Mixtopf leeren. **100 g Wasser**, **4 TL Zucker**, **70 g Süße Soße**, **40 g Sojasoße**, **40 g Sesamöl** und **8 g Maisstärke** in den Mixtopf geben und **`30 Sek./Stufe 3`** verquirlen. In eine Schüssel umfüllen.
-4. In einer großen Pfanne **15 g Öl** erhitzen. Zwiebeln, Rosenkohl und Champignons darin 10-14 Min. anbraten. Knoblauch, **8 g „Hello Umami"** und **20 g Ingwerpaste** dazugeben und 1 Min. mitbraten. Mit **30 g Balsamicoessig** ablöschen und Würzsoße aus Schritt 3 dazugeben, 1-2 Min. einkochen lassen. Mit **Pfeffer** abschmecken.
-5. Reis mit einer Gabel auflockern und auf 4 tiefe Teller verteilen. Stir-Fry darauf anrichten und mit Koriander und Erdnüssen garnieren.
+1. **2 Zwiebeln** grob würfeln, **400 g Champignons** vierteln und **4 Knoblauchzehen** grob hacken.
+2. Die äußeren Blätter von **300 g Rosenkohl** entfernen und die Röschen halbieren.
+3. Gareinsatz einhängen, **300 g Basmatireis** einwiegen und kalt abspülen.
+4. **600 g Wasser**, **1 TL Salz** und **5 g Öl** in den Mixtopf geben, den Gareinsatz einsetzen und **`18 Min./Varoma/Stufe 1`** dampfgaren.
+5. Den Gareinsatz mit dem Reis mithilfe des Spatels herausnehmen und abgedeckt 5 Min. ruhen lassen.
+6. Mixtopf leeren. **100 g Wasser**, **4 TL Zucker**, **70 g Süße Soße**, **40 g Sojasoße**, **40 g Sesamöl**, **20 g Ingwerpaste** und **8 g Maisstärke** in den Mixtopf geben und **`30 Sek./Stufe 3`** verquirlen. In eine Schüssel umfüllen.
+7. In einer großen Pfanne **15 g Öl** erhitzen und die Zwiebeln, den Rosenkohl und die Champignons 10–14 Min. anbraten.
+8. Den Knoblauch und **8 g Gewürzmischung „Hello Umami"** zugeben und 1 Min. mitbraten.
+9. Mit **30 g Balsamicoessig** ablöschen, die Würzsoße zugeben und 1–2 Min. einkochen lassen. Mit Pfeffer abschmecken.
+10. Den Reis mit einer Gabel auflockern und auf 4 tiefe Teller verteilen.
+11. **20 g Koriander** und **40 g Erdnüsse** grob hacken.
+12. Das Stir-Fry auf dem Reis anrichten und mit dem Koriander und den Erdnüssen garnieren.
 
 ## Tipps
 
-- **Rosenkohl HALBIEREN, nicht vierteln** — die Schnittflächen karamellisieren in der heißen Pfanne und geben süßliche, leicht nussige Röstaromen. Bei Viertel-Größe verlieren die Blätter ihren Halt und werden matschig.
-- **Champignons NICHT salzen vor dem Anbraten** — sonst zieht das Salz Wasser raus und sie kochen statt anzubraten. Erst zum Schluss würzen.
-- **Hello Umami ERST am Ende dazugeben** (mit dem Knoblauch) — die Gewürzmischung enthält viel Glutamat-Salz das beim Karamellisieren bitter wird. 1 Min. mitbraten reicht für die Aromenfreisetzung.
-- **Maisstärke in die Würzsoße im Mixtopf** — verquirlt klümpchenfrei und dickt die Soße in der Pfanne in 1-2 Min. zu einer glasig-glänzenden Glasur ein. Ohne Maisstärke bleibt's flüssig.
-- **Balsamicoessig zum Ablöschen** — der Säure-Hitze-Kontrast hebt das Umami-Profil. Alternativ Reisessig (milder) oder Sojasoße extra (intensiver).
-- **Koriander getrennt servieren**: viele mögen ihn nicht (Geschmacks-Genetik!), Schälchen daneben löst das Problem ohne Stress.
-- **Variation**: Pfifferlinge oder Shiitake statt Champignons — gibt mehr Aroma-Komplexität. Oder Brokkoli-Röschen statt Rosenkohl wenn der nicht in Saison ist.
-- **Reste** halten 1 Tag im Kühlschrank. In der Pfanne mit 1 EL Wasser aufwärmen, damit die Glasur wieder seidig wird.
+- Rosenkohl halbieren, nicht vierteln — die Schnittflächen karamellisieren, die Blätter bleiben dran.
+- Champignons nicht vor dem Anbraten salzen — sonst ziehen sie Wasser und kochen statt zu bräunen.
+- „Hello Umami" erst am Ende mit dem Knoblauch — das Glutamat-Salz wird beim Karamellisieren bitter.
+- Maisstärke in die Würzsoße im Mixtopf — verquirlt klümpchenfrei und dickt zur glänzenden Glasur ein.
+- Koriander getrennt reichen — nicht jeder mag ihn.
 
 ## Warum diese Cookidoo-Adaption
 
@@ -71,6 +75,7 @@ Für diese Cookidoo-Version habe ich die Karte komplett in **echtes Thermomix-Wo
 - **Reis im Gareinsatz dampfgaren** statt im Topf kochen: der Mixtopf wird trotzdem für die Würzsoße direkt danach gebraucht — also kein zusätzliches Equipment.
 - **Spezifische Mengen** statt Catch-all: `1 TL Salz`, `20 g Öl`, `1-2 Prisen Pfeffer` als separate Zutatenzeilen.
 - **Interaktive Koch-Befehl-Chips**: `18 Min./Varoma/Stufe 1` für den Reis und `30 Sek./Stufe 3` für die Würzsoße — beide sind im Cookidoo-Render keine Plain-Text-Strings, sondern hervorgehobene Chips. Der Thermomix führt sie beim Antippen direkt aus.
+- **Step-Granularität nach Native-Standard**: 12 kurze Ein-Aktion-Schritte (Median ~85 statt vorher ~185 Zeichen). Mengen gegen die HelloFresh-Quelle abgeglichen: **700 g Wasser** (Zutatenliste sagte fälschlich 900 g, die Schritte brauchen 600 + 100 g) und **20 g Koriander** (vorher fälschlich 10 g, nicht hochskaliert).
 
 Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 

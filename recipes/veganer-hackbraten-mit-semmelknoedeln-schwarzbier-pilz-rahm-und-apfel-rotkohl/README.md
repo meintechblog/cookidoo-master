@@ -59,31 +59,33 @@ Wirtshaus-Klassiker im Thermomix · vegan · 4 Portionen · ca. 720 kcal/Portion
 - 1 Lorbeerblatt
 - 1 Prise Salz
 
-## Zubereitung — 6 Schritte mit interaktiven Koch-Befehlen
+## Zubereitung — 17 Schritte mit interaktiven Koch-Befehlen
 
-1. Rotkohl (aus dem Glas) in einen kleinen Topf geben. Apfel entkernen und in feine Würfel schneiden, Zwetschgen in schmale Streifen, beides mit Rotweinessig, Zucker, Lorbeerblatt und 1 Prise Salz dazugeben und einmal kurz durchmischen. Beiseitestellen — zieht durch, während die Soße läuft.
-
-2. Knödelbrot in eine große Schüssel geben. Hafermilch in den Mixtopf einwiegen und **`5 Min./50 °C/Stufe 1`** erwärmen, dann gleichmäßig darübergießen. Mixtopf spülen. 10 Min ziehen lassen.
-
-3. Inzwischen Zwiebel halbieren, Knoblauch schälen, Petersilienblätter abzupfen. Alles zusammen in den Mixtopf geben und **`4 Sek./Stufe 5`** zerkleinern. Mit dem Spatel umfüllen: etwa ein Drittel der Mischung (Petersilie + ein EL davon) zur Knödelmasse geben, Rest im Mixtopf lassen. Margarine schmelzen und ebenfalls zur Knödelmasse geben. Sojamehl mit 4 EL Wasser glatt rühren, dazugeben. Mit Salz und Muskat würzen und kräftig durchkneten — die Masse soll sich glatt formen lassen. 8 gleichgroße Knödel (ca. 70 g) formen und in den mit Backpapier ausgelegten Varoma-Behälter setzen.
-
-4. Champignons putzen, halbieren und in den Mixtopf zur restlichen Zwiebel-Knoblauch-Mischung geben, **`3 Sek./Stufe 5/Linkslauf`** grob zerkleinern. Öl, Tomatenmark, Senf und geräuchertes Paprikapulver dazu, **`2 Min./Varoma/Linkslauf/Stufe 1`** anrösten.
-
-5. Schwarzbier, Gemüsebrühe und Sojasoße angießen, Mehl und Hafer-Cuisine unterheben. Varoma mit den Knödeln aufsetzen und **`25 Min./Varoma/Linkslauf/Stufe 1`** garen — Knödel werden dampfgegart, gleichzeitig reduziert die Soße. In den letzten 8 Min Rotkohl bei mittlerer Hitze in seinem Topf zugedeckt köcheln lassen, dann auf kleinste Stufe stellen. In den letzten 5 Min Hackbraten in ca. 1,5 cm dicke Scheiben schneiden, in einer beschichteten Pfanne mit 25 g Öl von jeder Seite 2 Min goldbraun braten und mit 1 Prise Pfeffer würzen.
-
-6. Varoma absetzen, Knödel mithilfe des Spatels herausnehmen. Soße mit Salz und Pfeffer abschmecken. Auf 4 Tellern jeweils 2 Knödel anrichten, 2-3 Hackbraten-Scheiben daneben legen und großzügig mit Schwarzbier-Pilz-Rahm überziehen. Lorbeerblatt aus dem Rotkohl fischen und eine Portion auf jedem Teller anrichten.
+1. **1 säuerlichen Apfel** entkernen und fein würfeln, **50 g Zwetschgen** in schmale Streifen schneiden.
+2. **500 g Rotkohl** mit Apfel, Zwetschgen, **1 EL Rotweinessig**, **1 EL Zucker**, **1 Lorbeerblatt** und 1 Prise Salz in einen kleinen Topf geben, durchmischen und beiseitestellen.
+3. **250 g Knödelbrot** in eine große Schüssel geben.
+4. **250 g Hafermilch** in den Mixtopf einwiegen und **`5 Min./50 °C/Stufe 1`** erwärmen. Über das Knödelbrot gießen, 10 Min. ziehen lassen und den Mixtopf spülen.
+5. **1 große Zwiebel**, **2 Knoblauchzehen** und die Blätter von **15 g Petersilie** in den Mixtopf geben und **`4 Sek./Stufe 5`** zerkleinern.
+6. Etwa ein Drittel der Mischung zur Knödelmasse geben, den Rest im Mixtopf lassen.
+7. **30 g Margarine** schmelzen und zur Knödelmasse geben. **2 EL Sojamehl** mit 4 EL Wasser glatt rühren und ebenfalls zugeben.
+8. Mit **1 TL Salz** und **1 Prise Muskat** würzen, kräftig durchkneten und 8 gleich große Knödel (ca. 70 g) formen.
+9. Die Knödel in den mit Backpapier ausgelegten Varoma-Behälter setzen.
+10. **400 g braune Champignons** putzen, halbieren und zur Zwiebel-Knoblauch-Mischung in den Mixtopf geben, **`3 Sek./Stufe 5/Linkslauf`** grob zerkleinern.
+11. **30 g Öl**, **1 EL Tomatenmark**, **1 TL Senf** und **1 TL geräuchertes Paprikapulver** zugeben und **`2 Min./Varoma/Linkslauf/Stufe 1`** anrösten.
+12. **200 g Schwarzbier**, **300 g Gemüsebrühe** und **1 EL Sojasoße** angießen, **1 TL Mehl** und **200 g Hafer-Cuisine** unterheben.
+13. Den Varoma mit den Knödeln aufsetzen und **`25 Min./Varoma/Linkslauf/Stufe 1`** garen.
+14. In den letzten 8 Min. den Rotkohl zugedeckt bei mittlerer Hitze köcheln lassen, dann auf kleinste Stufe stellen.
+15. In den letzten 5 Min. **500 g veganen Hackbraten** in 1,5 cm dicke Scheiben schneiden, in einer Pfanne mit **25 g Öl** von jeder Seite 2 Min. goldbraun braten und mit 1 Prise Pfeffer würzen.
+16. Den Varoma absetzen, die Knödel mithilfe des Spatels herausnehmen und die Soße mit Salz und Pfeffer abschmecken.
+17. Auf 4 Tellern je 2 Knödel und 2–3 Hackbraten-Scheiben anrichten, großzügig mit der Schwarzbier-Pilz-Rahmsoße überziehen, das Lorbeerblatt entfernen und je eine Portion Rotkohl dazugeben. Servieren.
 
 ## Tipps
 
-- **Knödelbrot statt frische Brötchen** — wenn du es eilig hast, kauf fertiges Knödelbrot (250 g im Beutel). Saugt gleichmäßiger als selbst geschnittene Brötchen, Knödel werden fluffiger.
-- **Sojamehl + Wasser ersetzt 1 Ei** als Bindung. Vor dem Unterkneten 2 Min quellen lassen — wirkt sonst weniger. Alternative: 1 EL Leinsamen geschrotet + 3 EL Wasser, ebenfalls gequollen.
-- **Schwarzbier statt Lager** ist der Geschmacksunterschied der Soße: dunkles Bier bringt Röstaromen + leichte Bitterkeit, die den Lupinen-Seitan-Braten erst richtig aufwerten. Köstritzer, Erdinger Schwarz oder Mönchshof tun's. Helles Bier macht die Soße flach.
-- **Champignons mit Linkslauf** zerkleinern, sonst werden sie püriert. Linkslauf hält Stücke, der Drehflügel "schiebt" statt zu schneiden.
-- **Knödel im Varoma niemals stapeln** — sie kleben sonst zusammen. Wenn 8 Knödel nicht nebeneinander passen: 4 im Behälter, 4 im Varoma-Tablett darüber.
-- **Hackbraten in Scheiben statt am Stück**: Hersteller-Empfehlung ist „anbraten und in Soße schmoren", aber Scheiben werden außen knusprig (Maillard-Reaktion) und das ist Geschmacks-Gold. Wenn du Reste hast: am nächsten Tag in der Soße aufwärmen.
-- **Rotkohl-Boost im Glas**: fertiger Rotkohl ist OK, wird aber erst geil durch Apfel + Zwetschge + Rotweinessig + ein Schluck Rotwein (optional, 2 EL beim Köcheln). Das ist der Unterschied zwischen „Beilage aus dem Glas" und „Wirtshausqualität".
-- **Reste** halten 2 Tage im Kühlschrank. Knödel separat aufbewahren (sonst werden sie matschig), am nächsten Tag in Scheiben in der Pfanne mit etwas Öl braten — „Knödel-Carpaccio", als Beilage zu Pilzen, Spinat oder einfach Spiegelei (oder vegane Pendants).
-- **Variation Maultaschen-Style**: Knödel mit Spinat-Tofu-Füllung formen (50 g Tofu + 50 g Blattspinat gehackt) — kompliziert macht's, aber dann hast du gefüllte Knödel als Show-Stück. Garzeit gleich.
+- Knödelbrot statt frischer Brötchen — saugt gleichmäßiger, Knödel werden fluffiger.
+- Sojamehl mit Wasser 2 Min. quellen lassen — bindet sonst weniger.
+- Schwarzbier statt Lager — dunkles Bier bringt Röstaromen, helles macht die Soße flach.
+- Champignons im Linkslauf zerkleinern — bleiben stückig statt püriert.
+- Knödel im Varoma nicht stapeln — sonst kleben sie zusammen.
 
 ## Warum diese Cookidoo-Adaption
 
@@ -95,6 +97,7 @@ Was die Cookidoo-Version anders macht:
 - **Aromaten in EINER Zerkleinerungs-Aktion**: Zwiebel + Knoblauch + Petersilie kommen gemeinsam in den Mixtopf für Knödel UND Soße — danach mit dem Spatel teilen. Statt zweimal zerkleinern, einmal zerkleinern, einmal teilen.
 - **Interaktive Koch-Befehl-Chips**: `5 Min./50 °C/Stufe 1`, `4 Sek./Stufe 5`, `3 Sek./Stufe 5/Linkslauf`, `2 Min./Varoma/Linkslauf/Stufe 1` und `25 Min./Varoma/Linkslauf/Stufe 1` sind im Cookidoo-Render keine Plain-Text-Strings, sondern hervorgehobene Chips. Der Thermomix erkennt sie und führt sie beim Antippen direkt aus — niemand tippt am Display Zahlen ein.
 - **Hackbraten in der Pfanne, nicht im Mixtopf**: Der Planeo-Braten ist am Stück, würde im Mixtopf seine Struktur verlieren. Die Pfanne mit 25 g Öl gibt ihm außen die Maillard-Kruste, die ihn vom „Versuchten" zum „Versprochenen" macht. Drei Minuten Aufwand, riesiger Geschmacks-Hebel.
+- **Step-Granularität nach Native-Standard**: 17 kurze Ein-Aktion-Schritte (Median ~112 statt vorher ~299 Zeichen) — bei vier parallel laufenden Komponenten der entscheidende Unterschied zur Benutzbarkeit am Gerät. Die Parallel-Tasks (Rotkohl, Hackbraten) sind als eigene „In den letzten X Min."-Schritte gesetzt, statt im 25-Minuten-Gar-Schritt vergraben.
 
 Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte (HelloFresh-Karte, Kochbuch, Eigenkreation) in ~2 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
