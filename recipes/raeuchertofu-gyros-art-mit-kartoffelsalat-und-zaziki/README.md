@@ -1,4 +1,4 @@
-# Räuchertofu Gyros-Art mit Kartoffelsalat und Zaziki
+# [#25] Räuchertofu Gyros-Art mit Kartoffelsalat und Zaziki
 
 dazu Drillinge, Dill-Petersilie-Oliven-Salat, selbstgemachtes Zaziki · vegan · 4 Portionen
 

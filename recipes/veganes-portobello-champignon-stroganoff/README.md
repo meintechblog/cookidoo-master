@@ -1,4 +1,4 @@
-# Veganes Portobello-Champignon-Stroganoff
+# [#33] Veganes Portobello-Champignon-Stroganoff
 
 auf Fusilli mit Kürbiskern-Chili-Topping · vegan · 4 Portionen
 

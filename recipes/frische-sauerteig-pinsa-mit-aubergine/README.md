@@ -1,4 +1,4 @@
-# Frische Sauerteig-Pinsa mit Aubergine
+# [#25] Frische Sauerteig-Pinsa mit Aubergine
 
 dazu Spitzpaprika, Tomatensoße & Salat mit Senf-Dressing · vegan · 4 Portionen
 
