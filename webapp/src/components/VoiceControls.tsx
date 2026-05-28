@@ -352,13 +352,13 @@ export function VoiceControls({ voice, onTranscript, show }: ControlsProps) {
       >
         {voice.transcribing ? (
           // Spinner around a centered stop-square → tap to abort the in-flight STT
-          <span className="relative inline-flex items-center justify-center w-7 h-7">
+          <span className="relative inline-flex items-center justify-center w-11 h-11">
             <svg className="absolute inset-0 animate-spin text-white" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.3" strokeWidth="3" />
-              <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+              <circle cx="12" cy="12" r="10.5" stroke="currentColor" strokeOpacity="0.3" strokeWidth="2.5" />
+              <path d="M22.5 12a10.5 10.5 0 0 1-10.5 10.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             </svg>
-            <svg className="relative" width={10} height={10} viewBox="0 0 10 10" fill="white">
-              <rect width="10" height="10" rx="1.5" />
+            <svg className="relative" width={16} height={16} viewBox="0 0 16 16" fill="white">
+              <rect width="16" height="16" rx="2.5" />
             </svg>
           </span>
         ) : voice.recording ? (
