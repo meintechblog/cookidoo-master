@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""cookidoo-chat — mini-CLI for the running session to reply into the chat-bridge.
+"""thermomix-chat — mini-CLI for the running session to reply into the chat-bridge.
 
 Usage:
-  cookidoo-chat reply "<text>"
-  echo "<text>" | cookidoo-chat reply --stdin
-  cookidoo-chat ping            # health check
+  thermomix-chat reply "<text>"
+  echo "<text>" | thermomix-chat reply --stdin
+  thermomix-chat ping            # health check
 """
 from __future__ import annotations
 
@@ -14,13 +14,13 @@ import sys
 import urllib.error
 import urllib.request
 
-BASE = os.environ.get("COOKIDOO_CHAT_BASE", "http://192.168.3.223").rstrip("/")
+BASE = os.environ.get("THERMOMIX_CHAT_BASE", "http://192.168.3.223").rstrip("/")
 TOKEN = os.environ.get("CHAT_BRIDGE_TOKEN", "")
 
 
 def _post(path: str, body: dict) -> tuple[int, dict]:
     data = json.dumps(body).encode()
-    headers = {"Content-Type": "application/json", "User-Agent": "cookidoo-chat-cli/1"}
+    headers = {"Content-Type": "application/json", "User-Agent": "thermomix-chat-cli/1"}
     if TOKEN:
         headers["Authorization"] = f"Bearer {TOKEN}"
     req = urllib.request.Request(f"{BASE}{path}", data=data, method="POST", headers=headers)
@@ -40,7 +40,7 @@ def cmd_reply(args: list[str]) -> int:
     else:
         body = " ".join(args).strip()
     if not body:
-        sys.stderr.write("Usage: cookidoo-chat reply \"<text>\"\n")
+        sys.stderr.write("Usage: thermomix-chat reply \"<text>\"\n")
         return 2
     status, data = _post("/api/chat/reply", {"body": body})
     if status == 200 and data.get("ok"):

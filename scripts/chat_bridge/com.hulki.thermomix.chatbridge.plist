@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>com.hulki.cookidoo.chatbridge</string>
+  <string>com.hulki.thermomix.chatbridge</string>
 
   <key>ProgramArguments</key>
   <array>
@@ -14,11 +14,11 @@
 
   <key>EnvironmentVariables</key>
   <dict>
-    <key>COOKIDOO_CHAT_BASE</key>
+    <key>THERMOMIX_CHAT_BASE</key>
     <string>http://192.168.3.223</string>
-    <key>COOKIDOO_REPO_PATH</key>
+    <key>THERMOMIX_REPO_PATH</key>
     <string>/Users/hulki/codex/thermomix-master</string>
-    <key>COOKIDOO_PEERS_BROKER</key>
+    <key>THERMOMIX_PEERS_BROKER</key>
     <string>http://127.0.0.1:7899</string>
     <key>PATH</key>
     <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
