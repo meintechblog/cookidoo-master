@@ -39,24 +39,27 @@ auf Fusilli mit Kürbiskern-Chili-Topping · vegan · 4 Portionen
 - 2 TL Salz
 - 1 Prise Pfeffer
 
-## Zubereitung — 5 Schritte mit interaktiven Koch-Befehlen
+## Zubereitung — 11 Schritte mit interaktiven Koch-Befehlen
 
-1. **2 Zitronen** heiß abwaschen und jeweils in 4 Spalten schneiden. **2 Zwiebeln** grob würfeln. **4 Portobello-Pilze** in 0,5 cm Scheiben schneiden. **400 g Champignons** je nach Größe halbieren oder vierteln. **10 g Petersilie** und **10 g Thymian** von den Stielen zupfen.
-2. Petersilien- und Thymianblätter in den Mixtopf einwiegen und **`5 Sek./Stufe 7`** hacken. In eine kleine Schüssel umfüllen, Mixtopf spülen.
-3. 1,5 l Wasser und **2 TL Salz** in den Mixtopf einwiegen. **540 g Fusilli** hinzugeben und **`13 Min./100 °C/Linkslauf/Stufe 1`** garen. Anschließend Pasta in einem Sieb abgießen und dabei 300 ml Kochwasser auffangen.
-4. In einer großen Pfanne ohne Fett **20 g Kürbiskerne** und **2 g milden Chili-Mix** 2–3 Min. rösten, herausnehmen und beiseite stellen. Pfanne auswischen, **30 g Öl** und **50 g pflanzliche Margarine** erhitzen. Zwiebelwürfel, Portobello und Champignons 5–6 Min. kräftig anbraten. **4 Knoblauchzehen** hineinpressen, die Hälfte der gehackten Kräuter dazu, 1 Min. mitbraten.
-5. Mit 300 ml Pastakochwasser, **500 ml Oatly Bio Cuisine**, **50 g Pilzbrühepaste**, **16 g Worcester Sauce** und dem Saft von 2 Zitronenspalten ablöschen, 2–3 Min. cremig einköcheln lassen. Mit **1 Prise Pfeffer** abschmecken. Fusilli auf 4 tiefe Teller verteilen, Pilz-Stroganoff daneben anrichten und mit Kürbis-Chili-Topping, restlichen Kräutern und Zitronenspalten servieren.
+1. **2 Zitronen** heiß abwaschen und jeweils in 4 Spalten schneiden.
+2. **10 g Petersilie** und **10 g Thymian** von den Stielen zupfen, in den Mixtopf geben, **`5 Sek./Stufe 7`** hacken, umfüllen und Mixtopf spülen.
+3. **1,5 l Wasser** und **2 TL Salz** in den Mixtopf geben. **540 g Fusilli** zugeben und **`13 Min./100 °C/Linkslauf/Stufe 1`** garen.
+4. In der Zwischenzeit **4 Portobello-Pilze** in 0,5 cm Scheiben schneiden, **400 g Champignons** halbieren oder vierteln und **2 Zwiebeln** würfeln.
+5. Die Pasta in ein Sieb abgießen und dabei 300 ml Kochwasser auffangen.
+6. **20 g Kürbiskerne** und **2 g Chili-Mix** in einer großen Pfanne ohne Fett 2–3 Min. rösten und herausnehmen.
+7. **30 g Öl** und **50 g Margarine** in der Pfanne erhitzen. Zwiebeln, Portobello und Champignons darin 5–6 Min. kräftig anbraten.
+8. **4 Knoblauchzehen** hineinpressen, die Hälfte der Kräuter zugeben und 1 Min. mitbraten.
+9. Mit 300 ml Kochwasser, **500 ml Oatly Bio Cuisine**, **50 g Pilzbrühepaste** und **16 g Worcester Sauce** ablöschen.
+10. Den Saft von 2 Zitronenspalten zugeben, 2–3 Min. cremig einköcheln lassen und mit **1 Prise Pfeffer** abschmecken.
+11. Fusilli auf 4 tiefe Teller verteilen, das Pilz-Stroganoff daneben anrichten und mit den Kürbiskernen, restlichen Kräutern und Zitronenspalten servieren.
 
 ## Tipps
 
-- **Kräuter VOR der Pasta im Mixtopf hacken** — `5 Sek./Stufe 7` reicht für eine grobe, aromatische Würze. Wenn man die Reihenfolge umdreht (erst Pasta, dann Kräuter), klebt feuchte Pasta-Stärke in den Messern und das Kräuter-Hacken wird matschig.
-- **Pasta IM MIXTOPF mit `13 Min./100 °C/Linkslauf/Stufe 1`** — der Linkslauf rührt vorsichtig ohne die Fusilli zu zerschneiden. 1,5 l Wasser auf 540 g Pasta ist konservativ unter der Mixtopf-Max-Linie, damit's beim Aufkochen nicht überläuft.
-- **300 ml Kochwasser AUFFANGEN** beim Abgießen — das stärkehaltige Wasser bindet die Sauce später cremig (Pasta-Wasser-Trick aus der italienischen Küche). Ein Glas unters Sieb stellen, fertig.
-- **Kürbiskerne + Chili-Mix OHNE FETT trocken rösten** — sonst werden die Kerne fettig statt knackig. Die Hitze allein bringt das ätherische Öl der Chili-Mischung heraus, dann ist das Topping schärfer.
-- **Pilze in HEISSE, FETTE Pfanne** — sonst geben sie Wasser ab und kochen statt zu bräunen. Margarine + Öl mischen: Öl verhindert das Verbrennen der Margarine, Margarine bringt Nuss-Note. Auch nicht zu viel auf einmal — die Pilze brauchen Platz.
-- **Knoblauch + Kräuter ERST NACH 5 Min. Pilzbraten** — sonst verbrennt der Knoblauch und schmeckt bitter. Kurz mitschwenken, 1 Min. genügt damit die Aromen sich verbinden.
-- **Worcester Sauce ist Umami-Booster** — 16 g klingt wenig, aber genau das ist gewollt. Mehr maskiert die Pilz-Eigennote. Vegane Worcester gibt's mittlerweile fast in jedem Supermarkt (Sanchon, Naturata, Edward & Sons).
-- **Reste** halten 2 Tage: Pasta und Sauce TRENNEN aufbewahren, sonst saugt die Pasta die Sauce auf und wird matschig. Beim Aufwärmen Sauce mit 2–3 EL Wasser oder Cuisine wieder lockern.
+- Kräuter vor der Pasta im Mixtopf hacken — danach klebt die Stärke in den Messern.
+- 300 ml Kochwasser auffangen — bindet die Sauce cremig.
+- Kürbiskerne + Chili ohne Fett rösten — sonst werden sie fettig statt knackig.
+- Pilze in heiße, fette Pfanne und mit Platz — sonst wässern sie statt zu bräunen.
+- Knoblauch erst nach 5 Min. dazu — sonst verbrennt er und wird bitter.
 
 ## Warum diese Cookidoo-Adaption
 
@@ -64,10 +67,9 @@ Die HelloFresh-Karte sagt explizit „Thermomix kocht" — also gibt's einen off
 
 Für diese Cookidoo-Version:
 
-- **Native Verben**: `einwiegen`, `umfüllen`, `mithilfe des Spatels herausnehmen`, `auf 4 tiefe Teller verteilen`, `... servieren` (Mixtopf-Pattern).
-- **Zwei interaktive Koch-Befehl-Chips**: `5 Sek./Stufe 7` für Kräuter-Hacken, `13 Min./100 °C/Linkslauf/Stufe 1` für Pasta-Garen — beide werden im Cookidoo-Render zu hervorgehobenen Chips.
-- **Spezifische Mengen** statt Catch-all: `2 TL Salz`, `30 g Öl`, `50 g pflanzliche Margarine`, `1 Prise Pfeffer` als eigene Zutatenzeilen.
-- **Adjektive nach Komma**: `Petersilie, glatt`, `Thymian, frisch`, `Zitronen, gewachst`, `Kürbiskerne, geröstet` (Native-Vorwerk-Schema).
+- **Kurze Ein-Aktion-Schritte** (11 statt vorher 5 Mega-Blöcke): die Vorbereitung läuft parallel zur Pasta im Mixtopf, jeder Schritt ist eine klare Aktion mit genau den Zutaten, die jetzt gebraucht werden.
+- **Zwei interaktive Koch-Befehl-Chips**: `5 Sek./Stufe 7` (Kräuter hacken), `13 Min./100 °C/Linkslauf/Stufe 1` (Pasta garen, Linkslauf rührt ohne zu zerschneiden) — beide werden im Cookidoo-Render zu antippbaren Chips.
+- **Spezifische Mengen** + **Adjektive nach Komma** (`Petersilie, glatt`, `Thymian, frisch`, `Zitronen, gewachst`, `Kürbiskerne, geröstet`) nach Native-Vorwerk-Schema.
 
 Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~3–5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 

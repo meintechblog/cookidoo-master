@@ -102,15 +102,31 @@ Wenn das Rezept aus einer fremden Quelle stammt (HelloFresh-Karte, Buch, Webseit
 
 Cookidoo macht die URL klickbar im Render-View.
 
-### 8. Step-Granularität: Median 5 Steps für ein 14-17-Zutaten-Hauptgericht
+### 8. Step-Granularität: EINE Operation pro Step, kurz (REVIDIERT 2026-05-28)
 
-Nach Deep-Research von 12 native Vorwerk-Bowls/Currys: bei **14-17 Zutaten = 5 Steps** Median (Range 4-7). Mein erster 8-Step-Versuch war zu fein-granular. Native gruppiert Vorbereitungs-Phasen aggressiver und nutzt „In der Zwischenzeit ..." als Lead-in für Parallel-Tasks.
+> ⚠️ **Die alte „Median 5 Steps / 250-550 Zeichen"-Regel war falsch** und hat
+> Mega-Steps produziert, durch die Jörg am Thermomix nicht durchkam (Räuchertofu #25).
+> Korrektur nach Analyse der **echten per-Schritt-Segmentierung** von ~12 Cookidoo-
+> Rezepten (`research/native-step-corpus.md`): native Steps sind **kurz**.
 
-| Zutaten | Native median Steps | Native Range |
+Echte Regel:
+- **Ein Step = eine Operation** (ein Chip / eine Pfannen- / Ofen- / Anricht-Aktion). Nie zwei Chips.
+- **40-130 Zeichen** pro Step (nativer Median ≈ 90). Hart bei ~180.
+- **Step-Zahl = Anzahl Operationen**, nicht Zutatenzahl → typisch **6-10 kurze Steps**.
+- Zutaten **inkrementell** zugeben; die **Maschine macht die Prep** (zerkleinern/hacken im Mixtopf).
+- Manuelle Prep nur per `Währenddessen …` in einen laufenden Maschinen-Step falten.
+
+Beleg (native „Champignonrahmsauce", 5 Steps à 50-178 Zeichen):
+`Zwiebeln + Knoblauch zerkleinern` → `Öl zugeben, dünsten. Währenddessen Champignons schneiden` →
+`Weißwein zugeben, reduzieren` → `Rahm + Stärke + Bouillon zugeben, mischen` → `Champignons zugeben, garen, servieren`.
+
+Die untenstehende alte Median-Tabelle ist **obsolet** (nur als Mahnmal stehengelassen):
+
+| Zutaten | ~~Native median Steps~~ | ~~Native Range~~ |
 |---|---|---|
-| 8-12 | 4 | 3-5 |
-| 13-17 | **5** | 4-7 |
-| 18-25 | 6 | 5-8 |
+| 8-12 | ~~4~~ | ~~3-5~~ |
+| 13-17 | ~~**5**~~ | ~~4-7~~ |
+| 18-25 | ~~6~~ | ~~5-8~~ |
 
 Beispiel-Mapping nach Rewrite (Sweet-Chili-Bowl, 17 Zutaten):
 

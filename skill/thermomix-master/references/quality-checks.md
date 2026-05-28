@@ -47,9 +47,22 @@ Wenn Step 5 und Step 6 beide mit „mit Salz und Pfeffer abschmecken." enden, li
 ✓ Zutaten: ... "2 TL Salz", "25 g Öl", "1-2 Prisen Pfeffer", "1 Prise Zucker"
 ```
 
-## 6. Tipps brauchen `— ` Prefix als Bullet
+## 6. Tipps: `— ` Prefix als Bullet UND kurz halten
 
 Cookidoo rendert die Tipps OHNE Auto-Bullets. Jede Zeile mit `— ` (em-dash + Space) starten, sonst verschwimmen alle Tipps zu einem Text-Block.
+
+**Kürze (Lektion 2026-05-28):** max. **3-5 Tipps**, jeder **EINE kurze Zeile**, telegrafisch
+— nur der handlungsrelevante Kern (≤ ~120 Zeichen). Keine Absatz-Tipps, keine Erklär-Prosa.
+Der „Warum diese Cookidoo-Adaption"-Narrativ-Block gehört **NICHT** in die Cookidoo-Tipps
+(nur ins Repo-README). Auf Cookidoo nur: `Karte #NN — <kurzname>`-Kopfzeile, die knappen
+Tipps, und am Ende die zwei Quellen-Links.
+
+```
+✗ — Drillinge HALBIEREN oder VIERTELN je nach Größe — gleichmäßige Stückgröße ist
+   wichtiger als Form. Zu große Stücke brauchen 35–40 Min., kleine sind in 22 Min.
+   fertig. Wenn unsicher: nach 22 Min. eine probieren, dann nachsteuern.
+✓ — Drillinge gleich groß schneiden (Form egal) — sonst garen sie ungleichmäßig.
+```
 
 ## 7. Quellen-Link gehört ans Ende der Tipps
 
@@ -63,13 +76,17 @@ Toolkit (Open Source):
 https://github.com/meintechblog/thermomix-master
 ```
 
-## 8. Step-Granularität nach Native-Median (siehe native-style-rules.md)
+## 8. Step-Granularität: kurz + eine Operation pro Step (siehe native-style-rules.md)
 
-| Zutaten | Median | Range |
-|---|---|---|
-| 8-12 | 4 | 3-5 |
-| 13-17 | **5** | 4-7 |
-| 18-25 | 6 | 5-8 |
+**Ersetzt die alte „median 5 Steps / 250-550 Zeichen"-Regel — die war falsch.**
+
+- Ein Step = **genau eine** Operation (ein Chip / eine Pfannen- / Ofen- / Anricht-Aktion).
+- Ziel **40-130 Zeichen** pro Step, hart bei ~180 (Ausnahme: finaler Anricht-Step).
+- Step-Zahl = **Anzahl Operationen**, nicht Zutatenzahl. Typisch **6-10 kurze Steps**.
+- Zutaten **inkrementell** zugeben, jede mit Menge im Step ihrer Verwendung.
+- Manuelle Prep nur wenn nötig, dann per `Währenddessen …` in einen laufenden Step falten.
+
+Mehr kurze Steps schlagen wenige dichte. Niemals zusammenquetschen um eine Zahl zu treffen.
 
 ## 9. Native Verb-Vokabular + Zutaten-Format
 

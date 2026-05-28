@@ -288,19 +288,29 @@ Native Sharing-Buttons (Facebook/Twitter/WhatsApp/Pinterest/Mail) bauen die URL 
 
 `#onetrust-accept-btn-handler` muss bei jedem fresh-launch des Profils einmal geklickt werden, sonst overlay-blockt OneTrust alle anderen Klicks. Persistent-Profile akzeptieren das einmal und merken's.
 
-## Native-Style Step-Granularität (Deep-Research 12 Vorwerk-Rezepte)
+## Native-Style Step-Granularität — KORRIGIERT 2026-05-28
 
-Nach dem ersten 8-Step-Rezept Deep-Research auf 12 native Vorwerk-Bowls/Currys/Pfannen-Rezepte (gesammelt via Search-API + URL-Scraping, persisted in `/tmp/cookidoo/deep/research.json`) ergab folgendes Muster:
+> ⚠️ **Die ursprüngliche Deep-Research war methodisch falsch.** Sie hat die
+> **zusammengefasste Web-Prosa** der Rezeptseiten gemessen (Cookidoo rendert die Steps
+> im Web als einen Fließtext-Block) und daraus „median 5 Steps / 250-550 Zeichen"
+> abgeleitet. Das ist NICHT die Schritt-Struktur, die der Anwender am Thermomix sieht.
+>
+> Bei der Re-Analyse (2026-05-28) habe ich die **echte per-Schritt-Segmentierung** aus
+> dem `recipe-content__ordered-list`-DOM extrahiert (`research/native-step-corpus.md`).
+> Ergebnis: native Steps sind **kurz** — ~40-130 Zeichen, **eine Operation pro Step**,
+> Zutaten **inkrementell**, die **Maschine macht die Prep**. Typisch 6-10 Steps.
+>
+> Auslöser: Jörg kam beim Räuchertofu #25 mit den Mega-Steps am Thermomix nicht durch
+> und musste die HelloFresh-Originalanleitung nehmen. Die maßgebliche Regel steht jetzt
+> in `references/native-style-rules.md` + `references/quality-checks.md` (Regel 8).
 
-### Step-Anzahl ≠ Zutaten-Anzahl
+Alte (obsolete) Tabelle als Mahnmal:
 
-| Zutaten | Native median Steps | Native Range |
+| Zutaten | ~~median Steps~~ | ~~Range~~ |
 |---|---|---|
-| 8-12 | 4 | 3-5 |
-| 13-17 | **5** | 4-7 |
-| 18-25 | 6 | 5-8 |
-
-Mein erstes Rezept hatte 14 Zutaten und **8 Steps** — die native Median-Erwartung wären **5 Steps** gewesen. Native Rezepte gruppieren Vorbereitungsphasen aggressiver in einen einzigen „Vorbereitung"-Step und bündeln parallele Tasks in einen „In der Zwischenzeit ..."-Step.
+| 8-12 | ~~4~~ | ~~3-5~~ |
+| 13-17 | ~~**5**~~ | ~~4-7~~ |
+| 18-25 | ~~6~~ | ~~5-8~~ |
 
 ### Native Verb-Vokabular + Zutaten-Format + Step-Längen
 
@@ -309,7 +319,7 @@ Mein erstes Rezept hatte 14 Zutaten und **8 Steps** — die native Median-Erwart
 Was die Reverse-Engineering-Recherche aus 12 nativen Vorwerk-Bowls/Currys/Pfannen ergab (Stand der Skill-Reference, dort vollständig + aktuell):
 - Verben: `einwiegen`, `einhängen`, `aufsetzen`/`absetzen`, `mithilfe des Spatels herausnehmen`, `unterheben`, `auf X Bowls/Tellern verteilen`, `... servieren`, `In der Zwischenzeit ...`
 - Zutaten: Adjektive nach Komma, Verb-Teile in den Step, spezifische Mengen statt Catch-all, Bindestrich-Soßen
-- Step-Längen: native Range 250-550 Zeichen für 14-17-Zutaten-Rezepte (mein 5-Step-Rewrite landete bei 253/308/314/425/536 — passt)
+- Step-Längen: **40-130 Zeichen pro Step** (eine Operation), NICHT 250-550 (das war der Web-Prosa-Messfehler, siehe Korrektur oben)
 - Niemals: `Guten Appetit!` (0 von 12), Doppelpunkte vor Listen, Hinweise in Klammern in der Zutatenliste
 
 ## Locale-Awareness

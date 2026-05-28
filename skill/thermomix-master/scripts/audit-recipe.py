@@ -13,7 +13,8 @@ Checks:
      `beiseitestellen.` and `beiseite stellen.` count as the same ending).
   3. Compound-name conflicts (substring matches that risk double-annotation).
   4. Chip-syntax sanity (cooking commands match `<N> <Min.|Sek.>/.../<Stufe ...>`).
-  5. Step-count vs ingredient-count vs native-median table.
+  5. Step structure: each step ~40-130 chars (BLOCK > 240), max one cooking chip per
+     step (one operation per step). See native-style-rules.md.
 
 Usage: ./audit-recipe.py recipe.json
 Prints findings, exits 0 if clean / 1 if any BLOCKer.
@@ -58,12 +59,9 @@ ADJACENT_END_PATTERNS = [
     "beiseitestellen", "beiseite stellen", "servieren",
 ]
 
-# Native step-median table: (max_ingredients, median, (lo, hi))
-NATIVE_STEP_TABLE = [
-    (12, 4, (3, 5)),
-    (17, 5, (4, 7)),
-    (25, 6, (5, 8)),
-]
+# Step-length quality gates (native median ≈ 90 chars, see native-style-rules.md).
+STEP_LEN_SOFT_MAX = 180   # > this = too dense, WARN (split it)
+STEP_LEN_HARD_MAX = 240   # > this = BLOCK (definitely crams multiple operations)
 
 
 def normalize_ending(s: str) -> str:
@@ -176,17 +174,34 @@ def check_chip_syntax(steps):
     return findings, chips_found
 
 
-def check_step_count(steps, ingredients):
-    n_ing = len(ingredients)
-    n_step = len(steps)
-    expected_median, (lo, hi) = next(((m, r) for cap, m, r in NATIVE_STEP_TABLE if n_ing <= cap), (6, (5, 8)))
+def _count_chips(step: str) -> int:
+    return len(re.findall(r"\b\d+(?:[-–]\d+)?\s+(?:Sek|Min)\.\/", step))
+
+
+def check_step_structure(steps, ingredients):
+    """New philosophy (2026-05-28): one operation per step, ~40-130 chars, many short
+    steps beat few dense ones. We no longer warn on HIGH step counts — only on steps
+    that are too LONG (cram multiple operations) or carry more than one cooking chip.
+    """
     findings = []
-    if n_step < lo:
-        findings.append(("WARN", f"{n_step} steps for {n_ing} ingredients is below native range {lo}-{hi} (median {expected_median}) — too coarse?"))
-    elif n_step > hi:
-        findings.append(("WARN", f"{n_step} steps for {n_ing} ingredients is above native range {lo}-{hi} (median {expected_median}) — too fine-grained?"))
-    else:
-        findings.append(("OK", f"{n_step} steps for {n_ing} ingredients matches native range {lo}-{hi} (median {expected_median})"))
+    n_step = len(steps)
+    last_idx = n_step - 1
+    long_steps = 0
+    for i, step in enumerate(steps):
+        L = len(step)
+        chips = _count_chips(step)
+        # The final plating/garnish step is allowed to be longer.
+        soft_max = STEP_LEN_SOFT_MAX + 60 if i == last_idx else STEP_LEN_SOFT_MAX
+        if L > STEP_LEN_HARD_MAX:
+            findings.append(("BLOCK", f"Step {i+1}: {L} chars — way too dense, crams multiple operations. Split it (target 40-130)."))
+            long_steps += 1
+        elif L > soft_max:
+            findings.append(("WARN", f"Step {i+1}: {L} chars — long, likely more than one operation. Consider splitting (target 40-130)."))
+            long_steps += 1
+        if chips > 1:
+            findings.append(("WARN", f"Step {i+1}: {chips} cooking-command chips in one step — one operation per step. Split into {chips} steps."))
+    if long_steps == 0:
+        findings.append(("OK", f"{n_step} steps, all within length budget (one operation each)"))
     return findings
 
 
@@ -207,7 +222,7 @@ def main():
     print()
 
     all_findings = []
-    all_findings += check_step_count(steps, ingredients)
+    all_findings += check_step_structure(steps, ingredients)
     all_findings += check_per_step_uniqueness(steps)
     all_findings += check_adjacent_endings(steps)
     all_findings += check_compound_conflicts(steps, ingredients)

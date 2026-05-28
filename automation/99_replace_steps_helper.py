@@ -37,6 +37,14 @@ def main():
         sys.exit("Run 01_create_recipe.py first")
     recipe_id = STATE_FILE.read_text().strip()
 
+    # Optional: load STEPS from a JSON file ({"steps": [...]}) passed as argv[1].
+    # Lets us drive several recipes without editing the constant each time.
+    global STEPS
+    if len(sys.argv) > 1:
+        import json as _json
+        STEPS = _json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))["steps"]
+        print(f"Loaded {len(STEPS)} steps from {sys.argv[1]}")
+
     with sync_playwright() as p:
         ctx = p.chromium.launch_persistent_context(
             USER_DATA, headless=os.environ.get('THERMOMIX_HEADLESS', '0') == '1',

@@ -1,60 +1,136 @@
-# Native-Style Rules
+# Native-Style Rules — wie ein Step wirklich aussehen muss
 
-Verdichtet aus Deep-Research von 12 nativen Vorwerk-Bowls/Currys/Pfannen. Diese Regeln bringen ein Plain-Text-Rezept auf das Render-Level eines originalen Vorwerk-Rezepts.
+> **Komplett-Rewrite 2026-05-28** nach Analyse von ~12 echten Cookidoo/Vorwerk-Rezepten
+> in ihrer **per-Schritt-Segmentierung** (nicht der zusammengefassten Web-Prosa).
+> Die alte Regel „250-550 Zeichen pro Step, median 5 Steps" war **falsch** und hat
+> Mega-Steps produziert, durch die man am Thermomix nicht durchkommt. Sie ist hiermit
+> ungültig. Belege: `research/native-step-corpus.md`.
 
-## Step-Anzahl-Tabelle (KRITISCH)
+## Das mentale Modell: der Anwender steht am Thermomix
 
-Native Vorwerk-Rezepte folgen dieser Zahl, NICHT die der HelloFresh-Karte:
+Er ist müde, will schnell kochen, hat **null Lust auf Fließtext**. Jeder Step auf dem
+Display muss in **2 Sekunden** drei Fragen beantworten:
 
-| Zutaten | Native median Steps | Native Range |
-|---|---|---|
-| 8-12 | 4 | 3-5 |
-| 13-17 | **5** | 4-7 |
-| 18-25 | 6 | 5-8 |
+1. **Was kommt jetzt rein** — Zutaten + exakte Menge/Gewicht (das sind die fett-Chips zum Abhaken)
+2. **Muss ich davor was schnibbeln** — falls ja, in einem kurzen Halbsatz
+3. **Was macht die Maschine / Pfanne / Ofen** — der Koch-Befehl-Chip oder Zeit/Hitze
 
-**Trick zum Verdichten**: parallel laufende Aktionen gehören in EINEN Step, eingeleitet mit `In der Zwischenzeit ...`. HelloFresh-Karten haben oft 6-8 Steps für ein Rezept das nativ in 5 passt.
+Mehr nicht. Wenn ein Step mehr will, ist es zu viel — splitten.
 
-**Wann 6 statt 5 für 14-17-Zutaten-Rezepte**: wenn die Pfannen-Phase zwei sequentielle Brate-Schritte braucht (Filetstücke raus → Öl neu erhitzen → Gemüse rein). Dann ist 1 Step nicht möglich ohne Öl 2x zu mentionieren — Split lohnt sich.
+## Die 5 Kern-Regeln (in dieser Reihenfolge wichtig)
 
-## Native Verb-Vokabular
+### 1. EINE Operation pro Step
+Ein Step dreht sich um **genau eine** Aktion: ein Mixtopf-Chip ODER eine Pfannen-Aktion
+ODER eine Ofen-Aktion ODER ein Anrichte-Schritt. **Nie zwei Chips in einem Step.**
+„Kräuter hacken UND Oliven hacken UND Dressing rühren" = drei Steps, nicht einer.
 
-Diese Verben kennt der Thermomix-Display + Cookidoo aus Vorwerk-Rezepten:
+### 2. Steps sind KURZ — 40-130 Zeichen Zielkorridor
+Nativer Median ≈ 90 Zeichen. Harte Obergrenze ~180 — und die nur für den
+Anricht-/Garnier-Schluss-Step oder einen Köchel-Step mit vielen Zutaten auf einmal.
+Wenn ein Step > 180 Zeichen hat: er macht zu viel, splitten.
 
-| Statt (HF-Karte) | Native |
+| Zeichen | Bewertung |
 |---|---|
-| in den Gareinsatz füllen | **einwiegen** |
+| 30-130 | ✓ ideal |
+| 130-180 | ok, wenn genau eine Operation |
+| > 180 | ✗ splitten (Ausnahme: finaler Anricht-Step) |
+
+### 3. Step-Zahl = Anzahl Operationen, NICHT Zutatenzahl
+Es gibt **keine** Ziel-Step-Zahl. Zähle die echten Operationen (jeder Chip, jede
+Pfannen-/Ofen-Phase, jedes Anrichten) — das ist die Step-Zahl. Typisch landet man bei
+**6-10 kurzen Steps**. Viele kurze Steps sind *besser* als wenige dichte. Niemals
+zusammenquetschen um eine Zahl zu treffen.
+
+### 4. Zutaten kommen INKREMENTELL rein
+Nicht 6 Zutaten in einen Step kippen. Jede Zutat erscheint **mit ihrer Menge in genau
+dem Step, in dem sie verwendet wird** — in der Reihenfolge, in der die Maschine sie
+braucht. So ist jeder Step gleichzeitig die „jetzt-einwiegen"-Liste.
+
+```
+✗ Step: 2 Gurken, 2 Zitronen, 50 g Mayo, 100 g Sojaprodukt, Salz, Pfeffer ... (alles auf einmal)
+✓ Step A: Gurke zerkleinern.  Step B: Mayo + Sojaprodukt + Salz zugeben, vermengen.
+```
+
+### 5. Die MASCHINE macht die Vorbereitung
+Zwiebel, Knoblauch, Kräuter, Oliven, Pilze, Nüsse → im **Mixtopf zerkleinern/hacken**
+mit einem Chip, NICHT „fein würfeln" als Handarbeit beschreiben. Das ist der ganze Sinn
+des Geräts und der Grund, warum native Rezepte so kurz sind.
+
+**Manuelle Prep nur**, wenn die Maschine es nicht kann (Tofu in Scheiben hobeln, etwas
+das in Stücken bleiben muss, Ofen-Kram) — und dann **in einen laufenden Maschinen-Step
+falten** mit `Währenddessen ...` / `In der Zwischenzeit ...`.
+
+## Step-Grammatik (das Bauschema)
+
+```
+<Zutat A, Zutat B (+ Mengen)> in den Mixtopf geben[/zugeben], <CHIP> <verb>[, <aufräumen>].
+```
+optional davor/danach: `Währenddessen <kurze manuelle Prep>.`
+
+Echte native Beispiele (so kurz!):
+- `Zwiebeln und Knoblauch in den Mixtopf geben, 3 Sek./Stufe 5 zerkleinern und mit dem Spatel nach unten schieben.`
+- `Olivenöl zugeben und 5 Min./120 °C/Stufe 1 dünsten. Währenddessen Champignons in 3 mm Scheiben schneiden.`
+- `Weißwein zugeben und 3 Min./120 °C/Stufe 1 reduzieren.`
+- `Gyros zugeben und anbraten.`
+
+## Native Verb-/Phrasen-Vokabular
+
+Diese Bausteine kennt der Thermomix + Cookidoo:
+
+| Zweck | Native Phrase |
+|---|---|
+| Zutat einfüllen (1. mal) | **in den Mixtopf geben** |
+| Zutat nachlegen | **zugeben** |
+| in Gareinsatz/Varoma | **einwiegen** |
 | Gareinsatz reinhängen | **einhängen** |
-| Varoma aufstellen | **aufsetzen** |
-| Varoma abnehmen | **absetzen** |
-| mit dem Spatel rausholen | **mithilfe des Spatels herausnehmen** |
-| dazugeben (am Ende) | **unterheben** |
-| in Schüsseln verteilen | **auf 4 Bowls/Tellern verteilen** |
-| Guten Appetit! | **... servieren** (Schluss-Verb) |
-| Jetzt kommt das Gemüse | **In der Zwischenzeit ...** (Lead-in für Parallel-Task) |
+| Varoma drauf/runter | **aufsetzen / absetzen** |
+| Topf-Rand säubern | **mit dem Spatel nach unten schieben** |
+| Inhalt rausnehmen | **umfüllen** / **mithilfe des Spatels herausnehmen** |
+| Topf reinigen | **Mixtopf spülen** |
+| parallele Handarbeit | **Währenddessen … / In der Zwischenzeit …** |
+| zur Seite | **beiseitestellen** |
+| Schluss | **… servieren** (NIE „Guten Appetit!") |
 
-**Niemals**: `Guten Appetit!` als Schluss (kommt in 0 von 12 nativen Rezepten vor).
+## Mehrkomponenten-Gerichte (Salat + Dip + Hauptkomponente …)
 
-## Zutaten-Format
+Der „Eigene Rezepte"-Editor hat **keine** Sektionen/Gruppen — alles ist eine flache
+Step- und Zutatenliste. Deshalb:
 
-Native Vorwerk-Zutaten folgen diesem Schema:
+- Komponenten so **ordnen, dass der Mixtopf fließt**: erst das, was trocken/sauber
+  gemixt wird (Kräuter, Topping), dann Dips/Soßen, dazwischen `umfüllen` + `Mixtopf spülen`.
+- Den Mixtopf **wiederverwenden** statt für jede Komponente neu anzusetzen.
+- Wenn es der Klarheit hilft, einen Step mit einem **1-Wort-Cue** beginnen
+  (`Fürs Zaziki: …`). Sparsam einsetzen, nicht jeden Step.
+- Ofen-Komponente (z. B. Kartoffeln) als **ersten Step** (läuft 25 Min. im Hintergrund),
+  der Rest per `In der Zwischenzeit` parallel.
 
-- **Adjektive nach Komma**: `1 rote Chilischote, frisch` (NICHT „1 frische rote Chilischote")
-- **Modifikator nach Komma**: `1 Limette, gewachst` (Verb-Teil `in 6 Spalten geschnitten` gehört in den Step!)
-- **Spezifische Mengen** statt Catch-all: 
-  - ✗ `Salz, Pfeffer, Zucker, Öl nach Bedarf` (HelloFresh-Style)
-  - ✓ `2 TL Salz` + `25 g Öl` + `1-2 Prisen Pfeffer` + `1 Prise Zucker` (4 getrennte Zeilen)
-- **Bindestrich-Soßen**: `Sriracha-Sauce`, `Sweet-Chili-Soße`, `Teriyakisoße` (kein Leerzeichen)
-- **Anzahl-Wort weglassen**: `2 Karotten` statt `2 Stück Karotten`
+## Skalierung & Mengen — Bruchteil-Falle
 
-## Step-Längen-Verteilung
+**Lektion Räuchertofu #25:** HF-Original (2 P) sagte „1 Gurke … die Hälfte raspeln …
+restliche Hälfte würfeln". Beim Skalieren auf 4 P (= 2 Gurken) wurde daraus
+„die eine Hälfte … die andere Hälfte" → **mehrdeutig** (Hälfte von je einer Gurke? oder
+eine ganze von zweien?). Anwender hat's falsch verstanden.
 
-Für 14-17-Zutaten-Rezepte: **250-550 Zeichen pro Step** ist die native Range.
-- < 200 Zeichen: nur am Ende (z.B. "Anrichten") akzeptabel
-- > 550 Zeichen: Step zu lang, in 2 splitten
+**Regel:** Wenn Skalieren einen „halb X / halb X"-Split auf **ganze Einheiten** hebt,
+schreib ganze Einheiten: `1 Gurke raspeln` / `1 Gurke würfeln`. Niemals
+„die eine Hälfte / die andere Hälfte" wenn die Menge ≥ 1 ganze Einheit ist.
+Mengen immer **konkret** im Step nennen (Gramm/Stück/TL), nie „etwas", „nach Bedarf".
 
-## Was native Rezepte NICHT haben
+## Zutatenliste (bestätigt durch native Rezepte)
 
-- `Guten Appetit!` als Schluss-Phrase
-- Doppelpunkte vor Listen (`Toppings: Reis, Bohnen, Erdnüsse`) — native nutzt Fließtext
-- Hinweise in Klammern direkt in der Zutatenliste — gehören in den Step
+- **Adjektiv nach Komma**: `1 Chilischote, frisch` (nicht „1 frische Chilischote")
+- **Modifikator nach Komma**, Verb gehört in den Step: `1 Zitrone, gewachst`
+  (das „in Spalten" steht im Step, nicht in der Zutatenzeile)
+- **Spezifische Mengen** statt Sammelposten: `2 TL Salz` + `25 g Öl` + `1 Prise Pfeffer`
+  als getrennte Zeilen, nie „Salz, Pfeffer, Öl nach Bedarf"
+- **Bindestrich-Soßen**: `Sweet-Chili-Soße`, `Teriyakisoße` (kein Leerzeichen)
+- **Kein „Stück"**: `2 Karotten`, nicht „2 Stück Karotten"
+
+## Was native Rezepte NIE haben
+
+- Mega-Steps mit 4+ Aktionen
+- `Guten Appetit!` als Schluss
+- Doppelpunkt-Listen im Step (`Toppings: …`) — Fließtext
+- Klammer-Hinweise in der Zutatenliste — gehören in den Step
 - HelloFresh-Multiplier-Brackets `[1,5 EL | 2 EL]` — vorab auf eine Portionsgröße runterrechnen
+- mehrfaches Nennen derselben Zutat über Steps verteilt ohne neue Menge

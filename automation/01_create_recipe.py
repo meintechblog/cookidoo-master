@@ -17,15 +17,22 @@ CRITICAL CONSISTENCY RULES (learned from the first recipe iteration):
 3. Don't list a generic Salz amount AND a catch-all 'Salz, Pfeffer, Zucker, Öl nach Bedarf'
    in the ingredient list — pick one.
 
-NATIVE-STYLE INSIGHTS (learned from deep-research of 12 Vorwerk recipes for Bowls/Currys):
-- Native recipes for 14-17 ingredients have a MEDIAN of 5 steps (range 4-7), not 8.
-- Group preparation + parallel tasks into a single 'In der Zwischenzeit ...' step.
-- Use native verbs: 'einwiegen', 'mithilfe des Spatels herausnehmen', 'aufsetzen',
-  'absetzen', 'einhängen', 'auf 4 Bowls verteilen', '... servieren'.
-- Ingredient lines: shorter is better. '1 Limette, gewachst' (not '1 Limette, gewachst,
-  in 6 Spalten geschnitten' — the verb belongs in the step text).
-- Specify exact amounts ('2 TL Salz', '25 g Öl', '1-2 Prisen Pfeffer', '1 Prise Zucker')
-  instead of a catch-all 'nach Bedarf' line — native recipes always do the former.
+NATIVE-STYLE INSIGHTS (rewritten 2026-05-28 after analysing the real per-step
+segmentation of ~12 Cookidoo recipes — see skill references/native-style-rules.md):
+- ONE operation per step. Never two cooking chips in one step.
+- Steps are SHORT: ~40-130 chars (native median ≈ 90). The old "median 5 steps /
+  250-550 chars" rule was WRONG and produced mega-steps. Step count = number of
+  operations (typically 6-10), NOT ingredient count.
+- Add ingredients INCREMENTALLY — each ingredient with its amount in the step where
+  it's used, in machine order. Don't dump 6 ingredients into one step.
+- Let the MACHINE do the prep: chop onions/garlic/herbs/olives/mushrooms in the
+  Mixtopf with a chip. Manual prep only when unavoidable, folded into a running
+  machine step via 'Währenddessen ...'.
+- Whole units, no fraction ambiguity: scaling a 'half/half' split → write whole units
+  ('1 Gurke raspeln' / '1 Gurke würfeln'), never 'die eine Hälfte / die andere Hälfte'.
+- Use native verbs: 'einwiegen', 'mit dem Spatel nach unten schieben', 'umfüllen',
+  'aufsetzen', 'einhängen', 'auf 4 Bowls verteilen', '... servieren'.
+- Specify exact amounts ('2 TL Salz', '25 g Öl', '1 Prise Pfeffer'), never 'nach Bedarf'.
 """
 import pathlib
 import os

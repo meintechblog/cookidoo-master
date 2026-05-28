@@ -132,11 +132,17 @@ Bei Pfad B: nichts weiter in Phase 2.5 — AI-Restyle läuft in Phase 6 Step 2 i
 
 @$SKILL_DIR/references/native-style-rules.md
 
-Konkret für jedes Rezept:
+Konkret für jedes Rezept (Details + Belege in der native-style-rules.md):
 
-1. **Step-Anzahl bestimmen**: 14-17 Zutaten → 5 Steps median (4-7 OK). Wenn Pfannen-Phase zwei sequentielle Brate-Schritte braucht (Filetstücke raus + Öl neu) → 6 Steps statt 5.
+1. **Step-Anzahl ergibt sich aus Operationen, nicht aus Zutatenzahl.** Zähle die echten
+   Operationen (jeder Chip, jede Pfannen-/Ofen-Phase, jedes Anrichten) — das ist die
+   Step-Zahl. Typisch **6-10 kurze Steps**. KEINE Ziel-Zahl, KEIN Zusammenquetschen.
 
-2. **Aktionen gruppieren**: Vorbereitung-Schritte zusammenfassen. Parallel laufende Tasks mit `In der Zwischenzeit ...` einleiten.
+2. **EINE Operation pro Step, 40-130 Zeichen.** Nie zwei Chips in einem Step. Zutaten
+   **inkrementell** zugeben (jede mit Menge im Step ihrer Verwendung). Maschine macht die
+   Prep (zerkleinern/hacken im Mixtopf), manuelle Prep nur per `Währenddessen …` in einen
+   laufenden Maschinen-Step falten. Der Anwender soll pro Step in 2 Sek. sehen: was rein,
+   was schnibbeln, welcher Befehl.
 
 3. **Native Verben einsetzen**:
    - `füllen → einwiegen` (in Gareinsatz/Mixtopf)
@@ -272,17 +278,14 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
 
 **3. Tipps schreiben + 03_add_tips.py editieren + ausführen:** (parallel zu Step 2)
    - **Erste Zeile (Pflicht bei HF-Quellen):** `Karte #<HF_NR> — <kurzer Rezeptname>` gefolgt von leerer Zeile. Beispiel: `Karte #33 — Veganes Portobello-Champignon-Stroganoff\n\n`. Grund: Jörg sieht am Thermomix-Display direkt im Tipps-Block welche Karten-Box aus dem Kühlschrank zum Rezept gehört — ohne scrollen oder mit der URL abgleichen.
-   - 5-8 rezept-spezifische Tipps generieren (kein Boilerplate!) basierend auf:
-     - Was die HelloFresh-Karte als Hinweis hat
-     - Welche Zubereitungs-Schritte rezeptspezifische Stolperfallen haben
-     - Variations-Ideen (Tofu statt X, Edamame zusätzlich, etc.)
-     - Reste/Haltbarkeit
-   - Tipps mit `— ` Prefix, jede Zeile eigene Tipp
-   - Narrativ-Block am Ende (siehe Sweet-Chili-Bowl + Nasi-Goreng als Template):
+   - **Max. 3-5 Tipps, jeder EINE kurze Zeile** (≤ ~120 Zeichen), telegrafisch — nur der
+     handlungsrelevante Kern. KEIN Boilerplate, KEINE Absatz-Tipps, KEINE Erklär-Prosa.
+     Quellen für gute Tipps: echte Stolperfallen der Steps, ein konkreter Variations-Swap,
+     Reste-Haltbarkeit. Lieber 3 scharfe Tipps als 7 schwammige.
+   - Tipps mit `— ` Prefix, jede Zeile ein Tipp.
+   - **Kein „Warum dieses Rezept"-Narrativ in den Cookidoo-Tipps** — der gehört nur ins
+     Repo-README. Auf Cookidoo nach den Tipps nur die zwei Quellen-Links:
      ```
-     Warum dieses Rezept als Cookidoo-Version hier liegt:
-     [HelloFresh-Würdigung + Thermomix-Variante-Kritik + was wir geändert haben]
-     
      Original-Karte (HelloFresh):
      <url>
      
