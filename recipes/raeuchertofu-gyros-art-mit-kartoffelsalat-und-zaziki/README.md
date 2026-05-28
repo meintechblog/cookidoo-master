@@ -8,7 +8,7 @@ dazu Drillinge, Dill-Petersilie-Oliven-Salat, selbstgemachtes Zaziki · vegan ·
 
 | | |
 |---|---|
-| **Quelle** | HelloFresh Wochenbox (HF_Y24_R33_W02, vegan) |
+| **Quelle** | HelloFresh Wochenbox, Karte #25 (HF_Y24_R33_W02, vegan) |
 | **Portionen** | 4 |
 | **Arbeitszeit** | ca. 30 Min. |
 | **Gesamtzeit** | ca. 40 Min. |
