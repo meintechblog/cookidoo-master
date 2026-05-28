@@ -196,7 +196,6 @@ export function useVoice() {
   }, [recording]);
 
   const speakText = useCallback(async (rawText: string) => {
-    if (mode === "off") return;
     if (!SPEECH_URL) return;
     const filtered = filterForTTS(rawText);
     if (!filtered) return;
