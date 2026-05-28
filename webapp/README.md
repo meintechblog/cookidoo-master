@@ -74,7 +74,7 @@ curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
 apt install -y nodejs
 
 # Bootstrap (also handles future updates):
-curl -fsSL https://raw.githubusercontent.com/meintechblog/cookidoo-master/main/webapp/deploy/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/meintechblog/thermomix-master/main/webapp/deploy/install.sh | bash
 ```
 
 After that the webapp is on port 80 of the LXC's IP. The autoupdate timer pulls from `main` every 10 min.

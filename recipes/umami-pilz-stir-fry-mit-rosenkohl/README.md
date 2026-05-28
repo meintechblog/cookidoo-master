@@ -72,7 +72,7 @@ Für diese Cookidoo-Version habe ich die Karte komplett in **echtes Thermomix-Wo
 - **Spezifische Mengen** statt Catch-all: `1 TL Salz`, `20 g Öl`, `1-2 Prisen Pfeffer` als separate Zutatenzeilen.
 - **Interaktive Koch-Befehl-Chips**: `18 Min./Varoma/Stufe 1` für den Reis und `30 Sek./Stufe 3` für die Würzsoße — beide sind im Cookidoo-Render keine Plain-Text-Strings, sondern hervorgehobene Chips. Der Thermomix führt sie beim Antippen direkt aus.
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

@@ -81,11 +81,11 @@ Alle optional (sensible defaults sind in plist + scripts gebacken):
 | Variable                          | Default                                       |
 |-----------------------------------|-----------------------------------------------|
 | `COOKIDOO_CHAT_BASE`        | `http://192.168.3.223`                       |
-| `COOKIDOO_REPO_PATH`        | `/Users/hulki/codex/cookidoo-master`                               |
+| `COOKIDOO_REPO_PATH`        | `/Users/hulki/codex/thermomix-master`                               |
 | `COOKIDOO_PEERS_BROKER`     | `http://127.0.0.1:7899`                       |
 | `COOKIDOO_CHAT_POLL_S`      | `2`                                           |
 | `COOKIDOO_PEER_POLL_S`      | `5`                                           |
 | `COOKIDOO_QUEUE_DIR`        | `~/.cookidoo-pending-chat`                |
 | `COOKIDOO_QUEUE_MAX`        | `500` (oldest dropped after that)             |
 | `CHAT_BRIDGE_TOKEN`               | leer = offen; wenn gesetzt: Bearer-required für inbox+reply |
-| `CHAT_DB_PATH`                    | (webapp-side) `/Users/hulki/codex/cookidoo-master/state/chat.sqlite`           |
+| `CHAT_DB_PATH`                    | (webapp-side) `/Users/hulki/codex/thermomix-master/state/chat.sqlite`           |

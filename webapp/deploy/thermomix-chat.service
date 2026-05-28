@@ -4,14 +4,14 @@ After=network-online.target
 
 [Service]
 Type=simple
-WorkingDirectory=/opt/cookidoo-master
+WorkingDirectory=/opt/thermomix-master
 Environment=HOME=/root
 Environment=TERM=xterm-256color
 # ttyd listens on localhost:7681; nginx reverse-proxies /chat → :7681.
 # -W = writable (user can type), --max-clients 4 = small abuse cap.
 # tmux session "thermomix" persists across browser refreshes.
 ExecStart=/usr/local/bin/ttyd -W --max-clients 4 -p 7681 -i 127.0.0.1 \
-  /usr/bin/tmux new -A -s thermomix -c /opt/cookidoo-master claude
+  /usr/bin/tmux new -A -s thermomix -c /opt/thermomix-master claude
 Restart=always
 RestartSec=5
 StandardOutput=journal

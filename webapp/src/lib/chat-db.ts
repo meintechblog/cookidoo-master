@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Override via ENV; otherwise the path baked in at install time.
-const DB_PATH = process.env.CHAT_DB_PATH || "/Users/hulki/codex/cookidoo-master/state/chat.sqlite";
+const DB_PATH = process.env.CHAT_DB_PATH || "/Users/hulki/codex/thermomix-master/state/chat.sqlite";
 
 let _db: Database.Database | null = null;
 

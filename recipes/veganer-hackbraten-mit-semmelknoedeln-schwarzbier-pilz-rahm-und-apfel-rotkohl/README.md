@@ -96,7 +96,7 @@ Was die Cookidoo-Version anders macht:
 - **Interaktive Koch-Befehl-Chips**: `5 Min./50 °C/Stufe 1`, `4 Sek./Stufe 5`, `3 Sek./Stufe 5/Linkslauf`, `2 Min./Varoma/Linkslauf/Stufe 1` und `25 Min./Varoma/Linkslauf/Stufe 1` sind im Cookidoo-Render keine Plain-Text-Strings, sondern hervorgehobene Chips. Der Thermomix erkennt sie und führt sie beim Antippen direkt aus — niemand tippt am Display Zahlen ein.
 - **Hackbraten in der Pfanne, nicht im Mixtopf**: Der Planeo-Braten ist am Stück, würde im Mixtopf seine Struktur verlieren. Die Pfanne mit 25 g Öl gibt ihm außen die Maillard-Kruste, die ihn vom „Versuchten" zum „Versprochenen" macht. Drei Minuten Aufwand, riesiger Geschmacks-Hebel.
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte (HelloFresh-Karte, Kochbuch, Eigenkreation) in ~2 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte (HelloFresh-Karte, Kochbuch, Eigenkreation) in ~2 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## Nährwerte pro Portion (Schätzung, ca. 500 g)
 

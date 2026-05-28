@@ -31,7 +31,7 @@ P = "COOKIDOO"  # interpolated by install.sh
 BASE = os.environ.get(f"{P}_CHAT_BASE", "http://192.168.3.223").rstrip("/")
 TOKEN = os.environ.get("CHAT_BRIDGE_TOKEN", "")
 REPO_PATH = os.path.realpath(
-    os.environ.get(f"{P}_REPO_PATH", "/Users/hulki/codex/cookidoo-master")
+    os.environ.get(f"{P}_REPO_PATH", "/Users/hulki/codex/thermomix-master")
 )
 BROKER = os.environ.get(f"{P}_PEERS_BROKER", "http://127.0.0.1:7899").rstrip("/")
 CHAT_POLL_S = float(os.environ.get(f"{P}_CHAT_POLL_S", "2"))
@@ -43,7 +43,7 @@ QUEUE_DIR = Path(os.environ.get(
 QUEUE_MAX = int(os.environ.get(f"{P}_QUEUE_MAX", "500"))
 LOG_PATH = Path(os.environ.get(
     f"{P}_CHAT_LOG",
-    "/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat-bridge.log",
+    "/Users/hulki/codex/thermomix-master/scripts/chat_bridge/chat-bridge.log",
 ))
 
 _stop = threading.Event()

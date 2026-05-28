@@ -32,7 +32,7 @@ TIPS = (
     "\n"
     "Toolkit (Open Source):\n"
     "Aus beliebigen Rezepten (HelloFresh-Karte, Kochbuch, Webseite) automatisch native-quality Cookidoo-Rezepte mit interaktiven Koch-Befehl-Chips machen:\n"
-    "https://github.com/meintechblog/cookidoo-master"
+    "https://github.com/meintechblog/thermomix-master"
 )
 # === END EDIT ===
 

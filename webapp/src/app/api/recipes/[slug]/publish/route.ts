@@ -71,7 +71,7 @@ function buildTipsBlock(tipsMd: string, warumMd: string, hfUrl: string | null): 
     sections.push(`Warum diese Cookidoo-Adaption:\n${cleaned}`);
   }
   if (hfUrl) sections.push(`Original-Karte (HelloFresh):\n${hfUrl}`);
-  sections.push(`Toolkit (Open Source):\nhttps://github.com/meintechblog/cookidoo-master`);
+  sections.push(`Toolkit (Open Source):\nhttps://github.com/meintechblog/thermomix-master`);
   return sections.join("\n\n");
 }
 

@@ -55,8 +55,8 @@ brew install python3
 pip3 install playwright
 playwright install chromium
 
-git clone https://github.com/meintechblog/cookidoo-master.git
-cd cookidoo-master
+git clone https://github.com/meintechblog/thermomix-master.git
+cd thermomix-master
 python3 automation/00_setup_profile.py
 # Im Browser bei cookidoo.de einloggen, Cookie-Banner akzeptieren, Fenster schließen.
 # Login persistiert in ~/cookidoo-automation/profile/ — danach nie wieder nötig.
@@ -113,7 +113,7 @@ Details + die 9 nicht-offensichtlichen Qualitätsregeln (per-step Uniqueness, Co
 ## Repo Layout
 
 ```
-cookidoo-master/
+thermomix-master/
 ├── README.md             ← du bist hier — Why + Quick Start
 ├── PLAYBOOK.md           ← Schritt-für-Schritt pro neuem Rezept + die 9 Qualitätsregeln
 ├── LEARNINGS.md          ← Reverse-Engineering: APIs, DOM, Custom-Elements, Edge-Cases

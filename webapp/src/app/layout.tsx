@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </main>
         <footer className="hidden md:block shrink-0 border-t border-charcoal-100 py-2 text-center text-xs text-charcoal-500">
-          Thermomix Master · <a href="https://github.com/meintechblog/cookidoo-master" className="hover:text-hero-700">Open Source</a> · MIT
+          Thermomix Master · <a href="https://github.com/meintechblog/thermomix-master" className="hover:text-hero-700">Open Source</a> · MIT
         </footer>
       </body>
     </html>

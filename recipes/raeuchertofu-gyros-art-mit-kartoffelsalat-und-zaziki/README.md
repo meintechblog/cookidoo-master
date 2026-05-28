@@ -70,7 +70,7 @@ Für diese Cookidoo-Version:
 - **Spezifische Mengen** statt Catch-all: `3 TL Salz`, `40 g Öl`, `40 g Olivenöl`, `1-2 Prisen Pfeffer`, `2 TL Zucker` als separate Zutatenzeilen.
 - **Adjektive nach Komma**: `Kartoffeln, Drillinge`, `Dill, frisch`, `Petersilie, frisch`, `Kalamata-Oliven, ohne Stein` (Native-Vorwerk-Schema).
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte in ~3–5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~3–5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

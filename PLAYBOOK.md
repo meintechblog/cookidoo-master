@@ -8,8 +8,8 @@ End-to-End-Anleitung: vom Foto/Karte zum interaktiv-startbaren Cookidoo-Rezept m
 pip3 install playwright
 playwright install chromium
 
-git clone https://github.com/meintechblog/cookidoo-master.git ~/cookidoo-master
-cd ~/cookidoo-master
+git clone https://github.com/meintechblog/thermomix-master.git ~/thermomix-master
+cd ~/thermomix-master
 python3 automation/00_setup_profile.py
 # Im Browser bei cookidoo.de einloggen, Cookie-Banner akzeptieren, Fenster schließen.
 # Profil persistiert in ~/cookidoo-automation/profile/

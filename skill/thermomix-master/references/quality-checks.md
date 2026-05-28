@@ -60,7 +60,7 @@ Original-Karte (HelloFresh):
 https://www.hellofresh.de/recipes/...
 
 Toolkit (Open Source):
-https://github.com/meintechblog/cookidoo-master
+https://github.com/meintechblog/thermomix-master
 ```
 
 ## 8. Step-Granularität nach Native-Median (siehe native-style-rules.md)

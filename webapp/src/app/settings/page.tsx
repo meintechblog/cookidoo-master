@@ -17,7 +17,7 @@ export default function SettingsPage() {
         <section>
           <h2 className="font-display text-xl font-bold mb-2">Auto-Update</h2>
           <p className="text-sm text-charcoal-600 mb-3">
-            Die Webapp pullt automatisch aus dem GitHub-Repo (cookidoo-master) alle 10 Minuten via systemd-Timer.
+            Die Webapp pullt automatisch aus dem GitHub-Repo (thermomix-master) alle 10 Minuten via systemd-Timer.
             Bei neuen Commits in <code className="text-xs bg-cream-100 px-1.5 py-0.5 rounded">main</code> wird automatisch <code>npm install + build + restart</code> ausgeführt.
           </p>
         </section>

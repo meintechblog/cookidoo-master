@@ -9,7 +9,7 @@
   <array>
     <string>/usr/bin/env</string>
     <string>python3</string>
-    <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat_bridge.py</string>
+    <string>/Users/hulki/codex/thermomix-master/scripts/chat_bridge/chat_bridge.py</string>
   </array>
 
   <key>EnvironmentVariables</key>
@@ -17,7 +17,7 @@
     <key>COOKIDOO_CHAT_BASE</key>
     <string>http://192.168.3.223</string>
     <key>COOKIDOO_REPO_PATH</key>
-    <string>/Users/hulki/codex/cookidoo-master</string>
+    <string>/Users/hulki/codex/thermomix-master</string>
     <key>COOKIDOO_PEERS_BROKER</key>
     <string>http://127.0.0.1:7899</string>
     <key>PATH</key>
@@ -31,10 +31,10 @@
   <true/>
 
   <key>StandardOutPath</key>
-  <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat-bridge.stdout.log</string>
+  <string>/Users/hulki/codex/thermomix-master/scripts/chat_bridge/chat-bridge.stdout.log</string>
 
   <key>StandardErrorPath</key>
-  <string>/Users/hulki/codex/cookidoo-master/scripts/chat_bridge/chat-bridge.stderr.log</string>
+  <string>/Users/hulki/codex/thermomix-master/scripts/chat_bridge/chat-bridge.stderr.log</string>
 
   <key>ProcessType</key>
   <string>Background</string>

@@ -9,7 +9,7 @@ Reads recipe JSON from stdin:
   "tips_text": "— Tipp 1\n— Tipp 2\n\nWarum dieses Rezept ...\n",
   "prep_min": 30,
   "total_min": 40,
-  "image_path": "/opt/cookidoo-master/recipes/<slug>/hero.jpg",  // optional
+  "image_path": "/opt/thermomix-master/recipes/<slug>/hero.jpg",  // optional
   "publish": false  // set true to also run 02_upload_image + 06_publish
 }
 

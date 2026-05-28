@@ -3,15 +3,15 @@
 # Run on the LXC as root. Pulls latest from GitHub, builds, restarts services.
 #
 # First-time setup:
-#   curl -fsSL https://raw.githubusercontent.com/meintechblog/cookidoo-master/main/webapp/deploy/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/meintechblog/thermomix-master/main/webapp/deploy/install.sh | bash
 #
 # Subsequent updates:
-#   /opt/cookidoo-master/webapp/deploy/install.sh
+#   /opt/thermomix-master/webapp/deploy/install.sh
 
 set -euo pipefail
 
-REPO_URL="https://github.com/meintechblog/cookidoo-master.git"
-REPO_DIR="/opt/cookidoo-master"
+REPO_URL="https://github.com/meintechblog/thermomix-master.git"
+REPO_DIR="/opt/thermomix-master"
 STATE_DIR="/var/lib/thermomix-master"
 APP_USER="root"
 

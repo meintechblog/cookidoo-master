@@ -1,7 +1,7 @@
 import path from "node:path";
 
 // The repo root is one directory above webapp/. In production the webapp lives
-// at /opt/cookidoo-master/webapp/, so the repo root is /opt/cookidoo-master/.
+// at /opt/thermomix-master/webapp/, so the repo root is /opt/thermomix-master/.
 // In dev (npm run dev from webapp/), the same logic resolves correctly.
 export const REPO_ROOT = path.resolve(process.cwd(), "..");
 export const RECIPES_DIR = path.join(REPO_ROOT, "recipes");

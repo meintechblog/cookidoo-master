@@ -11,7 +11,7 @@
 #     --target /path/to/hf-original.jpg \
 #     --slug   vegane-filetstuecke-thai-orange \
 #     --nr     32 \
-#     --repo   /Users/hulki/codex/cookidoo-master \
+#     --repo   /Users/hulki/codex/thermomix-master \
 #     [--hf-url <url>] [--no-hub-push] [--background]
 #
 # Output (sequential mode): writes restyled JPEG to .received/hf<NR>/restyled-final.jpg

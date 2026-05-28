@@ -71,7 +71,7 @@ Für diese Cookidoo-Version habe ich die Karte deshalb komplett in **echtes Ther
 - **Spezifische Mengen** statt Catch-all: `2 TL Salz`, `100 g Öl`, `1-2 Prisen Pfeffer` als separate Zutatenzeilen — nicht „Salz, Pfeffer, Öl nach Geschmack" wie die HelloFresh-Karte. Damit kennt der Thermomix die Mengen exakt.
 - **Interaktive Koch-Befehl-Chips**: `18 Min./Varoma/Stufe 1` und `10 Sek./Stufe 6` sind im Cookidoo-Render keine Plain-Text-Strings, sondern hervorgehobene Chips. Der Thermomix erkennt sie und führt sie beim Antippen direkt aus — der Reis wird wirklich 18 Minuten auf Varoma/Stufe 1 dampfgegart und die Würzpaste in 10 Sek. auf Stufe 6 püriert, ohne dass man am Display Werte eintippen muss.
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte (HelloFresh-Karte, Kochbuch, Webseite) in ~2 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte (HelloFresh-Karte, Kochbuch, Webseite) in ~2 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

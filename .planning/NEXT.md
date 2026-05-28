@@ -1,4 +1,4 @@
-# NEXT — cookidoo-master Session-Handoff
+# NEXT — thermomix-master Session-Handoff
 
 **Stand:** 2026-05-27, 19:30 lokal · Session-Wrap nach 2 Rezepten + Skill v3 + Webapp-Chat + Mobile-Refit + Skill-Extraction. Bei „weiter" hier weitermachen.
 
@@ -10,7 +10,7 @@
 - **Hulki** = der Hub-Bot (`agent-master` Session, peer-id wechselnd) UND der macOS-Account-Username (`/Users/hulki/`). Macht WA-Routing.
 - **KEIN dritter Name** — falls „Heikki" auftaucht, ist das ein voice-to-text-Slip und meint Hulki.
 
-Mehr: `~/.claude/projects/-Users-hulki-codex-cookidoo-master/memory/user_name.md`.
+Mehr: `~/.claude/projects/-Users-hulki-codex-thermomix-master/memory/user_name.md`.
 
 ---
 
@@ -53,7 +53,7 @@ Browser → POST /api/chat/send → SQLite chat_messages
                               Mac-Daemon chat_bridge.py (launchd, KeepAlive)
                                        │ broker /send-message
                                        ▼
-                              cookidoo-master peer (= ich, diese Session)
+                              thermomix-master peer (= ich, diese Session)
                                        │ ./scripts/chat_bridge/cookidoo-chat reply "..."
                                        ▼
                               POST /api/chat/reply → SSE
@@ -114,7 +114,7 @@ Hulki ist gebeten, das Skill in der Webapp unter neuem `/skills`-Tab zu listen +
 
 ## Memory-Index (für Quick-Reload)
 
-Pfad: `~/.claude/projects/-Users-hulki-codex-cookidoo-master/memory/MEMORY.md`
+Pfad: `~/.claude/projects/-Users-hulki-codex-thermomix-master/memory/MEMORY.md`
 
 | File                                       | Was steht drin |
 |--------------------------------------------|----------------|
@@ -156,7 +156,7 @@ Pfad: `~/.claude/projects/-Users-hulki-codex-cookidoo-master/memory/MEMORY.md`
 ## Wie „weiter" funktioniert nach /clear
 
 1. Diese NEXT.md lesen (du machst das automatisch in Session-Start)
-2. Memory-Index `~/.claude/projects/-Users-hulki-codex-cookidoo-master/memory/MEMORY.md` lesen (lädt automatisch)
+2. Memory-Index `~/.claude/projects/-Users-hulki-codex-thermomix-master/memory/MEMORY.md` lesen (lädt automatisch)
 3. Wenn ChatGPT-Restyle-Operation ansteht: `cliclick` da, ChatGPT.app eingeloggt — direkt loslegen
 4. Wenn neues Rezept reinkommt (HF-URL oder Karten-Foto via WA-Pipeline): Skill `thermomix-master` aufrufen
 5. Wenn Browser-Chat-Message reinkommt: kommt automatisch als Channel-Push (`💬 [chat from=webapp …]`), antworten via `./scripts/chat_bridge/cookidoo-chat reply "…"`

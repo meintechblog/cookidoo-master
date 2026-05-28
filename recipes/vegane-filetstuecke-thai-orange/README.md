@@ -67,7 +67,7 @@ Für diese Cookidoo-Version:
 - **Spezifische Mengen** statt Catch-all: `1 TL Salz`, `30 g Öl`, `1–2 Prisen Pfeffer` als eigene Zutatenzeilen.
 - **Adjektive nach Komma**: `vegane Filetstücke, Hähnchen-Art`, `Cashewkerne, geröstet`, `Thai-Basilikum, frisch` (Native-Vorwerk-Schema).
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte in ~3–5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~3–5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

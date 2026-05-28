@@ -4,11 +4,11 @@ After=thermomix-webapp.service
 
 [Service]
 Type=simple
-WorkingDirectory=/opt/cookidoo-master/webapp
+WorkingDirectory=/opt/thermomix-master/webapp
 Environment=NODE_ENV=production
 Environment=THERMOMIX_STATE_DIR=/var/lib/thermomix-master
-Environment=THERMOMIX_PYTHON=/opt/cookidoo-master/.venv/bin/python
-ExecStart=/usr/bin/node /opt/cookidoo-master/webapp/worker/worker.js
+Environment=THERMOMIX_PYTHON=/opt/thermomix-master/.venv/bin/python
+ExecStart=/usr/bin/node /opt/thermomix-master/webapp/worker/worker.js
 Restart=always
 RestartSec=10
 StandardOutput=journal

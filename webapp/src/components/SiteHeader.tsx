@@ -53,7 +53,7 @@ export function SiteHeader() {
             </a>
           ))}
           <a
-            href="https://github.com/meintechblog/cookidoo-master"
+            href="https://github.com/meintechblog/thermomix-master"
             target="_blank"
             rel="noopener"
             className="px-3 py-1.5 rounded-md border border-charcoal-200 hover:border-hero-500 hover:text-hero-700 transition"
@@ -104,7 +104,7 @@ export function SiteHeader() {
             ))}
             <li>
               <a
-                href="https://github.com/meintechblog/cookidoo-master"
+                href="https://github.com/meintechblog/thermomix-master"
                 target="_blank"
                 rel="noopener"
                 className="block px-2 py-3 text-base text-charcoal-600 hover:bg-cream-100 rounded-lg"

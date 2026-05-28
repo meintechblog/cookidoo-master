@@ -67,7 +67,7 @@ Für diese Cookidoo-Version:
 - **Spezifische Mengen** statt Catch-all: `1 TL Salz`, `20 g Öl`, `1-2 Prisen Pfeffer`, `1 Prise Zucker` als separate Zutatenzeilen.
 - **Zwei interaktive Koch-Befehl-Chips**: `20 Min./Varoma/Stufe 1` für Parallel-Garen und `2 Min./100 °C/Linkslauf/Stufe 1` für Grünkohl — beide werden im Cookidoo-Render zu hervorgehobenen Chips. Der Thermomix führt sie beim Antippen direkt aus.
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

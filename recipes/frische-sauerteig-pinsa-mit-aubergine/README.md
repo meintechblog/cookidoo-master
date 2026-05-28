@@ -69,7 +69,7 @@ Für diese Cookidoo-Version habe ich:
 - **Interaktiver Koch-Befehl-Chip**: `10 Sek./Stufe 5` für die Tomatensoße — im Cookidoo-Render kein Plain-Text-String, sondern hervorgehobener Chip. Der Thermomix führt ihn beim Antippen direkt aus.
 - **Step-Granularität nach Native-Standard**: 5 Steps statt 6 in der Original-Karte (das HF-Step „Teig ausrollen" wurde mit „Belegen + Backen" zusammengefasst).
 
-Erstellt mit dem Open-Source-Toolkit [cookidoo-master](https://github.com/meintechblog/cookidoo-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
+Erstellt mit dem Open-Source-Toolkit [thermomix-master](https://github.com/meintechblog/thermomix-master), das beliebige Rezepte in ~2-5 Minuten in native-quality Cookidoo-Eigene-Rezepte umwandelt.
 
 ## So sieht's live auf Cookidoo aus
 

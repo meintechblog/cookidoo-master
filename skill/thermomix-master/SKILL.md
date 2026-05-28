@@ -30,7 +30,7 @@ den Rest — kein manuelles Foto-Schicken, kein Mid-Workflow-Approval.
 - Commit + Push + LXC-Autoupdate getriggert → Webapp `http://192.168.3.223/r/<slug>` live
 
 **Vorbedingungen** (Setup-Sache, einmal pro Maschine):
-- Toolkit-Repo unter `~/codex/cookidoo-master/` (oder via SKILL_REPO env)
+- Toolkit-Repo unter `~/codex/thermomix-master/` (oder via SKILL_REPO env)
 - `~/cookidoo-automation/profile/` mit eingeloggter Cookidoo-Session
 - ChatGPT.app eingeloggt + Bedienungshilfen-Permission + `cliclick` (`brew install cliclick`) — nötig für den AI-Restyle in Pfad B
 - SSH-Zugang zu `root@192.168.3.223` für LXC-Autoupdate-Trigger (optional, sonst Fallback auf 10-Min-Timer)
@@ -38,7 +38,7 @@ den Rest — kein manuelles Foto-Schicken, kein Mid-Workflow-Approval.
 
 
 <execution_context>
-SKILL_REPO=${SKILL_REPO:-$HOME/codex/cookidoo-master}
+SKILL_REPO=${SKILL_REPO:-$HOME/codex/thermomix-master}
 SKILL_DIR=${SKILL_DIR:-$HOME/.claude/skills/thermomix-master}
 </execution_context>
 
@@ -271,6 +271,7 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
    - Garnituren auf dem HF-Original (Zitronenkeile, Kräuter, Toppings) in `--garnish` listen, damit sie bei der Generation UND beim Retry nicht weggelassen werden.
 
 **3. Tipps schreiben + 03_add_tips.py editieren + ausführen:** (parallel zu Step 2)
+   - **Erste Zeile (Pflicht bei HF-Quellen):** `Karte #<HF_NR> — <kurzer Rezeptname>` gefolgt von leerer Zeile. Beispiel: `Karte #33 — Veganes Portobello-Champignon-Stroganoff\n\n`. Grund: Jörg sieht am Thermomix-Display direkt im Tipps-Block welche Karten-Box aus dem Kühlschrank zum Rezept gehört — ohne scrollen oder mit der URL abgleichen.
    - 5-8 rezept-spezifische Tipps generieren (kein Boilerplate!) basierend auf:
      - Was die HelloFresh-Karte als Hinweis hat
      - Welche Zubereitungs-Schritte rezeptspezifische Stolperfallen haben
@@ -286,7 +287,7 @@ Bei Pfad A (eigenes Foto) oder Pfad C (kein Foto): Step 2 entfällt — alles se
      <url>
      
      Toolkit (Open Source):
-     https://github.com/meintechblog/cookidoo-master
+     https://github.com/meintechblog/thermomix-master
      ```
    - Edit `$SKILL_REPO/automation/03_add_tips.py` (TIPS = ...)
    - `python3 automation/03_add_tips.py`
