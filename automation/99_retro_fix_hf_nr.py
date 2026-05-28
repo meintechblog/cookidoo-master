@@ -31,6 +31,12 @@ RECIPES = [
         "name_short": "Räuchertofu-Gyros-Art mit Kartoffelsalat & Zaziki",
         "cookidoo_id": "01KSMJK60SXV36SCX77T7N5ZV6",
     },
+    {
+        "slug": "vegane-filetstuecke-thai-orange",
+        "hf_nr": 32,
+        "name_short": "Vegane Filetstücke in thailändischer Orangensoße",
+        "cookidoo_id": "01KSMKBJ3XW0C5K5NYYVMVFZXC",
+    },
 ]
 # === END EDIT ===
 

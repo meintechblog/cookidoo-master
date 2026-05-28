@@ -1,4 +1,4 @@
-# Vegane Filetstücke in thailändischer Orangensoße
+# [#32] Vegane Filetstücke in thailändischer Orangensoße
 
 mit Jasminreis, Stir-Fry-Gemüse, Cashews, Sesam und Thai-Basilikum · vegan · 4 Portionen
 
