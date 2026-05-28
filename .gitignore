@@ -47,3 +47,7 @@ scripts/chat_bridge/chat-bridge.stderr.log
 *.env
 .env.local
 .env.production
+
+# Peer-Briefe (können private Daten enthalten — nie committen)
+.planning/inbox/
+.planning/archive/
