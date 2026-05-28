@@ -250,14 +250,36 @@ export function ChatRoom({ initialBacklog }: Props) {
                   {m.role === "assistant" ? <AssistantMarkdown body={m.body} /> : m.body}
                   <div
                     className={
-                      "text-[10px] mt-1 " +
+                      "text-[10px] mt-1 flex items-center gap-2 " +
                       (m.role === "user" ? "text-blue-100" : "text-gray-400")
                     }
                   >
-                    {new Date(m.created_at * 1000).toLocaleTimeString("de-DE", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    <span>
+                      {new Date(m.created_at * 1000).toLocaleTimeString("de-DE", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                    {m.role === "assistant" && voice.available && (
+                      <button
+                        type="button"
+                        // The tap is a genuine user gesture → unlocks iOS Safari audio,
+                        // then plays. This is the reliable path on iPhone where SSE-driven
+                        // auto-speak is blocked by the autoplay policy.
+                        onClick={() => {
+                          voice.unlockAudio();
+                          voice.speakText(m.body);
+                        }}
+                        aria-label="Vorlesen"
+                        title="Vorlesen"
+                        className="inline-flex items-center gap-1 text-gray-400 hover:text-blue-600 transition-colors"
+                      >
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+                          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z" />
+                        </svg>
+                        Vorlesen
+                      </button>
+                    )}
                   </div>
                 </div>
               </li>
@@ -290,6 +312,13 @@ export function ChatRoom({ initialBacklog }: Props) {
         <div className="px-4 py-1 text-[11px] bg-blue-50 text-blue-700 border-t border-blue-200 flex items-center gap-2">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
           spricht…
+          <button
+            type="button"
+            onClick={() => voice.stopSpeaking()}
+            className="ml-auto underline hover:no-underline"
+          >
+            Stop
+          </button>
         </div>
       )}
 
