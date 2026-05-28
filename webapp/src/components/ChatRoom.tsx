@@ -300,7 +300,7 @@ export function ChatRoom({ initialBacklog }: Props) {
         }}
         className="border-t border-gray-200 bg-white px-3 py-3 flex items-end gap-2"
       >
-        <VoiceControls voice={voice} onTranscript={onVoiceTranscript} />
+        <VoiceControls voice={voice} onTranscript={onVoiceTranscript} show={connected} />
         <textarea
           value={draft}
           onChange={e => setDraft(e.target.value)}
@@ -311,7 +311,7 @@ export function ChatRoom({ initialBacklog }: Props) {
             }
           }}
           rows={2}
-          placeholder={voice.mode === "walkie" ? "Mic gedrückt = sprechen, sonst tippen…" : "Nachricht an cookidoo schreiben…"}
+          placeholder="Nachricht an cookidoo schreiben…"
           enterKeyHint="send"
           className="flex-1 resize-none px-4 py-2.5 rounded-2xl border border-gray-200 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
         />
@@ -322,15 +322,6 @@ export function ChatRoom({ initialBacklog }: Props) {
         >
           {sending ? "…" : "Senden"}
         </button>
-        <div
-          className={
-            "absolute mt-[-24px] ml-[-12px] text-[10px] " +
-            (connected ? "text-green-600" : "text-gray-400")
-          }
-          aria-live="polite"
-        >
-          {connected ? "● live" : "○ getrennt"}
-        </div>
       </form>
     </>
   );

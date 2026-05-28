@@ -94,10 +94,9 @@ async function postSynthesize(text: string): Promise<Blob> {
 // ── useVoice hook: returns recording state + handlers ──────────────────────
 
 export function useVoice() {
-  const [mode, setMode] = useState<VoiceMode>(() => {
-    if (typeof window === "undefined") return "off";
-    return (localStorage.getItem("chat-voice-mode") as VoiceMode) || "off";
-  });
+  // Walkie-only: hardcoded, no mode-switching UI.
+  const mode: VoiceMode = "walkie";
+  const setMode = (_: VoiceMode) => {}; // no-op kept for API compat
   const [recording, setRecording] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
   const [speaking, setSpeaking] = useState(false);
@@ -106,12 +105,31 @@ export function useVoice() {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioUnlockedRef = useRef(false);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("chat-voice-mode", mode);
-    }
-  }, [mode]);
+  // iOS Safari blocks audio.play() unless it's been "unlocked" inside a user-gesture handler.
+  // We call this from the mic-button click, which IS a user gesture — that's enough to bless
+  // subsequent (server-driven, SSE-triggered) audio playback for the rest of the session.
+  const unlockAudio = useCallback(() => {
+    if (audioUnlockedRef.current) return;
+    try {
+      const audio = new Audio(
+        // 1-frame silent WAV (RIFF, mono, 8kHz, 0 samples)
+        "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=",
+      );
+      audio.muted = true;
+      audio
+        .play()
+        .then(() => {
+          audio.pause();
+          audioUnlockedRef.current = true;
+        })
+        .catch(() => {
+          // best-effort: even a failed play() within the gesture still primes the context
+          audioUnlockedRef.current = true;
+        });
+    } catch {}
+  }, []);
 
   const startRecording = useCallback(async () => {
     if (recording) return;
@@ -230,6 +248,7 @@ export function useVoice() {
     cancelRecording,
     speakText,
     stopSpeaking,
+    unlockAudio,
     available: !!SPEECH_URL,
   };
 }
@@ -239,44 +258,21 @@ export function useVoice() {
 type ControlsProps = {
   voice: ReturnType<typeof useVoice>;
   onTranscript: (text: string, autoSend: boolean) => void;
+  show: boolean; // only render when SSE is connected (no point recording into a dead pipe)
 };
 
-export function VoiceControls({ voice, onTranscript }: ControlsProps) {
-  if (!voice.available) return null;
-
-  const cycleMode = () => {
-    const next: Record<VoiceMode, VoiceMode> = {
-      off: "tts",
-      tts: "walkie",
-      walkie: "off",
-    };
-    voice.setMode(next[voice.mode]);
-  };
+export function VoiceControls({ voice, onTranscript, show }: ControlsProps) {
+  if (!voice.available || !show) return null;
 
   const handleMicClick = async () => {
+    voice.unlockAudio(); // prime iOS Safari for later TTS playback (no-op after first call)
     if (voice.recording) {
       const text = await voice.stopRecording();
-      if (text) onTranscript(text, voice.mode === "walkie");
+      if (text) onTranscript(text, true); // walkie = always auto-send
     } else {
       voice.startRecording();
     }
   };
-
-  const modeLabel: Record<VoiceMode, string> = {
-    off: "Text",
-    tts: "Text + 🔊",
-    walkie: "🎙️ Walkie",
-  };
-  const modeColor: Record<VoiceMode, string> = {
-    off: "bg-gray-100 text-gray-700 border-gray-200",
-    tts: "bg-blue-100 text-blue-800 border-blue-200",
-    walkie: "bg-purple-100 text-purple-800 border-purple-300",
-  };
-
-  // Bigger button when walkie-mode is active so it's the obvious primary action.
-  const isPrimary = voice.mode === "walkie";
-  const micSize = isPrimary ? "w-14 h-14" : "w-12 h-12";
-  const micIconSize = isPrimary ? 24 : 20;
 
   return (
     <div className="flex items-center gap-2">
@@ -292,47 +288,33 @@ export function VoiceControls({ voice, onTranscript }: ControlsProps) {
       )}
       <button
         type="button"
-        onClick={cycleMode}
-        className={`px-3 py-1.5 text-xs rounded-full border transition ${modeColor[voice.mode]}`}
-        title="Voice-Modus wechseln (Text → Text + 🔊 → Walkie)"
-      >
-        {modeLabel[voice.mode]}
-      </button>
-      <button
-        type="button"
         onClick={handleMicClick}
         disabled={voice.transcribing}
-        aria-label={voice.recording ? "Aufnahme stoppen" : "Aufnahme starten"}
+        aria-label={voice.recording ? "Aufnahme stoppen" : "Walkie-Aufnahme starten"}
         className={
-          `${micSize} rounded-full flex items-center justify-center shrink-0 transition shadow-sm ` +
+          "w-14 h-14 rounded-full flex items-center justify-center shrink-0 transition shadow-sm " +
           (voice.recording
             ? "bg-red-500 hover:bg-red-600 animate-pulse ring-4 ring-red-200"
             : voice.transcribing
             ? "bg-gray-200"
-            : isPrimary
-            ? "bg-purple-600 hover:bg-purple-700 text-white"
-            : "bg-blue-600 hover:bg-blue-700 text-white")
+            : "bg-purple-600 hover:bg-purple-700 text-white")
         }
         title={
           voice.recording
-            ? "Aufnahme beenden + transkribieren"
+            ? "Reden, nochmal tippen → geht sofort raus"
             : voice.transcribing
             ? "Wird transkribiert…"
-            : voice.mode === "walkie"
-            ? "Walkie: tippen, reden, nochmal tippen — geht sofort raus"
-            : voice.mode === "tts"
-            ? "Aufnahme starten (Antwort wird vorgelesen)"
-            : "Aufnahme starten (Text geht ins Feld)"
+            : "Walkie: tippen, reden, nochmal tippen"
         }
       >
         {voice.transcribing ? (
           <span className="text-sm text-gray-500 font-bold">…</span>
         ) : voice.recording ? (
-          <svg width={micIconSize * 0.7} height={micIconSize * 0.7} viewBox="0 0 14 14" fill="white">
+          <svg width={18} height={18} viewBox="0 0 14 14" fill="white">
             <rect width="14" height="14" rx="2" />
           </svg>
         ) : (
-          <svg width={micIconSize} height={micIconSize} viewBox="0 0 24 24" fill="currentColor">
+          <svg width={24} height={24} viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zm5 10a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V22h2v-3.08A7 7 0 0 0 19 12h-2z" />
           </svg>
         )}
