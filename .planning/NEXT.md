@@ -54,7 +54,7 @@
 1. **Jörg-Review der neuen Rezepte** — er wollte 2–3 in Webapp/Cookidoo gegenchecken. Falls bei einem was auffällt: Step-JSON in `.received/rebuild/` anpassen → `audit-recipe.py` → live nachziehen (Pipeline siehe `memory/project_recipe_rebuild_status.md`).
 2. **`.planning/NEXT.md` aus public Repo nehmen?** — enthält LAN-IP 192.168.3.223 + interne Pfade (laut Hub nicht-kritisch). Offen, ob Jörg `.planning/` ganz aus public will. (Frage steht.)
 3. **Neues HelloFresh-Rezept eintragen** — Pipeline ready: `/thermomix-master <hellofresh-url>`.
-4. Alt-Quirks (low-risk, bewusst aufgeschoben): `thermomix-webapp.service` TimeoutStopSec=10; iOS-TTS-brittle. Siehe `memory/project_thermomix_open_quirks.md`.
+4. Alt-Quirks (low-risk): iOS-TTS-brittle (passt erst wenn Safari-Bug auftritt). Siehe `memory/project_thermomix_open_quirks.md`. — **Quirk #1 (webapp TimeoutStopSec) erledigt 2026-05-29, Commit `01b07ef`, live = 10s.**
 
 ---
 
